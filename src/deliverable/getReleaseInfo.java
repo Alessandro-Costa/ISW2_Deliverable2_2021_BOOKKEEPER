@@ -30,13 +30,14 @@ public class getReleaseInfo {
 	   public static ArrayList<LocalDateTime> releases;
 	   public static Integer numVersions;
 
-	public static void main(String[] args) throws IOException, JSONException {
+	public static HashMap<Integer, HashMap> hashMapCreation() throws IOException, JSONException {
 		   
 		   String projName ="BOOKKEEPER";
 		 //Fills the arraylist with releases dates and orders them
 		   //Ignores releases with missing dates
 		   releases = new ArrayList<LocalDateTime>();
-		         Integer i;
+		   		 HashMap <Integer, HashMap>idRelease = new HashMap <Integer, HashMap>();
+		   		 Integer i;
 		         String url = "https://issues.apache.org/jira/rest/api/2/project/" + projName;
 		         JSONObject json = readJsonFromUrl(url);
 		         JSONArray versions = json.getJSONArray("versions");
@@ -62,7 +63,7 @@ public class getReleaseInfo {
 		            }
 		         });
 		         if (releases.size() < 6)
-		            return;
+		            return idRelease;
 		         FileWriter fileWriter = null;
 			 try {
 		            fileWriter = null;
@@ -73,6 +74,7 @@ public class getReleaseInfo {
 		            fileWriter.append("\n");
 		            numVersions = releases.size();
 		            for ( i = 0; i < releases.size(); i++) {
+		               HashMap <String, LocalDateTime>versionDate = new HashMap <String, LocalDateTime>();
 		               Integer index = i + 1;
 		               fileWriter.append(index.toString());
 		               fileWriter.append(",");
@@ -82,8 +84,12 @@ public class getReleaseInfo {
 		               fileWriter.append(",");
 		               fileWriter.append(releases.get(i).toString());
 		               fileWriter.append("\n");
-		            }
-
+		               versionDate.put(releaseNames.get(releases.get(i)),releases.get(i));
+		               //System.out.println(versionDate);
+		               idRelease.put(index, versionDate);
+		               
+		         }
+		            //System.out.println(idRelease);
 		         } catch (Exception e) {
 		            System.out.println("Error in csv writer");
 		            e.printStackTrace();
@@ -96,7 +102,7 @@ public class getReleaseInfo {
 		               e.printStackTrace();
 		            }
 		         }
-		         return;
+		         return idRelease;
 		   }
  
 	
@@ -131,6 +137,4 @@ public class getReleaseInfo {
 		      }
 		      return sb.toString();
 		   }
-
-	
 }

@@ -8,6 +8,7 @@ import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONException;
@@ -61,7 +62,6 @@ public class RetrieveTicketsID {
 	   Integer j = 0;  
 	   Integer i = 0;
 	   Integer n = 0;
-	   Integer m = 0;
 	   Integer total = 1;
       //Get JSON API for closed bugs w/ AV in the project
       do {
@@ -76,20 +76,35 @@ public class RetrieveTicketsID {
          total = json.getInt("total");
          for (; i < total && i < j; i++) {
             //Iterate through each bug
-            String creationDate = issues.getJSONObject(i%1000).getJSONObject("fields").getString("created");
+        	String versionAffected = "";
+        	String creationDate = issues.getJSONObject(i%1000).getJSONObject("fields").getString("created").substring(0,16);
+        	LocalDateTime data = LocalDateTime.parse(creationDate);
             Integer dimension = issues.getJSONObject(i%1000).getJSONObject("fields").getJSONArray("versions").length();
+            System.out.println(issues.getJSONObject(i%1000).getString("key"));
             if (dimension >=1) {
-            	for(;m <dimension;m++ ) {
-                	String versionAffected = issues.getJSONObject(i%1000).getJSONObject("fields").getJSONArray("versions").getJSONObject(m).getString("name");
-                	System.out.println(versionAffected);
+            	for(int m = 0;m <dimension;m++ ) {
+                	versionAffected = issues.getJSONObject(i%1000).getJSONObject("fields").getJSONArray("versions").getJSONObject(m).getString("name");
+                	//System.out.println("Sto stampando la versione :"+versionAffected);
                 }
             }
             else {
-            	System.out.println("niente");
+            	//System.out.println("niente");
             }
-            System.out.println(issues.getJSONObject(i%1000).getString("key"));
-            
-            
+            String IV = issues.getJSONObject(i%1000).getJSONObject("fields").getString("created");
+            //System.out.println(getReleaseInfo.hashMapCreation());
+            String hashStringData = getReleaseInfo.hashMapCreation().get(1).values().toString().substring(1,17);
+            LocalDateTime hashData = LocalDateTime.parse(hashStringData);
+            System.out.println(data);
+            for(int o=1;o<getReleaseInfo.hashMapCreation().size();o++) {
+            	if(data.isBefore(hashData)) {
+            		System.out.println(hashData);
+            		System.out.println("porcodio");
+            	}
+            	else {
+            		System.out.println(hashData);
+            		System.out.println("dioca");
+            	}
+            }
             LocalDate dates = LocalDate.parse(creationDate.substring(0,10));  //TRASFORMO LA DATA DA STRINGA A DATA
             date.add(dates); //AGGIUNGO LA DATA NELLA LISTA DATE
             date.sort(null); //ORDINO LA LISTA SECONDO L'ANNO
