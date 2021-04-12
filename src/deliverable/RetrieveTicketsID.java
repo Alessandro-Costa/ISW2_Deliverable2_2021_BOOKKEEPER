@@ -98,11 +98,11 @@ public class RetrieveTicketsID {
             for(int o=1;o<getReleaseInfo.hashMapCreation().size();o++) {
             	if(data.isBefore(hashData)) {
             		System.out.println(hashData);
-            		System.out.println("porcodio");
+            		System.out.println("urca");
             	}
             	else {
             		System.out.println(hashData);
-            		System.out.println("dioca");
+            		System.out.println("vacca");
             	}
             }
             LocalDate dates = LocalDate.parse(creationDate.substring(0,10));  //TRASFORMO LA DATA DA STRINGA A DATA
