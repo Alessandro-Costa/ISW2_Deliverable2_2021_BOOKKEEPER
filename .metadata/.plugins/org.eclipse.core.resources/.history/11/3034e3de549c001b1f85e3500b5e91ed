@@ -8,6 +8,7 @@ import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONException;
@@ -76,9 +77,10 @@ public class RetrieveTicketsID {
          for (; i < total && i < j; i++) {
             //Iterate through each bug
         	String versionAffected = "";
-        	String creationDate = issues.getJSONObject(i%1000).getJSONObject("fields").getString("created");
+        	String creationDate = issues.getJSONObject(i%1000).getJSONObject("fields").getString("created").substring(0,16);
+        	LocalDateTime data = LocalDateTime.parse(creationDate);
             Integer dimension = issues.getJSONObject(i%1000).getJSONObject("fields").getJSONArray("versions").length();
-            //System.out.println(issues.getJSONObject(i%1000).getString("key"));
+            System.out.println(issues.getJSONObject(i%1000).getString("key"));
             if (dimension >=1) {
             	for(int m = 0;m <dimension;m++ ) {
                 	versionAffected = issues.getJSONObject(i%1000).getJSONObject("fields").getJSONArray("versions").getJSONObject(m).getString("name");
@@ -88,12 +90,19 @@ public class RetrieveTicketsID {
             else {
             	//System.out.println("niente");
             }
-            for(int o=0;o<getReleaseInfo.hashMapCreation().size();o++) {
-            	if(getReleaseInfo.hashMapCreation().containsKey(creationDate)) {
-            		System.out.println("canedio");
+            String IV = issues.getJSONObject(i%1000).getJSONObject("fields").getString("created");
+            //System.out.println(getReleaseInfo.hashMapCreation());
+            String hashStringData = getReleaseInfo.hashMapCreation().get(1).values().toString().substring(1,17);
+            LocalDateTime hashData = LocalDateTime.parse(hashStringData);
+            System.out.println(data);
+            for(int o=1;o<getReleaseInfo.hashMapCreation().size();o++) {
+            	if(data.isBefore(hashData)) {
+            		System.out.println(hashData);
+            		System.out.println("urca");
             	}
             	else {
-            		System.out.println("porcodio");
+            		System.out.println(hashData);
+            		System.out.println("vacca");
             	}
             }
             LocalDate dates = LocalDate.parse(creationDate.substring(0,10));  //TRASFORMO LA DATA DA STRINGA A DATA

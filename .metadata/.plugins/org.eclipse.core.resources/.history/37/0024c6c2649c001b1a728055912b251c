@@ -1,0 +1,5 @@
+module Deliverable2 {
+	requires java.json;
+	requires java.logging;
+	requires org.eclipse.jgit;
+}
