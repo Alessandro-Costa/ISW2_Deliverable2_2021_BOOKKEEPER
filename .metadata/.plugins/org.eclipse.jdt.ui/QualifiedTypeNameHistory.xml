@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="java.time.LocalDateTime"/>
     <fullyQualifiedTypeName name="org.eclipse.jgit.api.InitCommand"/>
     <fullyQualifiedTypeName name="java.io.File"/>
     <fullyQualifiedTypeName name="org.eclipse.jgit.lib.RepositoryBuilder"/>
     <fullyQualifiedTypeName name="org.eclipse.jgit.lib.Repository"/>
     <fullyQualifiedTypeName name="org.eclipse.jgit.api.Git"/>
     <fullyQualifiedTypeName name="org.eclipse.jgit.revwalk.RevCommit"/>
+    <fullyQualifiedTypeName name="java.time.ZoneId"/>
+    <fullyQualifiedTypeName name="java.util.HashMap"/>
+    <fullyQualifiedTypeName name="java.time.LocalDateTime"/>
 </qualifiedTypeNameHistroy>
