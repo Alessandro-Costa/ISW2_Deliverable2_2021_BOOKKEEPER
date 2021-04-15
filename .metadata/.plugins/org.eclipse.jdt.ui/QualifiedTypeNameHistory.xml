@@ -5,9 +5,9 @@
     <fullyQualifiedTypeName name="org.eclipse.jgit.lib.RepositoryBuilder"/>
     <fullyQualifiedTypeName name="org.eclipse.jgit.lib.Repository"/>
     <fullyQualifiedTypeName name="org.eclipse.jgit.api.Git"/>
-    <fullyQualifiedTypeName name="org.eclipse.jgit.revwalk.RevCommit"/>
     <fullyQualifiedTypeName name="java.time.LocalDateTime"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="java.util.HashMap"/>
     <fullyQualifiedTypeName name="java.time.ZoneId"/>
+    <fullyQualifiedTypeName name="org.eclipse.jgit.revwalk.RevCommit"/>
 </qualifiedTypeNameHistroy>

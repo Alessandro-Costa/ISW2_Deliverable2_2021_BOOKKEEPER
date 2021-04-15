@@ -9,10 +9,14 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.NoHeadException;
 import org.json.JSONArray;
 
 public class RetrieveTicketsID {
@@ -53,15 +57,14 @@ public class RetrieveTicketsID {
 
 
   
-  	   public static void reportTicket() throws IOException, JSONException {
-  		 List <LocalDate> date = new ArrayList<>();
-  		 List <Integer> month = new ArrayList<>();
-  		 List <String> finalList = new ArrayList<>();
-  		 List <Integer> fixedTicket = new ArrayList<>();
-		   String projName ="BOOKKEEPER";
+  	   public static void reportTicket() throws IOException, JSONException, NoHeadException, GitAPIException {
+	   String projName ="BOOKKEEPER";
+	   int count = 0;
+	   LocalDateTime var = LocalDateTime.now();
+	   HashMap <String, LocalDateTime> commitTicketList = new HashMap <String, LocalDateTime>();
 	   Integer j = 0;  
 	   Integer i = 0;
-	   Integer n = 0;
+	   Integer k = 0;
 	   Integer total = 1;
       //Get JSON API for closed bugs w/ AV in the project
       do {
@@ -76,12 +79,29 @@ public class RetrieveTicketsID {
          total = json.getInt("total");
          for (; i < total && i < j; i++) {
             //Iterate through each bug
+        	count++;
+        	String ticketID = issues.getJSONObject(i%1000).get("key").toString();
+        	for(k = 0;k < GetCommitInfo.commitList().size();k++) {
+        		String message = GetCommitInfo.commitList().get(k).getFullMessage();
+        		if (message.contains(ticketID +",") || message.contains(ticketID +"\r") || message.contains(ticketID +"\n")|| message.contains(ticketID + " ") || message.contains(ticketID +":")
+   					 || message.contains(ticketID +".")|| message.contains(ticketID + "/") || message.endsWith(ticketID) ||
+   					 message.contains(ticketID + "]")|| message.contains(ticketID+"_") || message.contains(ticketID + "-") || message.contains(ticketID + ")") ) {
+           		 System.out.println("Sono entrato nel messaggio contentente"+ ticketID);
+   				 if(var.isAfter(GetCommitInfo.commitList().get(0).getAuthorIdent().getWhen().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())) {
+   					commitTicketList.put(ticketID,GetCommitInfo.commitList().get(0).getAuthorIdent().getWhen().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+   					var = GetCommitInfo.commitList().get(0).getAuthorIdent().getWhen().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+   					count++;
+   				 }
+   			     if(var.isBefore(GetCommitInfo.commitList().get(0).getAuthorIdent().getWhen().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())) {
+   			    	System.out.println("Sono entrato nell'if della data precedente");
+   			     }
+           	}
+        	}
+        	System.out.println(ticketID);
         	String versionAffected = "";
         	String creationDate = issues.getJSONObject(i%1000).getJSONObject("fields").getString("created").substring(0,16);
-        	//System.out.println(creationDate);
         	LocalDateTime data = LocalDateTime.parse(creationDate);
             Integer dimension = issues.getJSONObject(i%1000).getJSONObject("fields").getJSONArray("versions").length();
-            //System.out.println(issues.getJSONObject(i%1000).getString("key"));
             if (dimension >=1) {
             	for(int m = 0;m <dimension;m++ ) {
                 	versionAffected = issues.getJSONObject(i%1000).getJSONObject("fields").getJSONArray("versions").getJSONObject(m).getString("name");
@@ -89,43 +109,26 @@ public class RetrieveTicketsID {
                 }
             }
             else {
-            	//System.out.println("niente");
+            	//System.out.println("Errore");
             }
-            System.out.println(getReleaseInfo.hashMapCreation());
-            String hashStringData = getReleaseInfo.hashMapCreation().get(1).values().toString().substring(1,14);
-            LocalDateTime hashData = LocalDateTime.parse(hashStringData);
-            System.out.println(hashData);
-            for(int o=1;o<getReleaseInfo.hashMapCreation().size();o++) {
-            	/*if(data.isBefore(getReleaseInfo.hashMapCreation().get(o).values())) {
-            		getReleaseInfo.hashMapCreation();
+            String versionInjected = issues.getJSONObject(i%1000).getJSONObject("fields").getString("created");
+            //System.out.println(getReleaseInfo.hashMapCreation());
+            //String hashStringData = getReleaseInfo.hashMapCreation().get(1).values().toString().substring(1,17);
+            //LocalDateTime hashData = LocalDateTime.parse(hashStringData);
+            //System.out.println(data);
+            /*for(int o=1;o<getReleaseInfo.hashMapCreation().size();o++) {
+            	if(data.isBefore(hashData)) {
+            		//System.out.println(hashData);
+            		//System.out.println("urca");
             	}
             	else {
-            		//System.out.println("porcodio");
-            	}*/
-            }
-            LocalDate dates = LocalDate.parse(creationDate.substring(0,10));  //TRASFORMO LA DATA DA STRINGA A DATA
-            date.add(dates); //AGGIUNGO LA DATA NELLA LISTA DATE
-            date.sort(null); //ORDINO LA LISTA SECONDO L'ANNO
-         } 
-         for (; n < date.size();n++) {
-        	 month.add(date.get(n).getMonthValue())  ;
-        	 finalList.add(month.get(n).toString()+"-"+date.get(n).getYear());
+            		//System.out.println(hashData);
+            		//System.out.println("vacca");
+            	}
+            }*/
          }
-         finalList.add(null);
-         Integer k =0;
-         List <String> ultimateList = new ArrayList<>();
-         for(;k<finalList.size();k++) {
-        	 if (!ultimateList.contains(finalList.get(k))) {
-        		  
-                 ultimateList.add(finalList.get(k));
-             }
-         }
-         for(int pasd = 0; pasd <ultimateList.size();pasd++) {
-        	 fixedTicket.add(0);
-         }
-         TicketsArray.write(finalList,fixedTicket);
-         CsvWriter.write(ultimateList,fixedTicket);
-         
+         System.out.println(commitTicketList);
+         System.out.println(count);
       } while (i < total);
    }
 
