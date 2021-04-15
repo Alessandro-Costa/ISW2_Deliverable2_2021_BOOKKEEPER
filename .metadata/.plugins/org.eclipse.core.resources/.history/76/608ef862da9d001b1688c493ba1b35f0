@@ -1,0 +1,132 @@
+package deliverable;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.NoHeadException;
+import org.json.JSONArray;
+
+public class RetrieveTicketsID {
+	private RetrieveTicketsID() {
+	    throw new IllegalStateException("Utility class");
+	  }
+
+
+
+
+   private static String readAll(Reader rd) throws IOException {
+	      StringBuilder sb = new StringBuilder();
+	      int cp;
+	      while ((cp = rd.read()) != -1) {
+	         sb.append((char) cp);
+	      }
+	      return sb.toString();
+	   }
+
+   public static JSONArray readJsonArrayFromUrl(String url) throws IOException, JSONException {
+      
+      try(InputStream is = new URL(url).openStream()) {
+    	 BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8.name()));
+         String jsonText = readAll(rd);
+         return new JSONArray(jsonText);
+       } 
+       
+   }
+
+   public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+      try(InputStream is = new URL(url).openStream()) {
+    	 BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8.name()));
+         String jsonText = readAll(rd);
+         return new JSONObject(jsonText);
+         
+       } 
+   }
+
+
+  
+  	   public static void reportTicket() throws IOException, JSONException, NoHeadException, GitAPIException {
+	   String projName ="BOOKKEEPER";
+	   int count = 0;
+	   LocalDateTime var = LocalDateTime.now();
+	   String message = GetCommitInfo.commitList().toString();
+	   HashMap <String, LocalDateTime> commitTicketList = new HashMap <String, LocalDateTime>();
+	   Integer j = 0;  
+	   Integer i = 0;
+	   Integer total = 1;
+      //Get JSON API for closed bugs w/ AV in the project
+      do {
+         //Only gets a max of 1000 at a time, so must do this multiple times if bugs >1000
+         j = i + 1000;
+         String url = "https://issues.apache.org/jira/rest/api/2/search?jql=project=%22"
+                 + projName + "%22AND%22issueType%22=%22Bug%22AND(%22status%22=%22closed%22OR"
+                 + "%22status%22=%22resolved%22)AND%22resolution%22=%22fixed%22&fields=key,resolutiondate,creationdate,versions,created&startAt="
+                 + i.toString() + "&maxResults=" + j.toString();
+         JSONObject json = readJsonFromUrl(url);
+         JSONArray issues = json.getJSONArray("issues");
+         total = json.getInt("total");
+         for (; i < total && i < j; i++) {
+            //Iterate through each bug
+        	count++;
+        	String ticketID = issues.getJSONObject(i%1000).get("key").toString();
+        	System.out.println(ticketID);
+        	if (message.contains(ticketID +",") || message.contains(ticketID +"\r") || message.contains(ticketID +"\n")|| message.contains(ticketID + " ") || message.contains(ticketID +":")
+					 || message.contains(ticketID +".")|| message.contains(ticketID + "/") || message.endsWith(ticketID) ||
+					 message.contains(ticketID + "]")|| message.contains(ticketID+"_") || message.contains(ticketID + "-") || message.contains(ticketID + ")") ) {
+				if(var.isAfter(GetCommitInfo.commitList().get(0).getAuthorIdent().getWhen().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())) {
+					commitTicketList.put(ticketID,GetCommitInfo.commitList().get(0).getAuthorIdent().getWhen().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+					var = GetCommitInfo.commitList().get(0).getAuthorIdent().getWhen().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+					count++;
+				}
+			    if(var.isBefore(GetCommitInfo.commitList().get(0).getAuthorIdent().getWhen().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())) {
+			    	System.out.println("Sono entrato nell'if della data precedente");
+			    }
+        	}
+        	String versionAffected = "";
+        	String creationDate = issues.getJSONObject(i%1000).getJSONObject("fields").getString("created").substring(0,16);
+        	LocalDateTime data = LocalDateTime.parse(creationDate);
+            Integer dimension = issues.getJSONObject(i%1000).getJSONObject("fields").getJSONArray("versions").length();
+            if (dimension >=1) {
+            	for(int m = 0;m <dimension;m++ ) {
+                	versionAffected = issues.getJSONObject(i%1000).getJSONObject("fields").getJSONArray("versions").getJSONObject(m).getString("name");
+                	//System.out.println("Sto stampando la versione :"+versionAffected);
+                }
+            }
+            else {
+            	//System.out.println("Errore");
+            }
+            String versionInjected = issues.getJSONObject(i%1000).getJSONObject("fields").getString("created");
+            //System.out.println(getReleaseInfo.hashMapCreation());
+            //String hashStringData = getReleaseInfo.hashMapCreation().get(1).values().toString().substring(1,17);
+            //LocalDateTime hashData = LocalDateTime.parse(hashStringData);
+            //System.out.println(data);
+            /*for(int o=1;o<getReleaseInfo.hashMapCreation().size();o++) {
+            	if(data.isBefore(hashData)) {
+            		//System.out.println(hashData);
+            		//System.out.println("urca");
+            	}
+            	else {
+            		//System.out.println(hashData);
+            		//System.out.println("vacca");
+            	}
+            }*/
+         }
+         System.out.println(commitTicketList);
+         System.out.println(count);
+      } while (i < total);
+   }
+
+ 
+}
