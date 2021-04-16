@@ -1,0 +1,32 @@
+package deliverable;
+
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.json.JSONException;
+
+public class VersionGenerator {
+	public static HashMap <Integer, String > gettingOV(LocalDateTime creationDate) throws IOException, JSONException {
+		HashMap<Integer, String> OV = new HashMap <Integer, String>();
+		HashMap <Integer, HashMap> excellList = getReleaseInfo.hashMapCreation();
+		LocalDateTime dataUltima = LocalDateTime.parse(excellList.get(14).values().toString().substring(1,17));
+		for(int k = 1;k<=excellList.size();k++ ) {
+			String stringDate = excellList.get(k).values().toString().substring(1,17);
+			LocalDateTime date = LocalDateTime.parse(stringDate);
+			System.out.println(date);
+			Integer index = 0;
+			System.out.println(excellList.keySet().toArray()[13].toString());
+			if(creationDate.isBefore(date)) {
+				index = Integer.parseInt(excellList.keySet().toArray()[k-1].toString());
+				OV.put(index, excellList.get(k).values().toString());
+			}
+			if(creationDate.isAfter(dataUltima)) {
+				index = Integer.parseInt(excellList.keySet().toArray()[k].toString());
+				OV.put(index, excellList.get(k).values().toString());
+			}
+		}
+		return OV;
+	}
+}

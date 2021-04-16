@@ -1,0 +1,22 @@
+package deliverable;
+
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+
+import org.json.JSONException;
+
+public class VersionGenerator {
+	public static void gettingOV(LocalDateTime creationDate) throws IOException, JSONException {
+		String OV = "";
+		HashMap <Integer, HashMap> excellList = getReleaseInfo.hashMapCreation();
+		for(int k = 0;k<excellList.size();k++ ) {
+			String stringDate = excellList.get(k).values().toString();
+			LocalDateTime date = LocalDateTime.parse(stringDate);
+			System.out.println(date);
+			if(creationDate.isBefore(date)) {
+				OV = excellList.get(k).toString();
+			}
+		}
+	}
+}
