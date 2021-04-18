@@ -6,13 +6,9 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
-import java.util.Map;
-import java.util.List;
 import java.util.Collections;
 import java.util.Comparator;
 import java.time.LocalDate;
@@ -23,7 +19,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-public class getReleaseInfo {
+public class GetReleaseInfo {
 	
 	   public static HashMap<LocalDateTime, String> releaseNames;
 	   public static HashMap<LocalDateTime, String> releaseID;
@@ -102,6 +98,7 @@ public class getReleaseInfo {
 		               e.printStackTrace();
 		            }
 		         }
+			 	 System.out.println(idRelease);
 		         return idRelease;
 		   }
  
