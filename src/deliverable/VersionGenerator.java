@@ -86,15 +86,23 @@ public class VersionGenerator {
             		if(s.contains(versionList)) {
         				index = Integer.parseInt(excellList.keySet().toArray()[k-1].toString());
             			AV.put(index, excellList.get(k).keySet().toString());
-            			break;
         			}
         		}
-            	break;
             }
         }
 		else {
 			
 		}
 		return AV;
+	}
+	public static HashMap<Integer, String> gettingIV(String ticketID, Integer dimension, JSONArray affectedVersion) throws JSONException, IOException {
+		HashMap <Integer, String> AV = gettingAV(ticketID, dimension, affectedVersion);
+		HashMap <Integer, String> IV = new HashMap <Integer, String>();
+		for(int k = 0; k<AV.size();k++)
+		{
+			IV.put(Integer.parseInt(AV.keySet().toString().substring(1,2)), AV.values().toString()) ;
+			break;
+		}
+		return IV;
 	}
 }

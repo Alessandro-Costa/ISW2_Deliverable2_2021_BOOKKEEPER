@@ -85,9 +85,11 @@ public class RetrieveTicketsID {
         	HashMap <Integer, String> OV = VersionGenerator.gettingOV(data);
         	HashMap<Integer, String> FV = VersionGenerator.gettingFV(ticketID);
         	HashMap<Integer, String> AV = VersionGenerator.gettingAV(ticketID, dimension,versionAffected);
+        	HashMap<Integer, String> IV = VersionGenerator.gettingIV(ticketID, dimension,versionAffected);
         	System.out.println("Sto stampando l'OV del relativo" + ticketID + OV);
         	System.out.println("Sto stampando l'FV del relativo" + ticketID + FV);
             System.out.println("Sto stampando l'AV del relativo" + ticketID + AV);
+            System.out.println("Sto stampando l'IV del relativo" + ticketID + IV);
             String versionInjected = issues.getJSONObject(i%1000).getJSONObject("fields").getString("created");
             //System.out.println(getReleaseInfo.hashMapCreation());
             //String hashStringData = getReleaseInfo.hashMapCreation().get(1).values().toString().substring(1,17);
