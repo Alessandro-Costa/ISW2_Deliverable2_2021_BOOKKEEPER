@@ -56,6 +56,7 @@ public class RetrieveTicketsID {
   	   public static void reportTicket() throws IOException, JSONException, NoHeadException, GitAPIException {
 	   String projName ="BOOKKEEPER";
 	   Integer count = 0;
+	   Integer P = 0;
 	   HashMap <String, LocalDateTime> commitTicketList = new HashMap <String, LocalDateTime>();
 	   Integer j = 0;  
 	   Integer i = 0;
@@ -79,32 +80,95 @@ public class RetrieveTicketsID {
         	System.out.println(ticketID);
         	String creationDate = issues.getJSONObject(i%1000).getJSONObject("fields").getString("created").substring(0,16);
         	LocalDateTime data = LocalDateTime.parse(creationDate);
-        	System.out.println(ticketID);
         	Integer dimension = issues.getJSONObject(i%1000).getJSONObject("fields").getJSONArray("versions").length();
             JSONArray versionAffected = issues.getJSONObject(i%1000).getJSONObject("fields").getJSONArray("versions");
         	HashMap <Integer, String> OV = VersionGenerator.gettingOV(data);
         	HashMap<Integer, String> FV = VersionGenerator.gettingFV(ticketID);
         	HashMap<Integer, String> AV = VersionGenerator.gettingAV(ticketID, dimension,versionAffected);
         	HashMap<Integer, String> IV = VersionGenerator.gettingIV(ticketID, dimension,versionAffected);
-        	System.out.println("Sto stampando l'OV del relativo" + ticketID + OV);
-        	System.out.println("Sto stampando l'FV del relativo" + ticketID + FV);
-            System.out.println("Sto stampando l'AV del relativo" + ticketID + AV);
-            System.out.println("Sto stampando l'IV del relativo" + ticketID + IV);
-            String versionInjected = issues.getJSONObject(i%1000).getJSONObject("fields").getString("created");
-            //System.out.println(getReleaseInfo.hashMapCreation());
-            //String hashStringData = getReleaseInfo.hashMapCreation().get(1).values().toString().substring(1,17);
-            //LocalDateTime hashData = LocalDateTime.parse(hashStringData);
-            //System.out.println(data);
-            /*for(int o=1;o<getReleaseInfo.hashMapCreation().size();o++) {
-            	if(data.isBefore(hashData)) {
-            		//System.out.println(hashData);
-            		//System.out.println("urca");
+        	System.out.println("Sto stampando l'OV del relativo:" + ticketID + OV);
+        	System.out.println("Sto stampando l'FV del relativo:" + ticketID + FV);
+            System.out.println("Sto stampando l'AV del relativo:" + ticketID + AV);
+            System.out.println("Sto stampando l'IV del relativo:" + ticketID + IV);
+            String indexFV = FV.keySet().toString();
+        	String indexOV = OV.keySet().toString();
+        	String indexIV = IV.keySet().toString();
+            if(IV.keySet().isEmpty()) {
+            	System.out.println("Entro nel for maledetto dove IV non esiste");
+            	if(indexFV.length()==4 && indexOV.length()==4 &&  indexIV.length()==4) {
+            		Integer intFV = Integer.parseInt(indexFV.substring(1,3));
+            		Integer intOV = Integer.parseInt(indexOV.substring(1,3));
+            		Integer intIV = Integer.parseInt(indexIV.substring(1,3));
+            		Integer predictedIV = intFV-(intFV-intOV)*P;
+            		System.out.println(predictedIV);
             	}
-            	else {
-            		//System.out.println(hashData);
-            		//System.out.println("vacca");
+            	if(indexFV.length()==3 && indexOV.length()==3 && indexIV.length()==3){
+            		Integer intFV = Integer.parseInt(indexFV.substring(1,2));
+            		Integer intOV = Integer.parseInt(indexOV.substring(1,2));
+            		Integer intIV = Integer.parseInt(indexIV.substring(1,2));
+            		Integer predictedIV = intFV-(intFV-intOV)*P;
+            		System.out.println(predictedIV);
             	}
-            }*/
+            	if(indexFV.length()==4 && indexOV.length()==3 &&  indexIV.length()==3){
+            		Integer intFV = Integer.parseInt(indexFV.substring(1,3));
+            		Integer intOV = Integer.parseInt(indexOV.substring(1,2));
+            		Integer intIV = Integer.parseInt(indexIV.substring(1,2));
+            		Integer predictedIV = intFV-(intFV-intOV)*P;
+            		System.out.println(predictedIV);
+                }
+            	
+            }
+            else {
+            	if(indexFV.length()==4 && indexOV.length()==4 &&  indexIV.length()==4) {
+            		Integer intFV = Integer.parseInt(indexFV.substring(1,3));
+            		Integer intOV = Integer.parseInt(indexOV.substring(1,3));
+            		Integer intIV = Integer.parseInt(indexIV.substring(1,3));
+            		if(intFV-intOV !=0) {
+            			P = (intFV-intIV)/(intFV-intOV);
+            		}
+            		else {
+            			System.out.println("Sono entrato nel caso divisiore = 0");
+            			P = 0;
+            		}
+            	}
+            	if(indexFV.length()==3 && indexOV.length()==3 && indexIV.length()==3){
+            		Integer intFV = Integer.parseInt(indexFV.substring(1,2));
+            		Integer intOV = Integer.parseInt(indexOV.substring(1,2));
+            		Integer intIV = Integer.parseInt(indexIV.substring(1,2));
+            		if(intFV-intOV !=0) {
+            			P = (intFV-intIV)/(intFV-intOV);
+            		}
+            		else {
+            			System.out.println("Sono entrato nel caso divisiore = 0");
+            			P = 0;
+            		}
+            	}
+            	if(indexFV.length()==4 && indexOV.length()==3 &&  indexIV.length()==3){
+            		Integer intFV = Integer.parseInt(indexFV.substring(1,3));
+            		Integer intOV = Integer.parseInt(indexOV.substring(1,2));
+            		Integer intIV = Integer.parseInt(indexIV.substring(1,2));
+            		if(intFV-intOV !=0) {
+            			P = (intFV-intIV)/(intFV-intOV);
+            		}
+            		else {
+            			System.out.println("Sono entrato nel caso divisiore = 0");
+            			P = 0;
+            		}
+            	}
+            	if(indexFV.length()==4 && indexOV.length()==4 &&  indexIV.length()==3){
+            		Integer intFV = Integer.parseInt(indexFV.substring(1,3));
+            		Integer intOV = Integer.parseInt(indexOV.substring(1,3));
+            		Integer intIV = Integer.parseInt(indexIV.substring(1,2));
+            		if(intFV-intOV !=0) {
+            			P = (intFV-intIV)/(intFV-intOV);
+            		}
+            		else {
+            			System.out.println("Sono entrato nel caso divisiore = 0");
+            			P = 0;
+            		}
+            	}
+            	System.out.println(P);
+            }
          }
          System.out.println(commitTicketList);
          System.out.println(count);

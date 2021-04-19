@@ -21,7 +21,7 @@ public class VersionGenerator {
 		Integer index = 0;
 		if(creationDate.isAfter(dataUltima)) {
 			index = Integer.parseInt(excellList.keySet().toArray()[size-1].toString());
-			OV.put(index, excellList.get(size).keySet().toString());
+			OV.put(index, excellList.get(size).keySet().toString().substring(1,6));
 			return OV;
 		}
 		for(int k = 1;k<=size;k++ ) {
@@ -29,7 +29,7 @@ public class VersionGenerator {
 			LocalDateTime date = LocalDateTime.parse(stringDate);
 			if(creationDate.isBefore(date)) {
 				index = Integer.parseInt(excellList.keySet().toArray()[k-1].toString());
-				OV.put(index, excellList.get(k).keySet().toString());
+				OV.put(index, excellList.get(k).keySet().toString().substring(1,6));
 				break;
 			}
 		}
@@ -59,7 +59,7 @@ public class VersionGenerator {
 		 }
 		if(dataWinnerCommit.isAfter(dataUltima)) {
 			index = Integer.parseInt(excellList.keySet().toArray()[size-1].toString());
-			FV.put(index, excellList.get(size).keySet().toString());
+			FV.put(index, excellList.get(size).keySet().toString().substring(1,6));
 			return FV;
 		}
 		 for(int k = 1;k<=size;k++ ) {
@@ -67,7 +67,7 @@ public class VersionGenerator {
 			LocalDateTime date = LocalDateTime.parse(stringDate);
 			if(dataWinnerCommit.isBefore(date)) {
 				index = Integer.parseInt(excellList.keySet().toArray()[k-1].toString());
-				FV.put(index, excellList.get(k).keySet().toString());
+				FV.put(index, excellList.get(k).keySet().toString().substring(1,6));
 				break;
 			}
 		 }
@@ -85,7 +85,7 @@ public class VersionGenerator {
         			String versionList = excellList.get(k).keySet().toString().substring(1,6);
             		if(s.contains(versionList)) {
         				index = Integer.parseInt(excellList.keySet().toArray()[k-1].toString());
-            			AV.put(index, excellList.get(k).keySet().toString());
+            			AV.put(index, excellList.get(k).keySet().toString().substring(1,6));
         			}
         		}
             }
@@ -100,7 +100,7 @@ public class VersionGenerator {
 		HashMap <Integer, String> IV = new HashMap <Integer, String>();
 		for(int k = 0; k<AV.size();k++)
 		{
-			IV.put(Integer.parseInt(AV.keySet().toString().substring(1,2)), AV.values().toString()) ;
+			IV.put(Integer.parseInt(AV.keySet().toString().substring(1,2)), AV.values().toString().substring(1,6)) ;
 			break;
 		}
 		return IV;

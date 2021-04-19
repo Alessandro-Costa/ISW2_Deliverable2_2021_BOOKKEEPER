@@ -98,7 +98,6 @@ public class GetReleaseInfo {
 		               e.printStackTrace();
 		            }
 		         }
-			 	 System.out.println(idRelease);
 		         return idRelease;
 		   }
  
