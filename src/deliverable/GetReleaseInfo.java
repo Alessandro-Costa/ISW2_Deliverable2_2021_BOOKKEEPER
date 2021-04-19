@@ -52,12 +52,7 @@ public class GetReleaseInfo {
 		            }
 		         }
 		         // order releases by date
-		         Collections.sort(releases, new Comparator<LocalDateTime>(){
-		            //@Override
-		            public int compare(LocalDateTime o1, LocalDateTime o2) {
-		                return o1.compareTo(o2);
-		            }
-		         });
+		        Collections.sort(releases,(o1,o2)-> o1.compareTo(o2));
 		         if (releases.size() < 6)
 		            return idRelease;
 		         FileWriter fileWriter = null;

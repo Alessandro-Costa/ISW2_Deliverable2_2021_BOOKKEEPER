@@ -8,6 +8,7 @@ import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,8 +57,7 @@ public class RetrieveTicketsID {
   	   public static void reportTicket() throws IOException, JSONException, NoHeadException, GitAPIException {
 	   String projName ="BOOKKEEPER";
 	   Integer count = 0;
-	   Integer P = 0;
-	   HashMap <String, LocalDateTime> commitTicketList = new HashMap <String, LocalDateTime>();
+	   ArrayList <Integer> P = new ArrayList<Integer>();
 	   Integer j = 0;  
 	   Integer i = 0;
 	   Integer k = 0;
@@ -71,11 +71,15 @@ public class RetrieveTicketsID {
                  + "%22status%22=%22resolved%22)AND%22resolution%22=%22fixed%22&fields=key,resolutiondate,creationdate,versions,created&startAt="
                  + i.toString() + "&maxResults=" + j.toString();
          JSONObject json = readJsonFromUrl(url);
-         JSONArray issues = json.getJSONArray("issues");
+         JSONArray issues2 = json.getJSONArray("issues");
          total = json.getInt("total");
+         
+         JSONArray issues = new JSONArray();
+         for(int m=issues2.length()-1;m>=0;m--) {
+        	 issues.put(issues2.getJSONObject(m));
+         }
          for (; i < total && i < j; i++) {
             //Iterate through each bug
-        	count++;
         	String ticketID = issues.getJSONObject(i%1000).get("key").toString();
         	System.out.println(ticketID);
         	String creationDate = issues.getJSONObject(i%1000).getJSONObject("fields").getString("created").substring(0,16);
@@ -95,26 +99,60 @@ public class RetrieveTicketsID {
         	String indexIV = IV.keySet().toString();
             if(IV.keySet().isEmpty()) {
             	System.out.println("Entro nel for maledetto dove IV non esiste");
-            	if(indexFV.length()==4 && indexOV.length()==4 &&  indexIV.length()==4) {
+            	if(indexFV.length()==4 && indexOV.length()==4) {
             		Integer intFV = Integer.parseInt(indexFV.substring(1,3));
             		Integer intOV = Integer.parseInt(indexOV.substring(1,3));
-            		Integer intIV = Integer.parseInt(indexIV.substring(1,3));
-            		Integer predictedIV = intFV-(intFV-intOV)*P;
-            		System.out.println(predictedIV);
+            		if(P.size()<=4) {
+            			P.add(0);
+            		}
+            		else {
+            			Integer predictedIV = intFV-(intFV-intOV)*((P.get(count-1)+P.get(count-2)+P.get(count-3)+P.get(count-4))/4);
+                		System.out.println(predictedIV);
+                		if(intFV-intOV !=0) {
+                			P.add((intFV-predictedIV)/(intFV-intOV));
+                		}
+                		else {
+                			System.out.println("Sono entrato nel caso divisiore = 0");
+                			P.add(0);
+                		}
+            		}
+            		
             	}
-            	if(indexFV.length()==3 && indexOV.length()==3 && indexIV.length()==3){
+            	if(indexFV.length()==3 && indexOV.length()==3){
             		Integer intFV = Integer.parseInt(indexFV.substring(1,2));
             		Integer intOV = Integer.parseInt(indexOV.substring(1,2));
-            		Integer intIV = Integer.parseInt(indexIV.substring(1,2));
-            		Integer predictedIV = intFV-(intFV-intOV)*P;
-            		System.out.println(predictedIV);
+            		if(P.size()<4) {
+            			P.add(0);
+            		}
+            		else {
+            			Integer predictedIV = intFV-(intFV-intOV)*((P.get(count-1)+P.get(count-2)+P.get(count-3)+P.get(count-4))/4);
+                		System.out.println(predictedIV);
+                		if(intFV-intOV !=0) {
+                			P.add((intFV-predictedIV)/(intFV-intOV));
+                		}
+                		else {
+                			System.out.println("Sono entrato nel caso divisiore = 0");
+                			P.add(0);
+                		}
+            		}
             	}
-            	if(indexFV.length()==4 && indexOV.length()==3 &&  indexIV.length()==3){
+            	if(indexFV.length()==4 && indexOV.length()==3){
             		Integer intFV = Integer.parseInt(indexFV.substring(1,3));
             		Integer intOV = Integer.parseInt(indexOV.substring(1,2));
-            		Integer intIV = Integer.parseInt(indexIV.substring(1,2));
-            		Integer predictedIV = intFV-(intFV-intOV)*P;
-            		System.out.println(predictedIV);
+            		if(P.size()<4) {
+            			P.add(0);
+            		}
+            		else {
+            			Integer predictedIV = intFV-(intFV-intOV)*((P.get(count-1)+P.get(count-2)+P.get(count-3)+P.get(count-4))/4);
+                		System.out.println(predictedIV);
+                		if(intFV-intOV !=0) {
+                			P.add((intFV-predictedIV)/(intFV-intOV));
+                		}
+                		else {
+                			System.out.println("Sono entrato nel caso divisiore = 0");
+                			P.add(0);
+                		}
+            		}
                 }
             	
             }
@@ -124,11 +162,11 @@ public class RetrieveTicketsID {
             		Integer intOV = Integer.parseInt(indexOV.substring(1,3));
             		Integer intIV = Integer.parseInt(indexIV.substring(1,3));
             		if(intFV-intOV !=0) {
-            			P = (intFV-intIV)/(intFV-intOV);
+            			P.add((intFV-intIV)/(intFV-intOV));
             		}
             		else {
             			System.out.println("Sono entrato nel caso divisiore = 0");
-            			P = 0;
+            			P.add(0);
             		}
             	}
             	if(indexFV.length()==3 && indexOV.length()==3 && indexIV.length()==3){
@@ -136,23 +174,22 @@ public class RetrieveTicketsID {
             		Integer intOV = Integer.parseInt(indexOV.substring(1,2));
             		Integer intIV = Integer.parseInt(indexIV.substring(1,2));
             		if(intFV-intOV !=0) {
-            			P = (intFV-intIV)/(intFV-intOV);
+            			P.add((intFV-intIV)/(intFV-intOV));
             		}
             		else {
             			System.out.println("Sono entrato nel caso divisiore = 0");
-            			P = 0;
-            		}
+            			P.add(0);            		}
             	}
             	if(indexFV.length()==4 && indexOV.length()==3 &&  indexIV.length()==3){
             		Integer intFV = Integer.parseInt(indexFV.substring(1,3));
             		Integer intOV = Integer.parseInt(indexOV.substring(1,2));
             		Integer intIV = Integer.parseInt(indexIV.substring(1,2));
             		if(intFV-intOV !=0) {
-            			P = (intFV-intIV)/(intFV-intOV);
+            			P.add((intFV-intIV)/(intFV-intOV));
             		}
             		else {
             			System.out.println("Sono entrato nel caso divisiore = 0");
-            			P = 0;
+            			P.add(0);
             		}
             	}
             	if(indexFV.length()==4 && indexOV.length()==4 &&  indexIV.length()==3){
@@ -160,19 +197,19 @@ public class RetrieveTicketsID {
             		Integer intOV = Integer.parseInt(indexOV.substring(1,3));
             		Integer intIV = Integer.parseInt(indexIV.substring(1,2));
             		if(intFV-intOV !=0) {
-            			P = (intFV-intIV)/(intFV-intOV);
+            			P.add((intFV-intIV)/(intFV-intOV));
             		}
             		else {
             			System.out.println("Sono entrato nel caso divisiore = 0");
-            			P = 0;
+            			P.add(0);
             		}
             	}
             	System.out.println(P);
+            	
             }
+            System.out.println(count);
+            count++;
          }
-         System.out.println(commitTicketList);
-         System.out.println(count);
-         System.out.println(commitTicketList.size());
       } while (i < total);
    }
 
