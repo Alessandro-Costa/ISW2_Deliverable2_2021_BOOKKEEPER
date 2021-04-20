@@ -8,9 +8,8 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.io.FileWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Collections;
-import java.util.Comparator;
+import java.util.HashMap;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -26,16 +25,18 @@ public class GetReleaseInfo {
 	   public static ArrayList<LocalDateTime> releases;
 	   public static Integer numVersions;
 
-	public static HashMap<Integer, HashMap> hashMapCreation() throws IOException, JSONException {
-		   
+	public static ArrayList <VersionObject>listVersion()  {
+		   ArrayList <VersionObject> listVersion = new ArrayList <VersionObject>();
 		   String projName ="BOOKKEEPER";
 		 //Fills the arraylist with releases dates and orders them
 		   //Ignores releases with missing dates
 		   releases = new ArrayList<LocalDateTime>();
-		   		 HashMap <Integer, HashMap>idRelease = new HashMap <Integer, HashMap>();
 		   		 Integer i;
 		         String url = "https://issues.apache.org/jira/rest/api/2/project/" + projName;
-		         JSONObject json = readJsonFromUrl(url);
+		         JSONObject json;
+				try {
+					json = readJsonFromUrl(url);
+				
 		         JSONArray versions = json.getJSONArray("versions");
 		         releaseNames = new HashMap<LocalDateTime, String>();
 		         releaseID = new HashMap<LocalDateTime, String> ();
@@ -51,10 +52,13 @@ public class GetReleaseInfo {
 		                          name,id);
 		            }
 		         }
+				} catch (IOException | JSONException e1) {
+					e1.printStackTrace();
+				}
 		         // order releases by date
 		        Collections.sort(releases,(o1,o2)-> o1.compareTo(o2));
 		         if (releases.size() < 6)
-		            return idRelease;
+		            return listVersion;
 		         FileWriter fileWriter = null;
 			 try {
 		            fileWriter = null;
@@ -65,6 +69,7 @@ public class GetReleaseInfo {
 		            fileWriter.append("\n");
 		            numVersions = releases.size();
 		            for ( i = 0; i < releases.size(); i++) {
+		               VersionObject versionInfo = new VersionObject();
 		               HashMap <String, LocalDateTime>versionDate = new HashMap <String, LocalDateTime>();
 		               Integer index = i + 1;
 		               fileWriter.append(index.toString());
@@ -77,10 +82,10 @@ public class GetReleaseInfo {
 		               fileWriter.append("\n");
 		               versionDate.put(releaseNames.get(releases.get(i)),releases.get(i));
 		               //System.out.println(versionDate);
-		               idRelease.put(index, versionDate);
-		               
+		               versionInfo.add(index, releaseNames.get(releases.get(i)), releases.get(i));
+		               listVersion.add(versionInfo);
 		         }
-		            //System.out.println(idRelease);
+		            
 		         } catch (Exception e) {
 		            System.out.println("Error in csv writer");
 		            e.printStackTrace();
@@ -93,7 +98,8 @@ public class GetReleaseInfo {
 		               e.printStackTrace();
 		            }
 		         }
-		         return idRelease;
+			 //System.out.println(listVersion.get(14).getAll());
+		         return listVersion;
 		   }
  
 	

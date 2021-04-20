@@ -86,127 +86,45 @@ public class RetrieveTicketsID {
         	LocalDateTime data = LocalDateTime.parse(creationDate);
         	Integer dimension = issues.getJSONObject(i%1000).getJSONObject("fields").getJSONArray("versions").length();
             JSONArray versionAffected = issues.getJSONObject(i%1000).getJSONObject("fields").getJSONArray("versions");
-        	HashMap <Integer, String> OV = VersionGenerator.gettingOV(data);
-        	HashMap<Integer, String> FV = VersionGenerator.gettingFV(ticketID);
-        	HashMap<Integer, String> AV = VersionGenerator.gettingAV(ticketID, dimension,versionAffected);
-        	HashMap<Integer, String> IV = VersionGenerator.gettingIV(ticketID, dimension,versionAffected);
-        	System.out.println("Sto stampando l'OV del relativo:" + ticketID + OV);
-        	System.out.println("Sto stampando l'FV del relativo:" + ticketID + FV);
+        	VersionObject OV = VersionGenerator.gettingOV(data);
+        	VersionObject FV = VersionGenerator.gettingFV(ticketID);
+        	ArrayList<VersionObject> AV = VersionGenerator.gettingAV(ticketID, dimension,versionAffected);
+        	VersionObject IV = VersionGenerator.gettingIV(ticketID, dimension,versionAffected);
+        	System.out.println("Sto stampando l'OV del relativo:" + ticketID + OV.getIdVersion());
+        	System.out.println("Sto stampando l'FV del relativo:" + ticketID + FV.getIdVersion());
             System.out.println("Sto stampando l'AV del relativo:" + ticketID + AV);
-            System.out.println("Sto stampando l'IV del relativo:" + ticketID + IV);
-            String indexFV = FV.keySet().toString();
-        	String indexOV = OV.keySet().toString();
-        	String indexIV = IV.keySet().toString();
-            if(IV.keySet().isEmpty()) {
+            System.out.println("Sto stampando l'IV del relativo:" + ticketID + IV.getIdVersion());
+            Integer indexFV = FV.getId();
+        	Integer indexOV = OV.getId();
+        	Integer indexIV = IV.getId();
+            if(IV.getId()==null) {
             	System.out.println("Entro nel for maledetto dove IV non esiste");
-            	if(indexFV.length()==4 && indexOV.length()==4) {
-            		Integer intFV = Integer.parseInt(indexFV.substring(1,3));
-            		Integer intOV = Integer.parseInt(indexOV.substring(1,3));
-            		if(P.size()<=4) {
-            			P.add(0);
-            		}
-            		else {
-            			Integer predictedIV = intFV-(intFV-intOV)*((P.get(count-1)+P.get(count-2)+P.get(count-3)+P.get(count-4))/4);
-                		System.out.println(predictedIV);
-                		if(intFV-intOV !=0) {
-                			P.add((intFV-predictedIV)/(intFV-intOV));
-                		}
-                		else {
-                			System.out.println("Sono entrato nel caso divisiore = 0");
-                			P.add(0);
-                		}
-            		}
-            		
+            	if(P.size()<=4) {
+            		P.add(0);
             	}
-            	if(indexFV.length()==3 && indexOV.length()==3){
-            		Integer intFV = Integer.parseInt(indexFV.substring(1,2));
-            		Integer intOV = Integer.parseInt(indexOV.substring(1,2));
-            		if(P.size()<4) {
-            			P.add(0);
+            	else {
+        			Integer predictedIV = indexFV-(indexFV-indexOV)*((P.get(count-1)+P.get(count-2)+P.get(count-3)+P.get(count-4))/4);
+            		System.out.println(predictedIV);
+            		if(indexFV-indexOV !=0) {
+            			P.add((indexFV-predictedIV)/(indexFV-indexOV));
             		}
             		else {
-            			Integer predictedIV = intFV-(intFV-intOV)*((P.get(count-1)+P.get(count-2)+P.get(count-3)+P.get(count-4))/4);
-                		System.out.println(predictedIV);
-                		if(intFV-intOV !=0) {
-                			P.add((intFV-predictedIV)/(intFV-intOV));
-                		}
-                		else {
-                			System.out.println("Sono entrato nel caso divisiore = 0");
-                			P.add(0);
-                		}
-            		}
-            	}
-            	if(indexFV.length()==4 && indexOV.length()==3){
-            		Integer intFV = Integer.parseInt(indexFV.substring(1,3));
-            		Integer intOV = Integer.parseInt(indexOV.substring(1,2));
-            		if(P.size()<4) {
+            			System.out.println("Sono entrato nel caso divisiore = 0");
             			P.add(0);
             		}
-            		else {
-            			Integer predictedIV = intFV-(intFV-intOV)*((P.get(count-1)+P.get(count-2)+P.get(count-3)+P.get(count-4))/4);
-                		System.out.println(predictedIV);
-                		if(intFV-intOV !=0) {
-                			P.add((intFV-predictedIV)/(intFV-intOV));
-                		}
-                		else {
-                			System.out.println("Sono entrato nel caso divisiore = 0");
-                			P.add(0);
-                		}
-            		}
-                }
-            	
+        		}
             }
             else {
-            	if(indexFV.length()==4 && indexOV.length()==4 &&  indexIV.length()==4) {
-            		Integer intFV = Integer.parseInt(indexFV.substring(1,3));
-            		Integer intOV = Integer.parseInt(indexOV.substring(1,3));
-            		Integer intIV = Integer.parseInt(indexIV.substring(1,3));
-            		if(intFV-intOV !=0) {
-            			P.add((intFV-intIV)/(intFV-intOV));
+            		if(indexFV-indexOV !=0) {
+            			P.add((indexFV-indexIV)/(indexFV-indexOV));
             		}
             		else {
             			System.out.println("Sono entrato nel caso divisiore = 0");
             			P.add(0);
             		}
-            	}
-            	if(indexFV.length()==3 && indexOV.length()==3 && indexIV.length()==3){
-            		Integer intFV = Integer.parseInt(indexFV.substring(1,2));
-            		Integer intOV = Integer.parseInt(indexOV.substring(1,2));
-            		Integer intIV = Integer.parseInt(indexIV.substring(1,2));
-            		if(intFV-intOV !=0) {
-            			P.add((intFV-intIV)/(intFV-intOV));
-            		}
-            		else {
-            			System.out.println("Sono entrato nel caso divisiore = 0");
-            			P.add(0);            		}
-            	}
-            	if(indexFV.length()==4 && indexOV.length()==3 &&  indexIV.length()==3){
-            		Integer intFV = Integer.parseInt(indexFV.substring(1,3));
-            		Integer intOV = Integer.parseInt(indexOV.substring(1,2));
-            		Integer intIV = Integer.parseInt(indexIV.substring(1,2));
-            		if(intFV-intOV !=0) {
-            			P.add((intFV-intIV)/(intFV-intOV));
-            		}
-            		else {
-            			System.out.println("Sono entrato nel caso divisiore = 0");
-            			P.add(0);
-            		}
-            	}
-            	if(indexFV.length()==4 && indexOV.length()==4 &&  indexIV.length()==3){
-            		Integer intFV = Integer.parseInt(indexFV.substring(1,3));
-            		Integer intOV = Integer.parseInt(indexOV.substring(1,3));
-            		Integer intIV = Integer.parseInt(indexIV.substring(1,2));
-            		if(intFV-intOV !=0) {
-            			P.add((intFV-intIV)/(intFV-intOV));
-            		}
-            		else {
-            			System.out.println("Sono entrato nel caso divisiore = 0");
-            			P.add(0);
-            		}
-            	}
+            	 }
             	System.out.println(P);
-            	
-            }
+          
             System.out.println(count);
             count++;
          }
