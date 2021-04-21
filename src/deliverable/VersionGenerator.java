@@ -82,11 +82,11 @@ public class VersionGenerator {
 		}
 		return AV;
 	}
-	public static VersionObject gettingIV(String ticketID, Integer dimension, JSONArray affectedVersion) throws JSONException, IOException {
-		ArrayList<VersionObject> AV = gettingAV(ticketID, dimension, affectedVersion);
+	public static VersionObject gettingIV(ArrayList<VersionObject> AV) throws JSONException, IOException {
 		VersionObject IV = new VersionObject();
-		for(int k = 0; k<AV.size();k++)
-		IV = AV.get(0);
+		for(int k = 0; k<AV.size();k++) {
+			IV = AV.get(0);
+		}
 		return IV;
 	}
 }

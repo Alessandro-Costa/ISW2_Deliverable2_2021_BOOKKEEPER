@@ -9,7 +9,6 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -60,7 +59,6 @@ public class RetrieveTicketsID {
 	   ArrayList <Integer> P = new ArrayList<Integer>();
 	   Integer j = 0;  
 	   Integer i = 0;
-	   Integer k = 0;
 	   Integer total = 1;
       //Get JSON API for closed bugs w/ AV in the project 
       do {
@@ -89,7 +87,7 @@ public class RetrieveTicketsID {
         	VersionObject OV = VersionGenerator.gettingOV(data);
         	VersionObject FV = VersionGenerator.gettingFV(ticketID);
         	ArrayList<VersionObject> AV = VersionGenerator.gettingAV(ticketID, dimension,versionAffected);
-        	VersionObject IV = VersionGenerator.gettingIV(ticketID, dimension,versionAffected);
+        	VersionObject IV = VersionGenerator.gettingIV(AV);
         	System.out.println("Sto stampando l'OV del relativo:" + ticketID + OV.getIdVersion());
         	System.out.println("Sto stampando l'FV del relativo:" + ticketID + FV.getIdVersion());
             System.out.println("Sto stampando l'AV del relativo:" + ticketID + AV);
