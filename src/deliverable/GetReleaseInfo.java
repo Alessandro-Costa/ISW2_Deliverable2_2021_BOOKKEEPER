@@ -12,9 +12,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.json.JSONArray;
 
 
@@ -25,8 +28,15 @@ public class GetReleaseInfo {
 	   public static ArrayList<LocalDateTime> releases;
 	   public static Integer numVersions;
 
-	public static ArrayList <VersionObject>listVersion()  {
+	public static ArrayList <VersionObject>listVersion(){
 		   ArrayList <VersionObject> listVersion = new ArrayList <VersionObject>();
+		   ArrayList<RevCommit> commitList = new ArrayList<RevCommit>();
+		   ArrayList<String> classes = new ArrayList<String>();
+		try {
+			commitList = GetCommitInfo.commitList();
+		} catch (IOException | GitAPIException e2) {
+			e2.printStackTrace();
+		}
 		   String projName ="BOOKKEEPER";
 		 //Fills the arraylist with releases dates and orders them
 		   //Ignores releases with missing dates
@@ -81,11 +91,18 @@ public class GetReleaseInfo {
 		               fileWriter.append(releases.get(i).toString());
 		               fileWriter.append("\n");
 		               versionDate.put(releaseNames.get(releases.get(i)),releases.get(i));
-		               //System.out.println(versionDate);
 		               versionInfo.add(index, releaseNames.get(releases.get(i)), releases.get(i));
 		               listVersion.add(versionInfo);
-		         }
-		            
+		               Release release = new Release();
+		               for(int m = 0; m<commitList.size();m++) {
+		            	   if(commitList.get(m).getAuthorIdent().getWhen().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().isBefore(releases.get(i))) {
+			            	   release.setCommitList(commitList);
+			            	   release.setDate(releases.get(i));
+			            	   release.setClassification(i);
+			            	   release.setRelease(releases.get(i).toString());
+			               }
+		               }  
+		         } 
 		         } catch (Exception e) {
 		            System.out.println("Error in csv writer");
 		            e.printStackTrace();
@@ -98,7 +115,12 @@ public class GetReleaseInfo {
 		               e.printStackTrace();
 		            }
 		         }
-			 //System.out.println(listVersion.get(14).getAll());
+			 try {
+				GetJavaFile.commitHistory(commitList, classes);
+			} catch (GitAPIException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		         return listVersion;
 		   }
  

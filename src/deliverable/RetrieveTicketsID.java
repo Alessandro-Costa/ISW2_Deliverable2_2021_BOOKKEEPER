@@ -71,7 +71,7 @@ public class RetrieveTicketsID {
          JSONObject json = readJsonFromUrl(url);
          JSONArray issues2 = json.getJSONArray("issues");
          total = json.getInt("total");
-         
+         Integer scartati = 0;
          JSONArray issues = new JSONArray();
          for(int m=issues2.length()-1;m>=0;m--) {
         	 issues.put(issues2.getJSONObject(m));
@@ -88,10 +88,6 @@ public class RetrieveTicketsID {
         	VersionObject FV = VersionGenerator.gettingFV(ticketID);
         	ArrayList<VersionObject> AV = VersionGenerator.gettingAV(ticketID, dimension,versionAffected);
         	VersionObject IV = VersionGenerator.gettingIV(AV);
-        	System.out.println("Sto stampando l'OV del relativo:" + ticketID + OV.getIdVersion());
-        	System.out.println("Sto stampando l'FV del relativo:" + ticketID + FV.getIdVersion());
-            System.out.println("Sto stampando l'AV del relativo:" + ticketID + AV);
-            System.out.println("Sto stampando l'IV del relativo:" + ticketID + IV.getIdVersion());
             Integer indexFV = FV.getId();
         	Integer indexOV = OV.getId();
         	Integer indexIV = IV.getId();
@@ -102,7 +98,19 @@ public class RetrieveTicketsID {
             	}
             	else {
         			Integer predictedIV = indexFV-(indexFV-indexOV)*((P.get(count-1)+P.get(count-2)+P.get(count-3)+P.get(count-4))/4);
-            		System.out.println(predictedIV);
+        			if(predictedIV > OV.getId()) {
+        				scartati++;
+        				continue;
+        			}
+        			ArrayList <VersionObject>listVersion = GetReleaseInfo.listVersion();
+        			for(int n = 0;n<listVersion.size();n++) {
+        				if(predictedIV == listVersion.get(n).getId()) {
+        					AV.add(listVersion.get(n));
+        					IV.addIdVersion(listVersion.get(n).getId(), listVersion.get(n).getVersion());
+        				}
+        			}
+            		
+        			System.out.println(predictedIV);
             		if(indexFV-indexOV !=0) {
             			P.add((indexFV-predictedIV)/(indexFV-indexOV));
             		}
@@ -121,11 +129,14 @@ public class RetrieveTicketsID {
             			P.add(0);
             		}
             	 }
-            	System.out.println(P);
+            System.out.println(P);
           
             System.out.println(count);
             count++;
+            TicketObjectVersionID info =new TicketObjectVersionID(OV,FV,AV,IV);
+            info.printInfo(ticketID);
          }
+         System.out.println("Gli elementi scartati sono:"+scartati);
       } while (i < total);
    }
 
