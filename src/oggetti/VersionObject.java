@@ -1,4 +1,4 @@
-package deliverable;
+package oggetti;
 
 import java.time.LocalDateTime;
 

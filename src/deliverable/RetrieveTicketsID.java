@@ -11,6 +11,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import oggetti.TicketObjectVersionID;
+import oggetti.VersionObject;
+
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.NoHeadException;
 import org.json.JSONArray;
@@ -53,10 +57,9 @@ public class RetrieveTicketsID {
 
 
   
-  	   public static void reportTicket() throws IOException, JSONException, NoHeadException, GitAPIException {
+  	   public static void reportTicket(ArrayList <VersionObject> listVersion) throws IOException, JSONException, NoHeadException, GitAPIException {
 	   String projName ="BOOKKEEPER";
 	   Integer count = 0;
-	   ArrayList <Integer> P = new ArrayList<Integer>();
 	   Integer j = 0;  
 	   Integer i = 0;
 	   Integer total = 1;
@@ -71,7 +74,6 @@ public class RetrieveTicketsID {
          JSONObject json = readJsonFromUrl(url);
          JSONArray issues2 = json.getJSONArray("issues");
          total = json.getInt("total");
-         Integer scartati = 0;
          JSONArray issues = new JSONArray();
          for(int m=issues2.length()-1;m>=0;m--) {
         	 issues.put(issues2.getJSONObject(m));
@@ -84,59 +86,20 @@ public class RetrieveTicketsID {
         	LocalDateTime data = LocalDateTime.parse(creationDate);
         	Integer dimension = issues.getJSONObject(i%1000).getJSONObject("fields").getJSONArray("versions").length();
             JSONArray versionAffected = issues.getJSONObject(i%1000).getJSONObject("fields").getJSONArray("versions");
-        	VersionObject OV = VersionGenerator.gettingOV(data);
-        	VersionObject FV = VersionGenerator.gettingFV(ticketID);
-        	ArrayList<VersionObject> AV = VersionGenerator.gettingAV(ticketID, dimension,versionAffected);
-        	VersionObject IV = VersionGenerator.gettingIV(AV);
-            Integer indexFV = FV.getId();
-        	Integer indexOV = OV.getId();
-        	Integer indexIV = IV.getId();
-            if(IV.getId()==null) {
-            	System.out.println("Entro nel for maledetto dove IV non esiste");
-            	if(P.size()<=4) {
-            		P.add(0);
-            	}
-            	else {
-        			Integer predictedIV = indexFV-(indexFV-indexOV)*((P.get(count-1)+P.get(count-2)+P.get(count-3)+P.get(count-4))/4);
-        			if(predictedIV > OV.getId()) {
-        				scartati++;
-        				continue;
-        			}
-        			ArrayList <VersionObject>listVersion = GetReleaseInfo.listVersion();
-        			for(int n = 0;n<listVersion.size();n++) {
-        				if(predictedIV == listVersion.get(n).getId()) {
-        					AV.add(listVersion.get(n));
-        					IV.addIdVersion(listVersion.get(n).getId(), listVersion.get(n).getVersion());
-        				}
-        			}
-            		
-        			System.out.println(predictedIV);
-            		if(indexFV-indexOV !=0) {
-            			P.add((indexFV-predictedIV)/(indexFV-indexOV));
-            		}
-            		else {
-            			System.out.println("Sono entrato nel caso divisiore = 0");
-            			P.add(0);
-            		}
-        		}
-            }
-            else {
-            		if(indexFV-indexOV !=0) {
-            			P.add((indexFV-indexIV)/(indexFV-indexOV));
-            		}
-            		else {
-            			System.out.println("Sono entrato nel caso divisiore = 0");
-            			P.add(0);
-            		}
-            	 }
-            System.out.println(P);
-          
+        	VersionObject OV = VersionGenerator.gettingOV(data,listVersion);
+        	VersionObject FV = VersionGenerator.gettingFV(ticketID,listVersion);
+        	ArrayList<VersionObject> AV = VersionGenerator.gettingAV(ticketID, dimension,versionAffected,listVersion);
+        	VersionObject IV = VersionGenerator.gettingIV(AV); 
             System.out.println(count);
             count++;
-            TicketObjectVersionID info =new TicketObjectVersionID(OV,FV,AV,IV);
-            info.printInfo(ticketID);
+            if(Proportion.proportion(FV, OV, AV, IV, listVersion, count)==true) {
+            	if(OV.getIdVersion() == null || FV.getIdVersion()==null || IV.getIdVersion()==null) {
+        			System.out.println("Un parametro è nullo-Ticket scartato");
+        		}
+            	TicketObjectVersionID info =new TicketObjectVersionID(OV,FV,AV,IV);
+                info.printInfo(ticketID);
+            }
          }
-         System.out.println("Gli elementi scartati sono:"+scartati);
       } while (i < total);
    }
 

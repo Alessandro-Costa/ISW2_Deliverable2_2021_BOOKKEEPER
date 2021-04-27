@@ -11,31 +11,34 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import oggetti.Release;
+import oggetti.VersionObject;
+
 public class VersionGenerator {
 	
-	private final static ArrayList <VersionObject> LISTVERSION = GetReleaseInfo.listVersion();
+	//private final static ArrayList <VersionObject> LISTVERSION = GetReleaseInfo.listVersion();
 	
-	public static VersionObject gettingOV(LocalDateTime creationDate) throws IOException, JSONException {
+	public static VersionObject gettingOV(LocalDateTime creationDate,ArrayList<VersionObject> listVersion) throws IOException, JSONException {
 		VersionObject OV = new VersionObject();
-		Integer size = LISTVERSION.size();
-		LocalDateTime dataUltima = LISTVERSION.get(size-1).getDate();
+		Integer size = listVersion.size();
+		LocalDateTime dataUltima = listVersion.get(size-1).getDate();
 		if(creationDate.isAfter(dataUltima)) {
-			 OV.addIdVersion(LISTVERSION.get(size-1).getId(),LISTVERSION.get(size-1).getVersion());
+			 OV.addIdVersion(listVersion.get(size-1).getId(),listVersion.get(size-1).getVersion());
 			return OV;
 		}
 		for(int k = 0;k<size;k++ ) {
-			if(creationDate.isBefore(LISTVERSION.get(k).getDate())) {
-				OV.addIdVersion(LISTVERSION.get(k).getId(),LISTVERSION.get(k).getVersion());
+			if(creationDate.isBefore(listVersion.get(k).getDate())) {
+				OV.addIdVersion(listVersion.get(k).getId(),listVersion.get(k).getVersion());
 				break;
 			}
 		}
 		return OV;
 	}
 	
-	public static VersionObject gettingFV(String ticketID) throws NoHeadException, IOException, GitAPIException, JSONException {
+	public static VersionObject gettingFV(String ticketID,ArrayList<VersionObject> listVersion) throws NoHeadException, IOException, GitAPIException, JSONException {
 		VersionObject FV = new VersionObject();
-		Integer size = LISTVERSION.size();
-		LocalDateTime dataUltima = LISTVERSION.get(size-1).getDate();
+		Integer size = listVersion.size();
+		LocalDateTime dataUltima = listVersion.get(size-1).getDate();
 		ArrayList<RevCommit> commits = GetCommitInfo.commitList();
 		LocalDateTime var = LocalDateTime.now();
 		LocalDateTime dataWinnerCommit = LocalDateTime.now();
@@ -52,27 +55,27 @@ public class VersionGenerator {
     		}
 		 }
 		if(dataWinnerCommit.isAfter(dataUltima)) {
-			FV.addIdVersion(LISTVERSION.get(size-1).getId(), LISTVERSION.get(size-1).getVersion());
+			FV.addIdVersion(listVersion.get(size-1).getId(), listVersion.get(size-1).getVersion());
 			return FV;
 		}
 		 for(int k = 0;k<size;k++ ) {
-			if(dataWinnerCommit.isBefore(LISTVERSION.get(k).getDate())) {
-				FV.addIdVersion(LISTVERSION.get(k).getId(), LISTVERSION.get(k).getVersion());
+			if(dataWinnerCommit.isBefore(listVersion.get(k).getDate())) {
+				FV.addIdVersion(listVersion.get(k).getId(), listVersion.get(k).getVersion());
 				break;
 			}
 		 }
 		 return FV;
 	}
-	public static ArrayList<VersionObject> gettingAV(String TicketID, Integer dimension, JSONArray affectedVersion) throws JSONException, IOException {
+	public static ArrayList<VersionObject> gettingAV(String TicketID, Integer dimension, JSONArray affectedVersion,ArrayList<VersionObject> listVersion) throws JSONException, IOException {
 		ArrayList<VersionObject> AV = new ArrayList <VersionObject>();
-		Integer size = LISTVERSION.size();
+		Integer size = listVersion.size();
 		if (dimension >=1) {
         	for(int m = 0;m <dimension;m++ ) {
             	String s = affectedVersion.getJSONObject(m).getString("name");
             	for(int k = 0;k<size;k++ ) {
-        			String versionList = LISTVERSION.get(k).getVersion();
+        			String versionList = listVersion.get(k).getVersion();
             		if(s.contains(versionList)) {
-        				AV.add(LISTVERSION.get(k));
+        				AV.add(listVersion.get(k));
         			}
         		}
             }
@@ -88,5 +91,27 @@ public class VersionGenerator {
 			IV = AV.get(0);
 		}
 		return IV;
+	}
+	public static void releaseCreate(ArrayList<VersionObject> listVersion, ArrayList<RevCommit> commitList,ArrayList<LocalDateTime> releases,Integer count) {
+		ArrayList<RevCommit> tempCommitList = new ArrayList<RevCommit>();
+		ArrayList<String> tempStringList = new ArrayList<String>(); 
+		ArrayList<Release> releaseList = new ArrayList<Release>();
+		Release release = new Release();
+		for(int m = 0; m<commitList.size();m++) {
+     	   if(commitList.get(m).getAuthorIdent().getWhen().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().isBefore(releases.get(count))) {
+     		   tempCommitList.add(commitList.get(m));
+     		   release.setCommitList(tempCommitList);
+         	   release.setDate(releases.get(count));
+         	   release.setClassification(count);
+         	   release.setRelease(releases.get(count).toString());
+         	   release.setFileList(tempStringList);
+         	   releaseList.add(release);
+            }	      
+        }
+		try {
+				GetJavaFile.commitHistory(releaseList);
+			} catch (GitAPIException | IOException e) {
+				e.printStackTrace();
+			}
 	}
 }

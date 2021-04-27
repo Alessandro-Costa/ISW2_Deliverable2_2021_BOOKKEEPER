@@ -1,4 +1,4 @@
-package deliverable;
+package oggetti;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -47,5 +47,8 @@ public class Release {
 	}
 	public void setCommitList(List<RevCommit> commitList) {
 		this.commit = commitList;
+	}
+	public void setFileList(List<String> javaFileList) {
+		this.javaFileList = javaFileList;
 	}
 }
