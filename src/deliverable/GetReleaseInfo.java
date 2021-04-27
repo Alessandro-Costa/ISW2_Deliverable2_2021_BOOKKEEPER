@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import oggetti.Release;
 import oggetti.VersionObject;
 
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -33,6 +34,7 @@ public class GetReleaseInfo {
 	public static ArrayList <VersionObject>listVersion(){
 		   ArrayList <VersionObject> listVersion = new ArrayList <VersionObject>();
 		   ArrayList<RevCommit> commitList = new ArrayList<RevCommit>();
+		   ArrayList<Release> releaseList = new ArrayList<Release>();
 		try {
 			commitList = GetCommitInfo.commitList();
 		} catch (IOException | GitAPIException e2) {
@@ -83,6 +85,7 @@ public class GetReleaseInfo {
 		               VersionObject versionInfo = new VersionObject();
 		               HashMap <String, LocalDateTime>versionDate = new HashMap <String, LocalDateTime>();
 		               Integer index = i + 1;
+		               Integer count = 0;
 		               fileWriter.append(index.toString());
 		               fileWriter.append(",");
 		               fileWriter.append(releaseID.get(releases.get(i)));
@@ -94,8 +97,9 @@ public class GetReleaseInfo {
 		               versionDate.put(releaseNames.get(releases.get(i)),releases.get(i));
 		               versionInfo.add(index, releaseNames.get(releases.get(i)), releases.get(i));
 		               listVersion.add(versionInfo);
-		               //VersionGenerator.releaseCreate(listVersion, commitList, releases, count);
+		               releaseList = VersionGenerator.releaseCreate(listVersion, commitList, releases, count);
 		               } 
+		            System.out.println(releaseList.get(0).getFileList());
 		         } catch (Exception e) {
 		            System.out.println("Error in csv writer");
 		            e.printStackTrace();

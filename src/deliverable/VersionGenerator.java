@@ -92,7 +92,7 @@ public class VersionGenerator {
 		}
 		return IV;
 	}
-	public static void releaseCreate(ArrayList<VersionObject> listVersion, ArrayList<RevCommit> commitList,ArrayList<LocalDateTime> releases,Integer count) {
+	public static ArrayList<Release> releaseCreate(ArrayList<VersionObject> listVersion, ArrayList<RevCommit> commitList,ArrayList<LocalDateTime> releases,Integer count) {
 		ArrayList<RevCommit> tempCommitList = new ArrayList<RevCommit>();
 		ArrayList<String> tempStringList = new ArrayList<String>(); 
 		ArrayList<Release> releaseList = new ArrayList<Release>();
@@ -113,5 +113,6 @@ public class VersionGenerator {
 			} catch (GitAPIException | IOException e) {
 				e.printStackTrace();
 			}
+		return releaseList;
 	}
 }

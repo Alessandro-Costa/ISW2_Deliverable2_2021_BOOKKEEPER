@@ -49,9 +49,8 @@ public class GetJavaFile {
 			                }   
 			                if (similarParents == 0) {
 			                	if(tw.getPathString().endsWith(".java")) {
-			                		System.out.println("File names: " + tw.getPathString());
+			                		//System.out.println("File names: " + tw.getPathString());
 			                        releaseList.get(0).getFileList().add(tw.getPathString());
-			                        System.out.println(releaseList.get(0).getFileList());
 			                	}
 			                }
 			            }
