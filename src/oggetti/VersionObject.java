@@ -36,8 +36,7 @@ public class VersionObject {
 		return this.date;
 	}
 	public String getAll() {
-		String all = "ID:"+ this.id +"\n"+"Version:"+ this.version +"\n"+"Date:"+ this.date;
-		return all;
+		return ("ID:"+ this.id +"\n"+"Version:"+ this.version +"\n"+"Date:"+ this.date);
 	}
 	public String getIdVersion() {
 		return "ID:"+this.id +"\n"+"Version:" + this.version;

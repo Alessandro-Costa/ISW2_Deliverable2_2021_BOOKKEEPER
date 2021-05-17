@@ -9,17 +9,17 @@ public class Release {
 	private List<RevCommit> commit;
 	private LocalDateTime date;
 	private Integer classification;
-	private String release;
-	private List<String> javaFileList;
+	private String releaseString;
+	private List<JavaFile> javaFileList;
 	public Release() {
 		
 	}
-	public Release(LocalDateTime date,Integer classification,String release, ArrayList<String> javaFileList) {
+	public Release(LocalDateTime date,Integer classification,String release, List<String> javaFileList) {
 		this.commit = new ArrayList<>();
 		this.date = date;
 		this.classification = classification;
-		this.release = release;
-		this.javaFileList = javaFileList;
+		this.releaseString = release;
+		this.javaFileList = new ArrayList<>();
 	}
 	public LocalDateTime getDate() {
 		return date;
@@ -28,12 +28,12 @@ public class Release {
 		return classification;
 	}
 	public String getRelease() {
-		return release;
+		return releaseString;
 	}
 	public List<RevCommit> getCommitList(){
 		return commit;
 	}
-	public List<String> getFileList(){
+	public List<JavaFile> getFileList(){
 		return javaFileList;
 	}
 	public void setDate(LocalDateTime date) {
@@ -43,12 +43,12 @@ public class Release {
 		this.classification = classification;
 	}
 	public void setRelease(String release) {
-		this.release = release;
+		this.releaseString = release;
 	}
 	public void setCommitList(List<RevCommit> commitList) {
 		this.commit = commitList;
 	}
-	public void setFileList(List<String> javaFileList) {
+	public void setFileList(List<JavaFile> javaFileList) {
 		this.javaFileList = javaFileList;
 	}
 }

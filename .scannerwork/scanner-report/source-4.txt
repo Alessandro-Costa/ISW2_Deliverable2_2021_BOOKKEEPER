@@ -1,0 +1,124 @@
+package deliverable;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import oggetti.Release;
+import oggetti.TicketObjectVersionID;
+import oggetti.VersionObject;
+
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.json.JSONArray;
+
+public class RetrieveTicketsID {
+	private static Logger logger = Logger.getLogger(RetrieveTicketsID.class.getName());
+	private RetrieveTicketsID() {
+	    throw new IllegalStateException("Utility class");
+	  }
+
+
+
+
+   private static String readAll(Reader rd) throws IOException {
+	      var sb = new StringBuilder();
+	      int cp;
+	      while ((cp = rd.read()) != -1) {
+	         sb.append((char) cp);
+	      }
+	      return sb.toString();
+	   }
+
+   public static JSONArray readJsonArrayFromUrl(String url) throws IOException, JSONException {
+      
+      try(InputStream is = new URL(url).openStream()) {
+    	 var rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8.name()));
+         String jsonText = readAll(rd);
+         return new JSONArray(jsonText);
+       } 
+       
+   }
+
+   public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+      try(InputStream is = new URL(url).openStream()) {
+    	 var rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8.name()));
+         String jsonText = readAll(rd);
+         return new JSONObject(jsonText);
+         
+       } 
+   }
+
+
+  
+  	   public static void reportTicket(List <VersionObject> listVersion, List<Release> releaseList) throws IOException, JSONException, GitAPIException {
+	   var projName ="BOOKKEEPER";
+	   Integer count = 0;
+	   Integer j = 0;  
+	   Integer i = 0;
+	   Integer f = 0;
+	   Integer g = 0;
+	   Integer total = 1;
+	   List<List<String>> buggyFile = new ArrayList<>();
+      //Get JSON API for closed bugs w/ AV in the project 
+      do {
+         //Only gets a max of 1000 at a time, so must do this multiple times if bugs >1000
+         j = i + 1000;
+         String url = "https://issues.apache.org/jira/rest/api/2/search?jql=project=%22"
+                 + projName + "%22AND%22issueType%22=%22Bug%22AND(%22status%22=%22closed%22OR"
+                 + "%22status%22=%22resolved%22)AND%22resolution%22=%22fixed%22&fields=key,resolutiondate,creationdate,versions,created&startAt="
+                 + i.toString() + "&maxResults=" + j.toString();
+         JSONObject json = readJsonFromUrl(url);
+         var issues2 = json.getJSONArray("issues");
+         total = json.getInt("total");
+         var issues = new JSONArray();
+         for(int m=issues2.length()-1;m>=0;m--) {
+        	 issues.put(issues2.getJSONObject(m));
+         }
+         for (; i < total && i < j; i++) {
+            //Iterate through each bug
+        	var ticketID = issues.getJSONObject(i%1000).get("key").toString();
+            logger.log(Level.INFO,ticketID);
+        	var fields = issues.getJSONObject(i%1000).getJSONObject("fields");
+        	var creationDate = fields.getString("created").substring(0,16);
+        	var data = LocalDateTime.parse(creationDate);
+        	Integer dimension = fields.getJSONArray("versions").length();
+            var versionAffected = fields.getJSONArray("versions");
+        	VersionObject oV = VersionGenerator.gettingOV(data,listVersion);
+        	VersionObject fV = VersionGenerator.gettingFV(ticketID,listVersion);
+        	List<VersionObject> aV = VersionGenerator.gettingAV(dimension,versionAffected,listVersion);
+        	VersionObject iV = VersionGenerator.gettingIV(aV);
+            logger.log(Level.INFO, count.toString());
+            count++;
+            if(Proportion.proportion(fV, oV, aV, iV, listVersion, count)) {
+            	var info = new TicketObjectVersionID(oV,fV,aV,iV);
+            	
+                info.printInfo(ticketID);
+            }
+            else {
+            	    logger.log(Level.INFO, "Un parametro è nullo-Ticket scartato");
+            }
+            for(f = 0; f < releaseList.size();f++) {
+            	for(g = 0; g < releaseList.get(f).getCommitList().size(); g++) {
+            		if(releaseList.get(f).getCommitList().get(g).getFullMessage().contains(ticketID)) {
+            			buggyFile.add(releaseList.get(f).getFileList() ) ;
+            		}
+            	}
+            }      
+          }
+      } while (i < total);
+   }
+
+ 
+}
