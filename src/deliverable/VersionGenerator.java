@@ -105,9 +105,9 @@ public class VersionGenerator {
 			for(RevCommit commit : commitList) {	
 				if(commit.getAuthorIdent().getWhen().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().isBefore(releases.get(k))) {
      			   tempCommitList.add(commit);
-            	   /*release.setDate(releases.get(k));
+            	   release.setDate(releases.get(k));
             	   release.setClassification(k);
-            	   release.setRelease(releases.get(k).toString());*/
+            	   release.setRelease(releases.get(k).toString());
      		  }
             }
 			release.setCommitList(tempCommitList);

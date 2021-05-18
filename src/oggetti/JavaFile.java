@@ -23,7 +23,7 @@ public class JavaFile {
 	private Integer avgChgSetSize;
 	
 	public JavaFile() {
-		
+		this.size = 0;
 	}
 	public JavaFile(String name) {
 		this.name = name;
@@ -168,5 +168,8 @@ public class JavaFile {
 
 	public void setAVGChurn(Integer aVGChurn) {
 		this.avgChurn = aVGChurn;
+	}
+	public void addSize() {
+		this.size ++;
 	}
 }

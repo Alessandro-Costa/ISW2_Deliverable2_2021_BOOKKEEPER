@@ -8,7 +8,6 @@ import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -69,6 +68,7 @@ public class RetrieveTicketsID {
   	   public static void reportTicket(List <VersionObject> listVersion, List<Release> releaseList, List<RevCommit> commitList) throws IOException, JSONException, GitAPIException {
 	   var projName ="BOOKKEEPER";
 	   List<TicketObjectVersionID> ticketList = new ArrayList<>();
+	   List<JavaFile> buggyFileList = new ArrayList<>();
 	   Integer count = 0;
 	   Integer j = 0;  
 	   Integer i = 0;
@@ -119,7 +119,6 @@ public class RetrieveTicketsID {
             }   
          }
          System.out.println(ticketList.size());
-         List<JavaFile> fileList = new ArrayList<>();
          for(TicketObjectVersionID ticket: ticketList) {
         	 System.out.println("Sto iterando i ticket");
         	 for(RevCommit commit : commitList) {
@@ -129,44 +128,43 @@ public class RetrieveTicketsID {
         			 for(DiffEntry entry : diffs) {
         				 System.out.println("Sto iterando gli entry");
         				 var file = new JavaFile(entry.toString());
+        				 Metrics.sizeLOC(entry.toString(), file);
         				 if (file.getName().contains(".java") && (entry.getChangeType().toString().equals("MODIFY")
 									|| entry.getChangeType().toString().equals("DELETE") )) { 
         					 System.out.println("Entro nell'if MODIFY");
-        					 fileList.add(file);
-        					 checkFileBug(file,releaseList,entry,ticket);
+        					 checkFileBug(releaseList,entry,ticket,buggyFileList);
         				 }	
         			 }
         		 }
         	 }
          }
-         System.out.println(fileList.size());
+         System.out.println(buggyFileList.size());
          } while (i < total);
    }
-  	   public static void checkFileBug(JavaFile file, List<Release> releaseList, DiffEntry entry, TicketObjectVersionID ticket) {
-  		   System.out.println("Sono entrato nel metodo checkFileBug");
+  	   public static void checkFileBug(List<Release> releaseList, DiffEntry entry, TicketObjectVersionID ticket, List<JavaFile> buggyFileList) {
+  		   String file;
   		   if(entry.getChangeType()== DiffEntry.ChangeType.DELETE) {
-  			 file.setOldPath(entry.getOldPath());
+  			 file =entry.getOldPath();
   		   }
   		   else {
-  			   file.setNewPath(entry.getNewPath());
+  			   file=entry.getNewPath();
   		   }
   		   for (Release release : releaseList) {
-  			   System.out.println("Sono entrato nel for delle release");
   			   for (JavaFile javaFile : release.getFileList()){ 
 				 //NON ENTRA IN QUESTO IF 
-  				   if(javaFile.getName().equals(file.getName()) ) {
-					 System.out.println("Sto per entrare nel compareAv");
-					 compareAv(javaFile, ticket.getAV(), release);
+  				   if(javaFile.getName().equals(file) ) {
+  					  compareAv(javaFile, ticket.getAV(), release,buggyFileList);
 				 }
 			 }
 		 }
   	   }
-  	   public static void compareAv(JavaFile javaFile, List<VersionObject> av, Release release) {
+  	   public static void compareAv(JavaFile javaFile, List<VersionObject> av, Release release,List<JavaFile> buggyFileList) {
   		   Integer c = 0;
   		   for(VersionObject version : av) {
   			if (version.getId().equals(release.getClassification())) {
-  				 //System.out.println("LA CLASSE E' BUGGY\n###\n");
+  				 System.out.println("LA CLASSE E' BUGGY\n###\n");
   				 javaFile.setBugg("YES");
+  				 buggyFileList.add(javaFile);
   				 c++;
   				 System.out.println("-------------------"+c);
   			 }
