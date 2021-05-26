@@ -34,6 +34,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryBuilder;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 import org.eclipse.jgit.treewalk.EmptyTreeIterator;
 import org.eclipse.jgit.util.io.DisabledOutputStream;
@@ -44,12 +45,14 @@ public class GetReleaseInfo {
 	private GetReleaseInfo() {
 	    throw new IllegalStateException("Utility class");
 	  }
+	   private static final String REPO = "/home/alessandro/eclipse-workspace/bookkeeper/.git";
+	   //private static final String REPO = "/home/alessandro/eclipse-workspace/zookeeper/.git";
 	   private static Map<LocalDateTime, String> releaseNames;
 	   private static Map<LocalDateTime, String> releaseID;
 	   private static List<LocalDateTime> releases;
 	   private static Integer numVersions;
 	   private static Repository repository;
-
+	   
 	public static List <VersionObject>listVersion(List <RevCommit> commitList) throws IOException, JSONException, GitAPIException{
 		   List <VersionObject> listVersion = new ArrayList <>();
 		   List<Release> releaseList = new ArrayList<>();
@@ -154,6 +157,7 @@ public class GetReleaseInfo {
 		 }
 	   public static List<DiffEntry> getDiffs(RevCommit commit) throws IOException {
 		   var dir= new File("/home/alessandro/eclipse-workspace/bookkeeper/.git");
+		   //var dir= new File("/home/alessandro/eclipse-workspace/zookeeper/.git");
 		   var build = new RepositoryBuilder();
 		   Repository rep = build.setGitDir(dir).readEnvironment().findGitDir().build();
 		   List<DiffEntry> diffs;
@@ -166,6 +170,10 @@ public class GetReleaseInfo {
 				RevCommit parent = (RevCommit) commit.getParent(0).getId();
 				diffs = df.scan(parent.getTree(), commit.getTree());
 			} else {
+				FileRepositoryBuilder repositoryBuilder = new FileRepositoryBuilder();
+				repository = repositoryBuilder.setGitDir(new File(REPO)).readEnvironment() // scan environment GIT_* variables
+						.findGitDir() // scan up the file system tree
+						.setMustExist(true).build();
 				RevWalk rw = new RevWalk(repository);
 				ObjectReader reader = rw.getObjectReader();
 				diffs = df.scan(new EmptyTreeIterator(), new CanonicalTreeParser(null, reader, commit.getTree()));

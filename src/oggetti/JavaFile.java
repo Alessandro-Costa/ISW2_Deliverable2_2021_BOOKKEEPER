@@ -1,26 +1,33 @@
 package oggetti;
 
+import java.util.List;
+
 public class JavaFile {
 
 	private String name;
 	private String oldPath;
 	private String newPath;
-
+    private List<String> oldPaths;
 	private String buggyness;
 	private Integer size; // LOC
 	private Integer locTouched;
 	private Integer nr;
 	private Integer nFix;
 	private Integer nAuth;
+	private List<String> listNAuth;
 	private Integer locAdded;
+	private List<Integer> locAddedList;
 	private Integer maxLocAdded;
 	private Integer avgLocAdded;
 	private Integer churn;
+	private List<Integer> churnList;
 	private Integer maxChurn;
 	private Integer avgChurn;
 	private Integer chgSetSize;
+	List<Integer> chgSetSizeList;
 	private Integer maxChgSetSize;
 	private Integer avgChgSetSize;
+	private Integer age;
 	
 	public JavaFile() {
 		this.size = 0;
@@ -30,6 +37,12 @@ public class JavaFile {
 	}
 
 	// get
+	public Integer getAge() {
+		return age;
+	}
+	public List<String> getoldPaths() {
+		return oldPaths;
+	}
 	public String getName() {
 		return name;
 	}
@@ -40,6 +53,9 @@ public class JavaFile {
 
 	public String getoldPath() {
 		return oldPath;
+	}
+	public String getnewPath() {
+		return newPath;
 	}
 
 	public Integer getSize() {
@@ -53,11 +69,15 @@ public class JavaFile {
 	public Integer getLOCadded() {
 		return locAdded;
 	}
-
+	public List<Integer> getLOCaddedList() {
+		return locAddedList;
+	}
 	public Integer getChurn() {
 		return churn;
 	}
-
+	public List<Integer> getChurnList() {
+		return churnList;
+	}
 	public Integer getChgSetSize() {
 		return chgSetSize;
 	}
@@ -83,6 +103,9 @@ public class JavaFile {
 	}
 
 	// set
+	public void setAge(Integer age) {
+		this.age = age;
+	}
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -98,13 +121,18 @@ public class JavaFile {
 	public void setLOCadded(Integer locAdded) {
 		this.locAdded = locAdded;
 	}
-
+	public void setLOCaddedList(List<Integer> locAddedList) {
+		this.locAddedList = locAddedList;
+	}
 	public void setLOCtouched(Integer locTouched) {
 		this.locTouched = locTouched;
 	}
 
 	public void setChurn(Integer churn) {
 		this.churn = churn;
+	}
+	public void setChurnList(List<Integer> churnList) {
+		this.churnList = churnList;
 	}
 
 	public void setChgSetSize(Integer chgSetSize) {
@@ -137,7 +165,12 @@ public class JavaFile {
 	public void setAvgChgSetSize(Integer avgChgSetSize) {
 		this.avgChgSetSize = avgChgSetSize;
 	}
-
+	public void setChgSetSizeList(List<Integer> chgSetSizeList) {
+		this.chgSetSizeList = chgSetSizeList;
+	}
+	public List<Integer> getChgSetSizeList(){
+		return chgSetSizeList;
+	}
 	public Integer getnFix() {
 		return nFix;
 	}
@@ -149,11 +182,15 @@ public class JavaFile {
 	public Integer getnAuth() {
 		return nAuth;
 	}
-
+	public List<String> getnAuthList(){
+		return listNAuth;
+	}
 	public void setnAuth(Integer nAuth) {
 		this.nAuth = nAuth;
 	}
-
+	public void setListNAuth(List<String> listNAuth) {
+		this.listNAuth = listNAuth;
+	}
 	public Integer getMAXChurn() {
 		return maxChurn;
 	}

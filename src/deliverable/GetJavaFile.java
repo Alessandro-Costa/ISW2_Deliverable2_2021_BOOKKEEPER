@@ -19,52 +19,9 @@ public class GetJavaFile {
 	private GetJavaFile() {
 	    throw new IllegalStateException("Utility class");
 	  }
-	/*public static void commitHistory2(List<Release> releaseList, Integer count) throws  GitAPIException, IOException	{
-		Integer i = 1;
-		var repoPath = Paths.get("/home/alessandro/eclipse-workspace/bookkeeper");
-		try (var git = Git.init().setDirectory(repoPath.toFile()).call()){
-		}
-		InitCommand init = Git.init();
-		init.setDirectory(repoPath.toFile());
-		try (var git = init.call()) {
-		    	
-		    }
-		try (var git = Git.open(repoPath.toFile())) {
-			   for (RevCommit commit :releaseList.get(count).getCommitList()) {
-				    String commitID = commit.getName();
-			        if (commitID != null && !commitID.isEmpty())
-			        {
-			            LogCommand logs2 = git.log().all();
-			            var repository = logs2.getRepository();
-			            var tw = new TreeWalk(repository);
-			            tw.setRecursive(true);
-			            RevCommit commitToCheck = commit;
-			            tw.addTree(commitToCheck.getTree());
-			            for (RevCommit parent : commitToCheck.getParents())
-			            {
-			                tw.addTree(parent.getTree());
-			            }
-			            while (tw.next()){
-			                var similarParents = 0;
-			                for (i = 1; i < tw.getTreeCount(); i++) {
-			                	if (tw.getFileMode(i) == tw.getFileMode(0) && tw.getObjectId(0).equals(tw.getObjectId(i))) {
-			                		similarParents++;
-			                	}  	
-			                }   
-			                if (similarParents == 0 && tw.getPathString().endsWith(".java")) {
-			                		List <String> tempList = new ArrayList<> ();
-			                		tempList.add(tw.getPathString());
-			                        releaseList.get(count).setFileList(tempList);
-			                	
-			                }
-			            }
-			            tw.close();
-			           }
-			        }
-		    }
-		}*/
 	public static void commitHistory(Release release) throws   IOException	{
 		var repoPath = Paths.get("/home/alessandro/eclipse-workspace/bookkeeper");
+		//var repoPath = Paths.get("/home/alessandro/eclipse-workspace/zookeeper");
 		InitCommand init = Git.init();
 		init.setDirectory(repoPath.toFile());
 		try (var git = Git.open(repoPath.toFile())) {

@@ -34,10 +34,14 @@ public class TicketObjectVersionID {
 		this.ticketID = new String();
 	}
 	public void printInfo(String ticketID) {
-		    logger.log(Level.INFO,"Sto stampando l'OV del relativo: {}",ticketID);
-		    logger.log(Level.INFO,"Sto stampando la versione dell'OV :{}", oV.getIdVersion());
-		    logger.log(Level.INFO,"Sto stampando l'FV del relativo:{}" , ticketID);
-		    logger.log(Level.INFO,"Sto stampando la versione dell'FV: {}", fV.getIdVersion());
+		    //logger.log(Level.INFO,"Sto stampando l'OV del relativo: {}",ticketID);
+		    System.out.println("Sto stampando l'OV del relativo:"+ticketID);
+		    //logger.log(Level.INFO,"Sto stampando la versione dell'OV :{}", oV.getIdVersion());
+		    System.out.println("Sto stampando la versione dell'OV:"+oV.getIdVersion());
+		    //logger.log(Level.INFO,"Sto stampando l'FV del relativo:{}" , ticketID);
+		    System.out.println("Sto stampando l'FV del relativo:"+ticketID);
+		    //logger.log(Level.INFO,"Sto stampando la versione dell'FV: {}", fV.getIdVersion());
+		    System.out.println("Sto stampando la versione dell'FV:"+fV.getIdVersion());
 	        for(int r = 0;r < aV.size();r++) {
 	        	System.out.println("Sto stampando l'AV del relativo:" + ticketID + aV.get(r).getIdVersion());
 	        }
