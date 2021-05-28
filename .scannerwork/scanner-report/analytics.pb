@@ -1,7 +1,7 @@
 
 "
 physical_memory_byte
-4054290432
+4054286336
 &
 msbuild_major_minor_versionUnknown
 
@@ -19,7 +19,7 @@
 
 msbuild_versionUnknown
  
-peak_used_heap_byte	203043872
+peak_used_heap_byte	241696768
 
 scanner_type
 ScannerCLI

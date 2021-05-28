@@ -1,16 +1,17 @@
 
--oggetti.JavaFile#getSize()Ljava/lang/Integer;h
-^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.java) )("1*¤
+.oggetti.JavaFile#getoldPaths()Ljava/util/List;h
+^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.javaR R( "1*¢
 1h
-^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.java*	 *(¬
-©
+^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.javaS	 S(­
+ª
 h
-^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.java*	 *(
-%0java.lang.Integer"__id**
-oggetti.JavaFile"
-size"…
+^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.javaS	 S(
+%0java.util.List"__id*"* 
+oggetti.JavaFile"
+
+oldPaths"‚
 h
-^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.java* *(
-
-%0java.lang.IntegerB
+^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.javaS S(
+
+%0java.util.ListB
 oggetti.JavaFile

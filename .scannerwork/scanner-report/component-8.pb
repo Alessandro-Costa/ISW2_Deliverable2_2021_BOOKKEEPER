@@ -1,1 +1,1 @@
- 2javaXhr%src/deliverable/VersionGenerator.java
+ 2javaXOhr"src/deliverable/GetCommitInfo.java

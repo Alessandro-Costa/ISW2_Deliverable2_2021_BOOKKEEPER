@@ -86,12 +86,8 @@ public class GetReleaseInfo {
 		        Collections.sort(releases,(o1,o2)-> o1.compareTo(o2));
 		         if (releases.size() < 6)
 		            return listVersion;
-		         FileWriter fileWriter = null;
-			 try {
-		            fileWriter = null;
-		            String outname = projName.get(prescelto) + "VersionInfo.csv";
-						    //Name of CSV for output
-						    fileWriter = new FileWriter(outname);
+		         String outname = projName.get(prescelto) + "VersionInfo.csv";
+			 try(var fileWriter = new FileWriter(outname)) {		    
 		            fileWriter.append("Index,Version ID,Version Name,Date");
 		            fileWriter.append("\n");
 		            for ( i = 0; i < releases.size(); i++) {
@@ -108,20 +104,13 @@ public class GetReleaseInfo {
 		               fileWriter.append("\n");
 		               versionDate.put(releaseNames.get(releases.get(i)),releases.get(i));
 		               versionInfo.add(index, releaseNames.get(releases.get(i)), releases.get(i));
-		               listVersion.add(versionInfo);	            
+		               listVersion.add(versionInfo);
+		               
 		            } 
 		            releaseList = VersionGenerator.releaseCreate(commitList, releases); 
 		         } catch (Exception e) {
 		            logger.log(Level.INFO,"Error in csv writer");
 		            e.printStackTrace();
-		         } finally {
-		            try {
-		               fileWriter.flush();
-		               fileWriter.close();
-		            } catch (IOException e) {
-		               logger.log(Level.INFO,"Error while flushing/closing fileWriter !!!");
-		               e.printStackTrace();
-		            }
 		         }
 			 RetrieveTicketsID.reportTicket(listVersion,releaseList,commitList);
 		         return listVersion;
@@ -195,13 +184,10 @@ public class GetReleaseInfo {
 	 }
 	   public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
 	      InputStream is = new URL(url).openStream();
-	      try{
-	         var rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+	      try(Reader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))){
 	         String jsonText = readAll(rd);
 	         return new JSONObject(jsonText);
-	       } finally {
-	         is.close();
-	       }
+	       } 
 	   }
 	   
 	   private static String readAll(Reader rd) throws IOException {

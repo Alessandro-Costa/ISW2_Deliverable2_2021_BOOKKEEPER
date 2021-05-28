@@ -19,13 +19,13 @@ getClass(),java.lang.Object#getClass()Ljava/lang/Class;5
 hashCode()java.lang.Object#hashCode()Iñ
 deliverable.Mainjava.lang.Object&
 <init>()deliverable.Main#<init>()VH
-main([Ljava/lang/String;)+deliverable.Main#main([Ljava/lang/String;)V™
-deliverable.GetReleaseInfojava.lang.ObjectI
-listVersion()8deliverable.GetReleaseInfo#listVersion()Ljava/util/List;§
+main([Ljava/lang/String;)+deliverable.Main#main([Ljava/lang/String;)VÓ
+deliverable.GetReleaseInfojava.lang.Object§
 BaddRelease(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)^deliverable.GetReleaseInfo#addRelease(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Vc
 readAll(Ljava/io/Reader;)Fdeliverable.GetReleaseInfo#readAll(Ljava/io/Reader;)Ljava/lang/String;0
 <init>()$deliverable.GetReleaseInfo#<init>()Vq
-#readJsonFromUrl(Ljava/lang/String;)Jdeliverable.GetReleaseInfo#readJsonFromUrl(Ljava/lang/String;)LJSONObject;(
+#readJsonFromUrl(Ljava/lang/String;)Jdeliverable.GetReleaseInfo#readJsonFromUrl(Ljava/lang/String;)LJSONObject;å
+-compareDateVersion(Ljava/time/LocalDateTime;)[deliverable.GetReleaseInfo#compareDateVersion(Ljava/time/LocalDateTime;)Ljava/lang/Integer;(
 java.io.Serializablejava.lang.Object√
 java.lang.Throwablejava.lang.Objectjava.io.Serializable;
 printStackTrace()&java.lang.Throwable#printStackTrace()VZ
@@ -241,7 +241,114 @@ CcomputeIfPresent(Ljava/lang/Object;Ljava/util/function/BiFunction;)cjava.util.
 »of(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Âjava.util.Map#of(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/Map;π
 Lof(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)ijava.util.Map#of(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/Map;à
 2getOrDefault(Ljava/lang/Object;Ljava/lang/Object;)Rjava.util.Map#getOrDefault(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;}
-+entry(Ljava/lang/Object;Ljava/lang/Object;)Njava.util.Map#entry(Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/Map$Entry;”
++entry(Ljava/lang/Object;Ljava/lang/Object;)Njava.util.Map#entry(Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/Map$Entry;Ö
+$java.time.chrono.ChronoLocalDateTimejava.lang.Comparablejava.lang.Objectjava.time.temporal.Temporal#java.time.temporal.TemporalAdjusterò
+)adjustInto(Ljava/time/temporal/Temporal;)kjava.time.chrono.ChronoLocalDateTime#adjustInto(Ljava/time/temporal/Temporal;)Ljava/time/temporal/Temporal;]
+timeLineOrder()Jjava.time.chrono.ChronoLocalDateTime#timeLineOrder()Ljava/util/Comparator;ç
+)query(Ljava/time/temporal/TemporalQuery;)`java.time.chrono.ChronoLocalDateTime#query(Ljava/time/temporal/TemporalQuery;)Ljava/lang/Object;å
+1compareTo(Ljava/time/chrono/ChronoLocalDateTime;)Wjava.time.chrono.ChronoLocalDateTime#compareTo(Ljava/time/chrono/ChronoLocalDateTime;)I•
++from(Ljava/time/temporal/TemporalAccessor;)vjava.time.chrono.ChronoLocalDateTime#from(Ljava/time/temporal/TemporalAccessor;)Ljava/time/chrono/ChronoLocalDateTime;£
+*minus(Ljava/time/temporal/TemporalAmount;)ujava.time.chrono.ChronoLocalDateTime#minus(Ljava/time/temporal/TemporalAmount;)Ljava/time/chrono/ChronoLocalDateTime;t
+%toEpochSecond(Ljava/time/ZoneOffset;)Kjava.time.chrono.ChronoLocalDateTime#toEpochSecond(Ljava/time/ZoneOffset;)Jì
+,format(Ljava/time/format/DateTimeFormatter;)cjava.time.chrono.ChronoLocalDateTime#format(Ljava/time/format/DateTimeFormatter;)Ljava/lang/String;•
++with(Ljava/time/temporal/TemporalAdjuster;)vjava.time.chrono.ChronoLocalDateTime#with(Ljava/time/temporal/TemporalAdjuster;)Ljava/time/chrono/ChronoLocalDateTime;°
+)plus(Ljava/time/temporal/TemporalAmount;)tjava.time.chrono.ChronoLocalDateTime#plus(Ljava/time/temporal/TemporalAmount;)Ljava/time/chrono/ChronoLocalDateTime;°
+)minus(JLjava/time/temporal/TemporalUnit;)tjava.time.chrono.ChronoLocalDateTime#minus(JLjava/time/temporal/TemporalUnit;)Ljava/time/chrono/ChronoLocalDateTime;Ü
+.isSupported(Ljava/time/temporal/TemporalUnit;)Tjava.time.chrono.ChronoLocalDateTime#isSupported(Ljava/time/temporal/TemporalUnit;)Zd
+getChronology()Qjava.time.chrono.ChronoLocalDateTime#getChronology()Ljava/time/chrono/Chronology;à
+/isEqual(Ljava/time/chrono/ChronoLocalDateTime;)Ujava.time.chrono.ChronoLocalDateTime#isEqual(Ljava/time/chrono/ChronoLocalDateTime;)Zà
+/isAfter(Ljava/time/chrono/ChronoLocalDateTime;)Ujava.time.chrono.ChronoLocalDateTime#isAfter(Ljava/time/chrono/ChronoLocalDateTime;)Zä
+0isBefore(Ljava/time/chrono/ChronoLocalDateTime;)Vjava.time.chrono.ChronoLocalDateTime#isBefore(Ljava/time/chrono/ChronoLocalDateTime;)Z~
+!toInstant(Ljava/time/ZoneOffset;)Yjava.time.chrono.ChronoLocalDateTime#toInstant(Ljava/time/ZoneOffset;)Ljava/time/Instant;íC
+java.time.LocalDateTime$java.time.chrono.ChronoLocalDateTimejava.lang.Objectjava.time.temporal.Temporal#java.time.temporal.TemporalAdjusterjava.io.SerializableK
+toLocalTime():java.time.LocalDateTime#toLocalTime()Ljava/time/LocalTime;Q
+equals(Ljava/lang/Object;)3java.time.LocalDateTime#equals(Ljava/lang/Object;)ZM
+plusNanos(J)=java.time.LocalDateTime#plusNanos(J)Ljava/time/LocalDateTime;s
+parse(Ljava/lang/CharSequence;)Pjava.time.LocalDateTime#parse(Ljava/lang/CharSequence;)Ljava/time/LocalDateTime;a
+now(Ljava/time/Clock;)Gjava.time.LocalDateTime#now(Ljava/time/Clock;)Ljava/time/LocalDateTime;ï
+0ofInstant(Ljava/time/Instant;Ljava/time/ZoneId;)ajava.time.LocalDateTime#ofInstant(Ljava/time/Instant;Ljava/time/ZoneId;)Ljava/time/LocalDateTime;3
+getMinute()$java.time.LocalDateTime#getMinute()Iá
+)plus(Ljava/time/temporal/TemporalAmount;)Zjava.time.LocalDateTime#plus(Ljava/time/temporal/TemporalAmount;)Ljava/time/LocalDateTime;K
+plusDays(J)<java.time.LocalDateTime#plusDays(J)Ljava/time/LocalDateTime;?
+now()6java.time.LocalDateTime#now()Ljava/time/LocalDateTime;K
+withNano(I)<java.time.LocalDateTime#withNano(I)Ljava/time/LocalDateTime;9
+getDayOfYear()'java.time.LocalDateTime#getDayOfYear()Ik
+'readObject(Ljava/io/ObjectInputStream;)@java.time.LocalDateTime#readObject(Ljava/io/ObjectInputStream;)VO
+minusYears(J)>java.time.LocalDateTime#minusYears(J)Ljava/time/LocalDateTime;}
+0isBefore(Ljava/time/chrono/ChronoLocalDateTime;)Ijava.time.LocalDateTime#isBefore(Ljava/time/chrono/ChronoLocalDateTime;)Zv
+ atOffset(Ljava/time/ZoneOffset;)Rjava.time.LocalDateTime#atOffset(Ljava/time/ZoneOffset;)Ljava/time/OffsetDateTime;;
+getDayOfMonth()(java.time.LocalDateTime#getDayOfMonth()Iç
+)range(Ljava/time/temporal/TemporalField;)`java.time.LocalDateTime#range(Ljava/time/temporal/TemporalField;)Ljava/time/temporal/ValueRange;i
+of(ILjava/time/Month;IIII)Kjava.time.LocalDateTime#of(ILjava/time/Month;IIII)Ljava/time/LocalDateTime;J
+writeReplace()8java.time.LocalDateTime#writeReplace()Ljava/lang/Object;c
+#writeExternal(Ljava/io/DataOutput;)<java.time.LocalDateTime#writeExternal(Ljava/io/DataOutput;)VO
+minusNanos(J)>java.time.LocalDateTime#minusNanos(J)Ljava/time/LocalDateTime;ã
+)adjustInto(Ljava/time/temporal/Temporal;)^java.time.LocalDateTime#adjustInto(Ljava/time/temporal/Temporal;)Ljava/time/temporal/Temporal;K
+of(IIIIIII)<java.time.LocalDateTime#of(IIIIIII)Ljava/time/LocalDateTime;K
+withHour(I)<java.time.LocalDateTime#withHour(I)Ljava/time/LocalDateTime;B
+
+toString()4java.time.LocalDateTime#toString()Ljava/lang/String;ß
+Euntil(Ljava/time/temporal/Temporal;Ljava/time/temporal/TemporalUnit;)^java.time.LocalDateTime#until(Ljava/time/temporal/Temporal;Ljava/time/temporal/TemporalUnit;)JG
+	of(IIIII):java.time.LocalDateTime#of(IIIII)Ljava/time/LocalDateTime;k
+of(ILjava/time/Month;IIIII)Ljava.time.LocalDateTime#of(ILjava/time/Month;IIIII)Ljava/time/LocalDateTime;â
+*minus(Ljava/time/temporal/TemporalAmount;)[java.time.LocalDateTime#minus(Ljava/time/temporal/TemporalAmount;)Ljava/time/LocalDateTime;ï
+0with(Ljava/time/LocalDate;Ljava/time/LocalTime;)ajava.time.LocalDateTime#with(Ljava/time/LocalDate;Ljava/time/LocalTime;)Ljava/time/LocalDateTime;ë
+.truncatedTo(Ljava/time/temporal/TemporalUnit;)_java.time.LocalDateTime#truncatedTo(Ljava/time/temporal/TemporalUnit;)Ljava/time/LocalDateTime;O
+plusMonths(J)>java.time.LocalDateTime#plusMonths(J)Ljava/time/LocalDateTime;s
++getLong(Ljava/time/temporal/TemporalField;)Djava.time.LocalDateTime#getLong(Ljava/time/temporal/TemporalField;)J{
+/isEqual(Ljava/time/chrono/ChronoLocalDateTime;)Hjava.time.LocalDateTime#isEqual(Ljava/time/chrono/ChronoLocalDateTime;)ZS
+minusSeconds(J)@java.time.LocalDateTime#minusSeconds(J)Ljava/time/LocalDateTime;/
+	getHour()"java.time.LocalDateTime#getHour()I/
+	getYear()"java.time.LocalDateTime#getYear()IO
+withMinute(I)>java.time.LocalDateTime#withMinute(I)Ljava/time/LocalDateTime;g
+%compareTo0(Ljava/time/LocalDateTime;)>java.time.LocalDateTime#compareTo0(Ljava/time/LocalDateTime;)IU
+withDayOfYear(I)Ajava.time.LocalDateTime#withDayOfYear(I)Ljava/time/LocalDateTime;M
+withMonth(I)=java.time.LocalDateTime#withMonth(I)Ljava/time/LocalDateTime;w
+!readExternal(Ljava/io/DataInput;)Rjava.time.LocalDateTime#readExternal(Ljava/io/DataInput;)Ljava/time/LocalDateTime;A
+
+getMonth()3java.time.LocalDateTime#getMonth()Ljava/time/Month;M
+plusYears(J)=java.time.LocalDateTime#plusYears(J)Ljava/time/LocalDateTime;Ü
+,format(Ljava/time/format/DateTimeFormatter;)Vjava.time.LocalDateTime#format(Ljava/time/format/DateTimeFormatter;)Ljava/lang/String;ã
++with(Ljava/time/temporal/TemporalAdjuster;)\java.time.LocalDateTime#with(Ljava/time/temporal/TemporalAdjuster;)Ljava/time/LocalDateTime;c
+now(Ljava/time/ZoneId;)Hjava.time.LocalDateTime#now(Ljava/time/ZoneId;)Ljava/time/LocalDateTime;1
+
+hashCode()#java.time.LocalDateTime#hashCode()Ii
+atZone(Ljava/time/ZoneId;)Kjava.time.LocalDateTime#atZone(Ljava/time/ZoneId;)Ljava/time/ZonedDateTime;I
+
+of(IIIIII);java.time.LocalDateTime#of(IIIIII)Ljava/time/LocalDateTime;á
+)minus(JLjava/time/temporal/TemporalUnit;)Zjava.time.LocalDateTime#minus(JLjava/time/temporal/TemporalUnit;)Ljava/time/LocalDateTime;Å
+2<init>(Ljava/time/LocalDate;Ljava/time/LocalTime;)Kjava.time.LocalDateTime#<init>(Ljava/time/LocalDate;Ljava/time/LocalTime;)Vá
+)with(Ljava/time/temporal/TemporalField;J)Zjava.time.LocalDateTime#with(Ljava/time/temporal/TemporalField;J)Ljava/time/LocalDateTime;Q
+plusMinutes(J)?java.time.LocalDateTime#plusMinutes(J)Ljava/time/LocalDateTime;{
+/isAfter(Ljava/time/chrono/ChronoLocalDateTime;)Hjava.time.LocalDateTime#isAfter(Ljava/time/chrono/ChronoLocalDateTime;)Z;
+getMonthValue()(java.time.LocalDateTime#getMonthValue()IK
+toLocalDate():java.time.LocalDateTime#toLocalDate()Ljava/time/LocalDate;ë
+.of(Ljava/time/LocalDate;Ljava/time/LocalTime;)_java.time.LocalDateTime#of(Ljava/time/LocalDate;Ljava/time/LocalTime;)Ljava/time/LocalDateTime;M
+plusHours(J)=java.time.LocalDateTime#plusHours(J)Ljava/time/LocalDateTime;Ä
+)query(Ljava/time/temporal/TemporalQuery;)Sjava.time.LocalDateTime#query(Ljava/time/temporal/TemporalQuery;)Ljava/lang/Object;
+1compareTo(Ljava/time/chrono/ChronoLocalDateTime;)Jjava.time.LocalDateTime#compareTo(Ljava/time/chrono/ChronoLocalDateTime;)IÖ
+(plus(JLjava/time/temporal/TemporalUnit;)Yjava.time.LocalDateTime#plus(JLjava/time/temporal/TemporalUnit;)Ljava/time/LocalDateTime;g
+of(ILjava/time/Month;III)Jjava.time.LocalDateTime#of(ILjava/time/Month;III)Ljava/time/LocalDateTime;k
+'get(Ljava/time/temporal/TemporalField;)@java.time.LocalDateTime#get(Ljava/time/temporal/TemporalField;)Iã
++from(Ljava/time/temporal/TemporalAccessor;)\java.time.LocalDateTime#from(Ljava/time/temporal/TemporalAccessor;)Ljava/time/LocalDateTime;ç
+,plusWithOverflow(Ljava/time/LocalDate;JJJJI)]java.time.LocalDateTime#plusWithOverflow(Ljava/time/LocalDate;JJJJI)Ljava/time/LocalDateTime;O
+minusHours(J)>java.time.LocalDateTime#minusHours(J)Ljava/time/LocalDateTime;Q
+minusMonths(J)?java.time.LocalDateTime#minusMonths(J)Ljava/time/LocalDateTime;S
+minusMinutes(J)@java.time.LocalDateTime#minusMinutes(J)Ljava/time/LocalDateTime;ª
+Cparse(Ljava/lang/CharSequence;Ljava/time/format/DateTimeFormatter;)tjava.time.LocalDateTime#parse(Ljava/lang/CharSequence;Ljava/time/format/DateTimeFormatter;)Ljava/time/LocalDateTime;M
+plusWeeks(J)=java.time.LocalDateTime#plusWeeks(J)Ljava/time/LocalDateTime;É
+'ofEpochSecond(JILjava/time/ZoneOffset;)Xjava.time.LocalDateTime#ofEpochSecond(JILjava/time/ZoneOffset;)Ljava/time/LocalDateTime;y
+.isSupported(Ljava/time/temporal/TemporalUnit;)Gjava.time.LocalDateTime#isSupported(Ljava/time/temporal/TemporalUnit;)ZM
+getDayOfWeek();java.time.LocalDateTime#getDayOfWeek()Ljava/time/DayOfWeek;M
+minusDays(J)=java.time.LocalDateTime#minusDays(J)Ljava/time/LocalDateTime;Q
+plusSeconds(J)?java.time.LocalDateTime#plusSeconds(J)Ljava/time/LocalDateTime;3
+getSecond()$java.time.LocalDateTime#getSecond()I/
+	getNano()"java.time.LocalDateTime#getNano()I{
+/isSupported(Ljava/time/temporal/TemporalField;)Hjava.time.LocalDateTime#isSupported(Ljava/time/temporal/TemporalField;)ZK
+withYear(I)<java.time.LocalDateTime#withYear(I)Ljava/time/LocalDateTime;O
+withSecond(I)>java.time.LocalDateTime#withSecond(I)Ljava/time/LocalDateTime;W
+withDayOfMonth(I)Bjava.time.LocalDateTime#withDayOfMonth(I)Ljava/time/LocalDateTime;O
+minusWeeks(J)>java.time.LocalDateTime#minusWeeks(J)Ljava/time/LocalDateTime;”
 java.lang.CharSequencejava.lang.ObjectE
 chars():java.lang.CharSequence#chars()Ljava/util/stream/IntStream;é
 9compare(Ljava/lang/CharSequence;Ljava/lang/CharSequence;)Qjava.lang.CharSequence#compare(Ljava/lang/CharSequence;Ljava/lang/CharSequence;)IO
@@ -410,57 +517,60 @@ insert(IF);java.lang.StringBuilder#insert(IF)Ljava/lang/StringBuilder;&
 	getDate()8oggetti.VersionObject#getDate()Ljava/time/LocalDateTime;Å
 3addIdVersion(Ljava/lang/Integer;Ljava/lang/String;)Joggetti.VersionObject#addIdVersion(Ljava/lang/Integer;Ljava/lang/String;)VH
 getIdVersion()6oggetti.VersionObject#getIdVersion()Ljava/lang/String;°
-Cadd(Ljava/lang/Integer;Ljava/lang/String;Ljava/time/LocalDateTime;)Zoggetti.VersionObject#add(Ljava/lang/Integer;Ljava/lang/String;Ljava/time/LocalDateTime;)Vü
-oggetti.JavaFilejava.lang.ObjectV
- setAVGChurn(Ljava/lang/Integer;)2oggetti.JavaFile#setAVGChurn(Ljava/lang/Integer;)V`
-%setMaxChgSetSize(Ljava/lang/Integer;)7oggetti.JavaFile#setMaxChgSetSize(Ljava/lang/Integer;)V<
+Cadd(Ljava/lang/Integer;Ljava/lang/String;Ljava/time/LocalDateTime;)Zoggetti.VersionObject#add(Ljava/lang/Integer;Ljava/lang/String;Ljava/time/LocalDateTime;)VÀ
+oggetti.JavaFilejava.lang.Object`
+%setMaxChgSetSize(Ljava/lang/Integer;)7oggetti.JavaFile#setMaxChgSetSize(Ljava/lang/Integer;)VA
+getnAuthList()/oggetti.JavaFile#getnAuthList()Ljava/util/List;Z
+"setChgSetSize(Ljava/lang/Integer;)4oggetti.JavaFile#setChgSetSize(Ljava/lang/Integer;)VR
+setOldPath(Ljava/lang/String;)0oggetti.JavaFile#setOldPath(Ljava/lang/String;)VR
+setChurnList(Ljava/util/List;)0oggetti.JavaFile#setChurnList(Ljava/util/List;)V9
+	getName(),oggetti.JavaFile#getName()Ljava/lang/String;&
+<init>()oggetti.JavaFile#<init>()VR
+setListNAuth(Ljava/util/List;)0oggetti.JavaFile#setListNAuth(Ljava/util/List;)VL
+getAvgChgSetSize()6oggetti.JavaFile#getAvgChgSetSize()Ljava/lang/Integer;R
+setNewPath(Ljava/lang/String;)0oggetti.JavaFile#setNewPath(Ljava/lang/String;)VX
+!setLOCaddedList(Ljava/util/List;)3oggetti.JavaFile#setLOCaddedList(Ljava/util/List;)V\
+#setChgSetSizeList(Ljava/util/List;)5oggetti.JavaFile#setChgSetSizeList(Ljava/util/List;)VL
+getMaxChgSetSize()6oggetti.JavaFile#getMaxChgSetSize()Ljava/lang/Integer;L
+setBugg(Ljava/lang/String;)-oggetti.JavaFile#setBugg(Ljava/lang/String;)V:
+	getnFix()-oggetti.JavaFile#getnFix()Ljava/lang/Integer;\
+#setAvgLOCAdded(Ljava/lang/Integer;)5oggetti.JavaFile#setAvgLOCAdded(Ljava/lang/Integer;)V8
+getAge(),oggetti.JavaFile#getAge()Ljava/lang/Integer;F
+getChgSetSize()3oggetti.JavaFile#getChgSetSize()Ljava/lang/Integer;A
+getChurnList()/oggetti.JavaFile#getChurnList()Ljava/util/List;F
+getLOCtouched()3oggetti.JavaFile#getLOCtouched()Ljava/lang/Integer;<
+
+getnAuth().oggetti.JavaFile#getnAuth()Ljava/lang/Integer;(
+	addSize()oggetti.JavaFile#addSize()V6
+getNr()+oggetti.JavaFile#getNr()Ljava/lang/Integer;V
+ setMAXChurn(Ljava/lang/Integer;)2oggetti.JavaFile#setMAXChurn(Ljava/lang/Integer;)V?
+getoldPaths().oggetti.JavaFile#getoldPaths()Ljava/util/List;V
+ setLOCadded(Ljava/lang/Integer;)2oggetti.JavaFile#setLOCadded(Ljava/lang/Integer;)V\
+#setMaxLocAdded(Ljava/lang/Integer;)5oggetti.JavaFile#setMaxLocAdded(Ljava/lang/Integer;)VV
+ setAVGChurn(Ljava/lang/Integer;)2oggetti.JavaFile#setAVGChurn(Ljava/lang/Integer;)V?
+getnewPath()/oggetti.JavaFile#getnewPath()Ljava/lang/String;<
 
 getChurn().oggetti.JavaFile#getChurn()Ljava/lang/Integer;Z
-"setLOCtouched(Ljava/lang/Integer;)4oggetti.JavaFile#setLOCtouched(Ljava/lang/Integer;)VZ
-"setChgSetSize(Ljava/lang/Integer;)4oggetti.JavaFile#setChgSetSize(Ljava/lang/Integer;)VR
-setOldPath(Ljava/lang/String;)0oggetti.JavaFile#setOldPath(Ljava/lang/String;)VH
-getAvglocAdded()4oggetti.JavaFile#getAvglocAdded()Ljava/lang/Integer;9
-	getName(),oggetti.JavaFile#getName()Ljava/lang/String;B
+"setLOCtouched(Ljava/lang/Integer;)4oggetti.JavaFile#setLOCtouched(Ljava/lang/Integer;)VL
+setAge(Ljava/lang/Integer;)-oggetti.JavaFile#setAge(Ljava/lang/Integer;)VH
+getAvglocAdded()4oggetti.JavaFile#getAvglocAdded()Ljava/lang/Integer;B
 getAVGChurn()1oggetti.JavaFile#getAVGChurn()Ljava/lang/Integer;N
 setSize(Ljava/lang/Integer;).oggetti.JavaFile#setSize(Ljava/lang/Integer;)VP
 setnAuth(Ljava/lang/Integer;)/oggetti.JavaFile#setnAuth(Ljava/lang/Integer;)VJ
 <init>(Ljava/lang/String;),oggetti.JavaFile#<init>(Ljava/lang/String;)V9
-	getBugg(),oggetti.JavaFile#getBugg()Ljava/lang/String;L
-getAvgChgSetSize()6oggetti.JavaFile#getAvgChgSetSize()Ljava/lang/Integer;P
+	getBugg(),oggetti.JavaFile#getBugg()Ljava/lang/String;P
 setChurn(Ljava/lang/Integer;)/oggetti.JavaFile#setChurn(Ljava/lang/Integer;)VL
-setName(Ljava/lang/String;)-oggetti.JavaFile#setName(Ljava/lang/String;)VL
-getMaxChgSetSize()6oggetti.JavaFile#getMaxChgSetSize()Ljava/lang/Integer;N
-setnFix(Ljava/lang/Integer;).oggetti.JavaFile#setnFix(Ljava/lang/Integer;)VL
-setBugg(Ljava/lang/String;)-oggetti.JavaFile#setBugg(Ljava/lang/String;)VB
+setName(Ljava/lang/String;)-oggetti.JavaFile#setName(Ljava/lang/String;)VG
+getLOCaddedList()2oggetti.JavaFile#getLOCaddedList()Ljava/util/List;N
+setnFix(Ljava/lang/Integer;).oggetti.JavaFile#setnFix(Ljava/lang/Integer;)VB
 getLOCadded()1oggetti.JavaFile#getLOCadded()Ljava/lang/Integer;J
 setNr(Ljava/lang/Integer;),oggetti.JavaFile#setNr(Ljava/lang/Integer;)V:
-	getnFix()-oggetti.JavaFile#getnFix()Ljava/lang/Integer;:
-	getSize()-oggetti.JavaFile#getSize()Ljava/lang/Integer;\
-#setAvgLOCAdded(Ljava/lang/Integer;)5oggetti.JavaFile#setAvgLOCAdded(Ljava/lang/Integer;)VF
-getChgSetSize()3oggetti.JavaFile#getChgSetSize()Ljava/lang/Integer;?
+	getSize()-oggetti.JavaFile#getSize()Ljava/lang/Integer;K
+getChgSetSizeList()4oggetti.JavaFile#getChgSetSizeList()Ljava/util/List;?
 getoldPath()/oggetti.JavaFile#getoldPath()Ljava/lang/String;`
 %setAvgChgSetSize(Ljava/lang/Integer;)7oggetti.JavaFile#setAvgChgSetSize(Ljava/lang/Integer;)VB
-getMAXChurn()1oggetti.JavaFile#getMAXChurn()Ljava/lang/Integer;F
-getLOCtouched()3oggetti.JavaFile#getLOCtouched()Ljava/lang/Integer;<
-
-getnAuth().oggetti.JavaFile#getnAuth()Ljava/lang/Integer;6
-getNr()+oggetti.JavaFile#getNr()Ljava/lang/Integer;V
- setMAXChurn(Ljava/lang/Integer;)2oggetti.JavaFile#setMAXChurn(Ljava/lang/Integer;)VV
- setLOCadded(Ljava/lang/Integer;)2oggetti.JavaFile#setLOCadded(Ljava/lang/Integer;)VH
-getMaxlocAdded()4oggetti.JavaFile#getMaxlocAdded()Ljava/lang/Integer;\
-#setMaxLocAdded(Ljava/lang/Integer;)5oggetti.JavaFile#setMaxLocAdded(Ljava/lang/Integer;)VŒ
-oggetti.Releasejava.lang.ObjectÀ
-[<init>(Ljava/time/LocalDateTime;Ljava/lang/Integer;Ljava/lang/String;Ljava/util/ArrayList;)loggetti.Release#<init>(Ljava/time/LocalDateTime;Ljava/lang/Integer;Ljava/lang/String;Ljava/util/ArrayList;)V%
-<init>()oggetti.Release#<init>()V>
-getRelease().oggetti.Release#getRelease()Ljava/lang/String;>
-getFileList()-oggetti.Release#getFileList()Ljava/util/List;M
-getClassification()6oggetti.Release#getClassification()Ljava/lang/Integer;O
-setFileList(Ljava/util/List;).oggetti.Release#setFileList(Ljava/util/List;)Va
-&setClassification(Ljava/lang/Integer;)7oggetti.Release#setClassification(Ljava/lang/Integer;)V?
-	getDate()2oggetti.Release#getDate()Ljava/time/LocalDateTime;Q
-setRelease(Ljava/lang/String;)/oggetti.Release#setRelease(Ljava/lang/String;)VY
-"setDate(Ljava/time/LocalDateTime;)3oggetti.Release#setDate(Ljava/time/LocalDateTime;)VB
-getCommitList()/oggetti.Release#getCommitList()Ljava/util/List;*
+getMAXChurn()1oggetti.JavaFile#getMAXChurn()Ljava/lang/Integer;H
+getMaxlocAdded()4oggetti.JavaFile#getMaxlocAdded()Ljava/lang/Integer;*
 java.util.RandomAccessjava.lang.Object'
 java.lang.Cloneablejava.lang.Object‚
 
@@ -568,12 +678,86 @@ iterator()2java.util.ArrayList#iterator()Ljava/util/Iterator;I
 spliterator()8java.util.ArrayList#spliterator()Ljava/util/Spliterator;1
 isClear([JI)!java.util.ArrayList#isClear([JI)Zk
 )writeObject(Ljava/io/ObjectOutputStream;)>java.util.ArrayList#writeObject(Ljava/io/ObjectOutputStream;)V%
-size()java.util.ArrayList#size()Id
+size()java.util.ArrayList#size()I”
+oggetti.Releasejava.lang.Object%
+<init>()oggetti.Release#<init>()V>
+getRelease().oggetti.Release#getRelease()Ljava/lang/String;>
+getFileList()-oggetti.Release#getFileList()Ljava/util/List;M
+getClassification()6oggetti.Release#getClassification()Ljava/lang/Integer;°
+F<init>(Ljava/time/LocalDateTime;Ljava/lang/Integer;Ljava/lang/String;)Woggetti.Release#<init>(Ljava/time/LocalDateTime;Ljava/lang/Integer;Ljava/lang/String;)Va
+&setClassification(Ljava/lang/Integer;)7oggetti.Release#setClassification(Ljava/lang/Integer;)V?
+	getDate()2oggetti.Release#getDate()Ljava/time/LocalDateTime;Q
+setRelease(Ljava/lang/String;)/oggetti.Release#setRelease(Ljava/lang/String;)VY
+"setDate(Ljava/time/LocalDateTime;)3oggetti.Release#setDate(Ljava/time/LocalDateTime;)VB
+getCommitList()/oggetti.Release#getCommitList()Ljava/util/List;d
 deliverable.VersionGeneratorjava.lang.Object2
-<init>()&deliverable.VersionGenerator#<init>()V—
-oggetti.TicketObjectVersionIDjava.lang.Object?
-getIV()4oggetti.TicketObjectVersionID#getIV()LVersionObject;]
-printInfo(Ljava/lang/String;)<oggetti.TicketObjectVersionID#printInfo(Ljava/lang/String;)VÛ]
+<init>()&deliverable.VersionGenerator#<init>()VÕ
+oggetti.TicketObjectVersionIDjava.lang.Object@
+getAV()5oggetti.TicketObjectVersionID#getAV()Ljava/util/List;?
+getIV()4oggetti.TicketObjectVersionID#getIV()LVersionObject;3
+<init>()'oggetti.TicketObjectVersionID#<init>()V]
+printInfo(Ljava/lang/String;)<oggetti.TicketObjectVersionID#printInfo(Ljava/lang/String;)VN
+getTicketID()=oggetti.TicketObjectVersionID#getTicketID()Ljava/lang/String;a
+addTicketId(Ljava/lang/String;)>oggetti.TicketObjectVersionID#addTicketId(Ljava/lang/String;)VP
+getCommitList()=oggetti.TicketObjectVersionID#getCommitList()Ljava/util/List;Z
+deliverable.GetJavaFilejava.lang.Object-
+<init>()!deliverable.GetJavaFile#<init>()V√
+deliverable.RetrieveTicketsIDjava.lang.Objectf
+readAll(Ljava/io/Reader;)Ideliverable.RetrieveTicketsID#readAll(Ljava/io/Reader;)Ljava/lang/String;3
+<init>()'deliverable.RetrieveTicketsID#<init>()V}
+(readJsonArrayFromUrl(Ljava/lang/String;)Qdeliverable.RetrieveTicketsID#readJsonArrayFromUrl(Ljava/lang/String;)LJSONArray;t
+#readJsonFromUrl(Ljava/lang/String;)Mdeliverable.RetrieveTicketsID#readJsonFromUrl(Ljava/lang/String;)LJSONObject;˘
+utility.FileLoggerjava.lang.Object(
+<init>()utility.FileLogger#<init>()VJ
+error(Ljava/lang/String;)-utility.FileLogger#error(Ljava/lang/String;)VN
+warning(Ljava/lang/String;)/utility.FileLogger#warning(Ljava/lang/String;)VH
+info(Ljava/lang/String;),utility.FileLogger#info(Ljava/lang/String;)VA
+getLogger()2utility.FileLogger#getLogger()Lutility/FileLogger;ê
+java.lang.Systemjava.lang.Object^
+$identityHashCode(Ljava/lang/Object;)6java.lang.System#identityHashCode(Ljava/lang/Object;)I*
+
+nanoTime()java.lang.System#nanoTime()Jt
+/setSecurityManager(Ljava/lang/SecurityManager;)Ajava.lang.System#setSecurityManager(Ljava/lang/SecurityManager;)Vk
+"mapLibraryName(Ljava/lang/String;)Ejava.lang.System#mapLibraryName(Ljava/lang/String;)Ljava/lang/String;[
+getenv(Ljava/lang/String;)=java.lang.System#getenv(Ljava/lang/String;)Ljava/lang/String;z
+2arraycopy(Ljava/lang/Object;ILjava/lang/Object;II)Djava.lang.System#arraycopy(Ljava/lang/Object;ILjava/lang/Object;II)V8
+	console()+java.lang.System#console()Ljava/io/Console;8
+registerNatives()#java.lang.System#registerNatives()VP
+setOut(Ljava/io/PrintStream;)/java.lang.System#setOut(Ljava/io/PrintStream;)VN
+setIn(Ljava/io/InputStream;).java.lang.System#setIn(Ljava/io/InputStream;)Vå
+;logInitException(ZZLjava/lang/String;Ljava/lang/Throwable;)Mjava.lang.System#logInitException(ZZLjava/lang/String;Ljava/lang/Throwable;)VX
+getSecurityManager()@java.lang.System#getSecurityManager()Ljava/lang/SecurityManager;`
+%setProperties(Ljava/util/Properties;)7java.lang.System#setProperties(Ljava/util/Properties;)V<
+setJavaLangAccess()%java.lang.System#setJavaLangAccess()V(
+	checkIO()java.lang.System#checkIO()V&
+<init>()java.lang.System#<init>()VP
+setErr(Ljava/io/PrintStream;)/java.lang.System#setErr(Ljava/io/PrintStream;)Vâ
+1getProperty(Ljava/lang/String;Ljava/lang/String;)Tjava.lang.System#getProperty(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;N
+checkKey(Ljava/lang/String;).java.lang.System#checkKey(Ljava/lang/String;)V<
+currentTimeMillis()%java.lang.System#currentTimeMillis()JP
+setIn0(Ljava/io/InputStream;)/java.lang.System#setIn0(Ljava/io/InputStream;)V$
+exit(I)java.lang.System#exit(I)VE
+lineSeparator()2java.lang.System#lineSeparator()Ljava/lang/String;R
+setErr0(Ljava/io/PrintStream;)0java.lang.System#setErr0(Ljava/io/PrintStream;)Ve
+getProperty(Ljava/lang/String;)Bjava.lang.System#getProperty(Ljava/lang/String;)Ljava/lang/String;â
+1setProperty(Ljava/lang/String;Ljava/lang/String;)Tjava.lang.System#setProperty(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;2
+initPhase2(ZZ) java.lang.System#initPhase2(ZZ)I8
+runFinalization()#java.lang.System#runFinalization()Vw
+&initProperties(Ljava/util/Properties;)Mjava.lang.System#initProperties(Ljava/util/Properties;)Ljava/util/Properties;T
+inheritedChannel()>java.lang.System#inheritedChannel()Ljava/nio/channels/Channel;ú
+7getLogger(Ljava/lang/String;Ljava/util/ResourceBundle;)ajava.lang.System#getLogger(Ljava/lang/String;Ljava/util/ResourceBundle;)Ljava/lang/System$Logger;
+gc()java.lang.System#gc()V¢
+<newPrintStream(Ljava/io/FileOutputStream;Ljava/lang/String;)bjava.lang.System#newPrintStream(Ljava/io/FileOutputStream;Ljava/lang/String;)Ljava/io/PrintStream;h
+getLogger(Ljava/lang/String;)Gjava.lang.System#getLogger(Ljava/lang/String;)Ljava/lang/System$Logger;v
+0setSecurityManager0(Ljava/lang/SecurityManager;)Bjava.lang.System#setSecurityManager0(Ljava/lang/SecurityManager;)V.
+initPhase1()java.lang.System#initPhase1()Vi
+!clearProperty(Ljava/lang/String;)Djava.lang.System#clearProperty(Ljava/lang/String;)Ljava/lang/String;R
+setOut0(Ljava/io/PrintStream;)0java.lang.System#setOut0(Ljava/io/PrintStream;)V.
+initPhase3()java.lang.System#initPhase3()V4
+getenv()(java.lang.System#getenv()Ljava/util/Map;I
+getProperties()6java.lang.System#getProperties()Ljava/util/Properties;T
+loadLibrary(Ljava/lang/String;)1java.lang.System#loadLibrary(Ljava/lang/String;)VF
+load(Ljava/lang/String;)*java.lang.System#load(Ljava/lang/String;)VÛ]
 java.util.logging.Loggerjava.lang.ObjectF
 isLevelInitialized().java.util.logging.Logger#isLevelInitialized()Zd
 #fine(Ljava/util/function/Supplier;)=java.util.logging.Logger#fine(Ljava/util/function/Supplier;)Vî
@@ -661,91 +845,67 @@ ulogp(Ljava/util/logging/Level;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Th
 @entering(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Object;)Zjava.util.logging.Logger#entering(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Object;)VN
 info(Ljava/lang/String;)2java.util.logging.Logger#info(Ljava/lang/String;)Vx
 -exiting(Ljava/lang/String;Ljava/lang/String;)Gjava.util.logging.Logger#exiting(Ljava/lang/String;Ljava/lang/String;)V®
-Elog(Ljava/util/logging/Level;Ljava/lang/String;Ljava/lang/Throwable;)_java.util.logging.Logger#log(Ljava/util/logging/Level;Ljava/lang/String;Ljava/lang/Throwable;)V%
-java.io.Flushablejava.lang.ObjectÉ
-java.io.OutputStreamjava.io.Closeablejava.lang.Objectjava.io.FlushableS
-nullOutputStream()=java.io.OutputStream#nullOutputStream()Ljava/io/OutputStream;,
-	write([B)java.io.OutputStream#write([B)V*
-<init>()java.io.OutputStream#<init>()V(
-flush()java.io.OutputStream#flush()V0
-write([BII)!java.io.OutputStream#write([BII)V(
-close()java.io.OutputStream#close()Vé
-java.io.FilterOutputStreamjava.io.OutputStream2
-	write([B)%java.io.FilterOutputStream#write([B)V\
-<init>(Ljava/io/OutputStream;):java.io.FilterOutputStream#<init>(Ljava/io/OutputStream;)V.
-flush()#java.io.FilterOutputStream#flush()V0
-write(I)$java.io.FilterOutputStream#write(I)V6
-write([BII)'java.io.FilterOutputStream#write([BII)V.
-close()#java.io.FilterOutputStream#close()VÖ 
-java.io.PrintStreamjava.lang.Appendablejava.io.Closeablejava.io.FilterOutputStream+
-	write([C)java.io.PrintStream#write([C)V)
-print(J)java.io.PrintStream#print(J)V-
+Elog(Ljava/util/logging/Level;Ljava/lang/String;Ljava/lang/Throwable;)_java.util.logging.Logger#log(Ljava/util/logging/Level;Ljava/lang/String;Ljava/lang/Throwable;)VÁ
+java.util.logging.Formatterjava.lang.Objectä
+,formatMessage(Ljava/util/logging/LogRecord;)Zjava.util.logging.Formatter#formatMessage(Ljava/util/logging/LogRecord;)Ljava/lang/String;z
+$getHead(Ljava/util/logging/Handler;)Rjava.util.logging.Formatter#getHead(Ljava/util/logging/Handler;)Ljava/lang/String;1
+<init>()%java.util.logging.Formatter#<init>()Vz
+$getTail(Ljava/util/logging/Handler;)Rjava.util.logging.Formatter#getTail(Ljava/util/logging/Handler;)Ljava/lang/String;Ö
+!java.util.logging.SimpleFormatterjava.util.logging.FormatterÇ
+%format(Ljava/util/logging/LogRecord;)Yjava.util.logging.SimpleFormatter#format(Ljava/util/logging/LogRecord;)Ljava/lang/String;7
+<init>()+java.util.logging.SimpleFormatter#<init>()VÑ
+&getLoggingProperty(Ljava/lang/String;)Zjava.util.logging.SimpleFormatter#getLoggingProperty(Ljava/lang/String;)Ljava/lang/String;»
+java.util.logging.Handlerjava.lang.Objecte
+#setLevel(Ljava/util/logging/Level;)>java.util.logging.Handler#setLevel(Ljava/util/logging/Level;)V]
+setEncoding(Ljava/lang/String;):java.util.logging.Handler#setEncoding(Ljava/lang/String;)VJ
+getEncoding()9java.util.logging.Handler#getEncoding()Ljava/lang/String;’
+[<init>(Ljava/util/logging/Level;Ljava/util/logging/Formatter;Ljava/util/logging/Formatter;)vjava.util.logging.Handler#<init>(Ljava/util/logging/Level;Ljava/util/logging/Formatter;Ljava/util/logging/Formatter;)VÅ
+1setErrorManager(Ljava/util/logging/ErrorManager;)Ljava.util.logging.Handler#setErrorManager(Ljava/util/logging/ErrorManager;)Vu
++setFormatter(Ljava/util/logging/Formatter;)Fjava.util.logging.Handler#setFormatter(Ljava/util/logging/Formatter;)VN
+getFilter()?java.util.logging.Handler#getFilter()Ljava/util/logging/Filter;q
+)isLoggable(Ljava/util/logging/LogRecord;)Djava.util.logging.Handler#isLoggable(Ljava/util/logging/LogRecord;)ZW
+getFormatter()Ejava.util.logging.Handler#getFormatter()Ljava/util/logging/Formatter;/
+<init>()#java.util.logging.Handler#<init>()Vâ
+5reportError(Ljava/lang/String;Ljava/lang/Exception;I)Pjava.util.logging.Handler#reportError(Ljava/lang/String;Ljava/lang/Exception;I)Vi
+%setFilter(Ljava/util/logging/Filter;)@java.util.logging.Handler#setFilter(Ljava/util/logging/Filter;)VK
 
-println(J)java.io.PrintStream#println(J)V)
-print(F)java.io.PrintStream#print(F)V-
+getLevel()=java.util.logging.Handler#getLevel()Ljava/util/logging/Level;A
+checkPermission(),java.util.logging.Handler#checkPermission()V`
+getErrorManager()Kjava.util.logging.Handler#getErrorManager()Ljava/util/logging/ErrorManager;Ó	
+java.util.logging.StreamHandlerjava.util.logging.Handlerc
+setEncoding(Ljava/lang/String;)@java.util.logging.StreamHandler#setEncoding(Ljava/lang/String;)VC
+flushAndClose()0java.util.logging.StreamHandler#flushAndClose()Vw
+)isLoggable(Ljava/util/logging/LogRecord;)Jjava.util.logging.StreamHandler#isLoggable(Ljava/util/logging/LogRecord;)Z€
+[<init>(Ljava/util/logging/Level;Ljava/util/logging/Formatter;Ljava/util/logging/Formatter;)|java.util.logging.StreamHandler#<init>(Ljava/util/logging/Level;Ljava/util/logging/Formatter;Ljava/util/logging/Formatter;)V5
+<init>())java.util.logging.StreamHandler#<init>()Vq
+&publish(Ljava/util/logging/LogRecord;)Gjava.util.logging.StreamHandler#publish(Ljava/util/logging/LogRecord;)Vs
+'setOutputStream(Ljava/io/OutputStream;)Hjava.util.logging.StreamHandler#setOutputStream(Ljava/io/OutputStream;)V3
+flush()(java.util.logging.StreamHandler#flush()Vá
+1setOutputStreamPrivileged(Ljava/io/OutputStream;)Rjava.util.logging.StreamHandler#setOutputStreamPrivileged(Ljava/io/OutputStream;)Võ
+;<init>(Ljava/io/OutputStream;Ljava/util/logging/Formatter;)\java.util.logging.StreamHandler#<init>(Ljava/io/OutputStream;Ljava/util/logging/Formatter;)V3
+close()(java.util.logging.StreamHandler#close()V±
 
-println(F)java.io.PrintStream#println(F)V/
-write([BII) java.io.PrintStream#write([BII)VÅ
-4<init>(Ljava/lang/String;Ljava/nio/charset/Charset;)Ijava.io.PrintStream#<init>(Ljava/lang/String;Ljava/nio/charset/Charset;)V)
-print(Z)java.io.PrintStream#print(Z)V1
-clearError()!java.io.PrintStream#clearError()V-
-
-println(Z)java.io.PrintStream#println(Z)Vi
-(<init>(Ljava/io/File;Ljava/lang/String;)=java.io.PrintStream#<init>(Ljava/io/File;Ljava/lang/String;)V)
-write(I)java.io.PrintStream#write(I)VO
-println(Ljava/lang/Object;)0java.io.PrintStream#println(Ljava/lang/Object;)VK
-print(Ljava/lang/String;).java.io.PrintStream#print(Ljava/lang/String;)Ví
-4requireNonNull(Ljava/lang/Object;Ljava/lang/String;)Zjava.io.PrintStream#requireNonNull(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;)
-print(I)java.io.PrintStream#print(I)V-
-
-println(I)java.io.PrintStream#println(I)V'
-flush()java.io.PrintStream#flush()V´
-?format(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)hjava.io.PrintStream#format(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;m
- append(Ljava/lang/CharSequence;)Ijava.io.PrintStream#append(Ljava/lang/CharSequence;)Ljava/io/PrintStream;l
-toCharset(Ljava/lang/String;)Kjava.io.PrintStream#toCharset(Ljava/lang/String;)Ljava/nio/charset/Charset;W
-<init>(ZLjava/io/OutputStream;)4java.io.PrintStream#<init>(ZLjava/io/OutputStream;)V+
-	print([C)java.io.PrintStream#print([C)Vq
-"append(Ljava/lang/CharSequence;II)Kjava.io.PrintStream#append(Ljava/lang/CharSequence;II)Ljava/io/PrintStream;)
-print(D)java.io.PrintStream#print(D)Vq
-,<init>(Ljava/lang/String;Ljava/lang/String;)Ajava.io.PrintStream#<init>(Ljava/lang/String;Ljava/lang/String;)V-
-
-println(D)java.io.PrintStream#println(D)VO
-println(Ljava/lang/String;)0java.io.PrintStream#println(Ljava/lang/String;)VW
-<init>(Ljava/io/OutputStream;Z)4java.io.PrintStream#<init>(Ljava/io/OutputStream;Z)VE
-<init>(Ljava/io/File;)+java.io.PrintStream#<init>(Ljava/io/File;)Vy
-0<init>(Ljava/io/File;Ljava/nio/charset/Charset;)Ejava.io.PrintStream#<init>(Ljava/io/File;Ljava/nio/charset/Charset;)V1
-ensureOpen()!java.io.PrintStream#ensureOpen()Vã
-9<init>(Ljava/io/OutputStream;ZLjava/nio/charset/Charset;)Njava.io.PrintStream#<init>(Ljava/io/OutputStream;ZLjava/nio/charset/Charset;)V´
-?printf(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)hjava.io.PrintStream#printf(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;-
-
-setError()java.io.PrintStream#setError()Vá
--printf(Ljava/lang/String;[Ljava/lang/Object;)Vjava.io.PrintStream#printf(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;?
-	append(C)2java.io.PrintStream#append(C)Ljava/io/PrintStream;M
-<init>(Ljava/lang/String;)/java.io.PrintStream#<init>(Ljava/lang/String;)Vá
--format(Ljava/lang/String;[Ljava/lang/Object;)Vjava.io.PrintStream#format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;+
-	newLine()java.io.PrintStream#newLine()V)
-print(C)java.io.PrintStream#print(C)V1
-checkError()!java.io.PrintStream#checkError()Z+
-	println()java.io.PrintStream#println()V'
-close()java.io.PrintStream#close()V-
-
-println(C)java.io.PrintStream#println(C)VK
-write(Ljava/lang/String;).java.io.PrintStream#write(Ljava/lang/String;)VK
-print(Ljava/lang/Object;).java.io.PrintStream#print(Ljava/lang/Object;)V{
-1<init>(Ljava/io/OutputStream;ZLjava/lang/String;)Fjava.io.PrintStream#<init>(Ljava/io/OutputStream;ZLjava/lang/String;)VU
-<init>(Ljava/io/OutputStream;)3java.io.PrintStream#<init>(Ljava/io/OutputStream;)V/
-println([C) java.io.PrintStream#println([C)Vã
-9<init>(ZLjava/nio/charset/Charset;Ljava/io/OutputStream;)Njava.io.PrintStream#<init>(ZLjava/nio/charset/Charset;Ljava/io/OutputStream;)VZ
-deliverable.GetJavaFilejava.lang.Object-
-<init>()!deliverable.GetJavaFile#<init>()V√
-deliverable.RetrieveTicketsIDjava.lang.Objectf
-readAll(Ljava/io/Reader;)Ideliverable.RetrieveTicketsID#readAll(Ljava/io/Reader;)Ljava/lang/String;3
-<init>()'deliverable.RetrieveTicketsID#<init>()V}
-(readJsonArrayFromUrl(Ljava/lang/String;)Qdeliverable.RetrieveTicketsID#readJsonArrayFromUrl(Ljava/lang/String;)LJSONArray;t
-#readJsonFromUrl(Ljava/lang/String;)Mdeliverable.RetrieveTicketsID#readJsonFromUrl(Ljava/lang/String;)LJSONObject;´
+java.util.logging.FileHandlerjava.util.logging.StreamHandler9
+openFiles()*java.util.logging.FileHandler#openFiles()V[
+<init>(Ljava/lang/String;II);java.util.logging.FileHandler#<init>(Ljava/lang/String;II)V]
+<init>(Ljava/lang/String;JIZ)<java.util.logging.FileHandler#<init>(Ljava/lang/String;JIZ)V]
+<init>(Ljava/lang/String;IIZ)<java.util.logging.FileHandler#<init>(Ljava/lang/String;IIZ)V3
+rotate()'java.util.logging.FileHandler#rotate()Vl
+generate(Ljava/lang/String;II)Jjava.util.logging.FileHandler#generate(Ljava/lang/String;II)Ljava/io/File;9
+configure()*java.util.logging.FileHandler#configure()V3
+<init>()'java.util.logging.FileHandler#<init>()Vo
+&publish(Ljava/util/logging/LogRecord;)Ejava.util.logging.FileHandler#publish(Ljava/util/logging/LogRecord;)Vo
+&isParentWritable(Ljava/nio/file/Path;)Ejava.util.logging.FileHandler#isParentWritable(Ljava/nio/file/Path;)ZY
+<init>(Ljava/lang/String;Z):java.util.logging.FileHandler#<init>(Ljava/lang/String;Z)VW
+<init>(Ljava/lang/String;)9java.util.logging.FileHandler#<init>(Ljava/lang/String;)Vn
+generate(Ljava/lang/String;III)Kjava.util.logging.FileHandler#generate(Ljava/lang/String;III)Ljava/io/File;M
+open(Ljava/io/File;Z)4java.util.logging.FileHandler#open(Ljava/io/File;Z)V1
+close()&java.util.logging.FileHandler#close()V¶
 deliverable.GetCommitInfojava.lang.Object/
-<init>()#deliverable.GetCommitInfo#<init>()VK
-commitList();deliverable.GetCommitInfo#commitList()Ljava/util/ArrayList; 
+<init>()#deliverable.GetCommitInfo#<init>()VF
+commitList()6deliverable.GetCommitInfo#commitList()Ljava/util/List;R
+deliverable.Metricsjava.lang.Object)
+<init>()deliverable.Metrics#<init>()V 
 deliverable.TicketsArrayjava.lang.Objectl
 'write(Ljava/util/List;Ljava/util/List;)Adeliverable.TicketsArray#write(Ljava/util/List;Ljava/util/List;)V.
 <init>()"deliverable.TicketsArray#<init>()V¬?
@@ -871,110 +1031,6 @@ valueOf(J)-java.lang.String#valueOf(J)Ljava/lang/String;2
 value()java.lang.String#value()[B`
 %regionMatches(ZILjava/lang/String;II)7java.lang.String#regionMatches(ZILjava/lang/String;II)ZX
 deliverable.Proportionjava.lang.Object,
-<init>() deliverable.Proportion#<init>()V¡
-deliverable.CsvWriterjava.lang.Objecti
-'write(Ljava/util/List;Ljava/util/List;)>deliverable.CsvWriter#write(Ljava/util/List;Ljava/util/List;)V+
-<init>()deliverable.CsvWriter#<init>()VÚ
-java.io.Writerjava.lang.Appendablejava.io.Closeablejava.lang.Objectjava.io.Flushable&
-	write([C)java.io.Writer#write([C)Vc
- append(Ljava/lang/CharSequence;)?java.io.Writer#append(Ljava/lang/CharSequence;)Ljava/io/Writer;$
-<init>()java.io.Writer#<init>()V5
-	append(C)(java.io.Writer#append(C)Ljava/io/Writer;g
-"append(Ljava/lang/CharSequence;II)Ajava.io.Writer#append(Ljava/lang/CharSequence;II)Ljava/io/Writer;J
-write(Ljava/lang/String;II)+java.io.Writer#write(Ljava/lang/String;II)V$
-write(I)java.io.Writer#write(I)V;
-nullWriter()+java.io.Writer#nullWriter()Ljava/io/Writer;F
-write(Ljava/lang/String;))java.io.Writer#write(Ljava/lang/String;)VH
-<init>(Ljava/lang/Object;)*java.io.Writer#<init>(Ljava/lang/Object;)V“	
-java.io.OutputStreamWriterjava.io.Writerû
-?<init>(Ljava/io/OutputStream;Ljava/nio/charset/CharsetEncoder;)[java.io.OutputStreamWriter#<init>(Ljava/io/OutputStream;Ljava/nio/charset/CharsetEncoder;)Vo
- append(Ljava/lang/CharSequence;)Kjava.io.OutputStreamWriter#append(Ljava/lang/CharSequence;)Ljava/io/Writer;K
-getEncoding():java.io.OutputStreamWriter#getEncoding()Ljava/lang/String;s
-"append(Ljava/lang/CharSequence;II)Mjava.io.OutputStreamWriter#append(Ljava/lang/CharSequence;II)Ljava/io/Writer;Ä
-0<init>(Ljava/io/OutputStream;Ljava/lang/String;)Ljava.io.OutputStreamWriter#<init>(Ljava/io/OutputStream;Ljava/lang/String;)V\
-<init>(Ljava/io/OutputStream;):java.io.OutputStreamWriter#<init>(Ljava/io/OutputStream;)VV
-write(Ljava/lang/String;II)7java.io.OutputStreamWriter#write(Ljava/lang/String;II)V.
-flush()#java.io.OutputStreamWriter#flush()V0
-write(I)$java.io.OutputStreamWriter#write(I)V:
-flushBuffer())java.io.OutputStreamWriter#flushBuffer()V6
-write([CII)'java.io.OutputStreamWriter#write([CII)V.
-close()#java.io.OutputStreamWriter#close()Vê
-8<init>(Ljava/io/OutputStream;Ljava/nio/charset/Charset;)Tjava.io.OutputStreamWriter#<init>(Ljava/io/OutputStream;Ljava/nio/charset/Charset;)V¥
-java.io.FileWriterjava.io.OutputStreamWriterz
-1<init>(Ljava/io/File;Ljava/nio/charset/Charset;Z)Ejava.io.FileWriter#<init>(Ljava/io/File;Ljava/nio/charset/Charset;Z)VF
-<init>(Ljava/io/File;Z)+java.io.FileWriter#<init>(Ljava/io/File;Z)VÇ
-5<init>(Ljava/lang/String;Ljava/nio/charset/Charset;Z)Ijava.io.FileWriter#<init>(Ljava/lang/String;Ljava/nio/charset/Charset;Z)VN
-<init>(Ljava/lang/String;Z)/java.io.FileWriter#<init>(Ljava/lang/String;Z)VD
-<init>(Ljava/io/File;)*java.io.FileWriter#<init>(Ljava/io/File;)VL
-<init>(Ljava/lang/String;).java.io.FileWriter#<init>(Ljava/lang/String;)Vx
-0<init>(Ljava/io/File;Ljava/nio/charset/Charset;)Djava.io.FileWriter#<init>(Ljava/io/File;Ljava/nio/charset/Charset;)VÄ
-4<init>(Ljava/lang/String;Ljava/nio/charset/Charset;)Hjava.io.FileWriter#<init>(Ljava/lang/String;Ljava/nio/charset/Charset;)VX
- <init>(Ljava/io/FileDescriptor;)4java.io.FileWriter#<init>(Ljava/io/FileDescriptor;)V¿
-java.lang.Numberjava.lang.Objectjava.io.Serializable.
-shortValue()java.lang.Number#shortValue()S&
-<init>()java.lang.Number#<init>()V,
-byteValue()java.lang.Number#byteValue()B»
-java.lang.Integerjava.lang.Comparablejava.lang.Number/
-shortValue()java.lang.Integer#shortValue()SK
-equals(Ljava/lang/Object;)-java.lang.Integer#equals(Ljava/lang/Object;)Z)
-	<init>(I)java.lang.Integer#<init>(I)V%
-sum(II)java.lang.Integer#sum(II)I]
-decode(Ljava/lang/String;)?java.lang.Integer#decode(Ljava/lang/String;)Ljava/lang/Integer;q
--parseUnsignedInt(Ljava/lang/CharSequence;III)@java.lang.Integer#parseUnsignedInt(Ljava/lang/CharSequence;III)IG
-numberOfTrailingZeros(I)+java.lang.Integer#numberOfTrailingZeros(I)I-
-compare(II)java.lang.Integer#compare(II)I;
-divideUnsigned(II)%java.lang.Integer#divideUnsigned(II)I5
-rotateRight(II)"java.lang.Integer#rotateRight(II)I>
-toString(I)/java.lang.Integer#toString(I)Ljava/lang/String;7
-highestOneBit(I)#java.lang.Integer#highestOneBit(I)Ia
-%parseInt(Ljava/lang/CharSequence;III)8java.lang.Integer#parseInt(Ljava/lang/CharSequence;III)II
-formatUnsignedInt(II[CII),java.lang.Integer#formatUnsignedInt(II[CII)VD
-toHexString(I)2java.lang.Integer#toHexString(I)Ljava/lang/String;E
-numberOfLeadingZeros(I)*java.lang.Integer#numberOfLeadingZeros(I)I_
-$parseUnsignedInt(Ljava/lang/String;)7java.lang.Integer#parseUnsignedInt(Ljava/lang/String;)I<
-
-toString().java.lang.Integer#toString()Ljava/lang/String;S
-compareTo(Ljava/lang/Integer;)1java.lang.Integer#compareTo(Ljava/lang/Integer;)I-
-byteValue()java.lang.Integer#byteValue()Be
-getInteger(Ljava/lang/String;)Cjava.lang.Integer#getInteger(Ljava/lang/String;)Ljava/lang/Integer;g
-getInteger(Ljava/lang/String;I)Djava.lang.Integer#getInteger(Ljava/lang/String;I)Ljava/lang/Integer;/
-floatValue()java.lang.Integer#floatValue()FP
-toUnsignedString(II)8java.lang.Integer#toUnsignedString(II)Ljava/lang/String;1
-doubleValue() java.lang.Integer#doubleValue()D1
-stringSize(I) java.lang.Integer#stringSize(I)Iã
-1getInteger(Ljava/lang/String;Ljava/lang/Integer;)Vjava.lang.Integer#getInteger(Ljava/lang/String;Ljava/lang/Integer;)Ljava/lang/Integer;-
-bitCount(I)java.lang.Integer#bitCount(I)I_
-valueOf(Ljava/lang/String;)@java.lang.Integer#valueOf(Ljava/lang/String;)Ljava/lang/Integer;I
-formatUnsignedInt(II[BII),java.lang.Integer#formatUnsignedInt(II[BII)V5
-reverseBytes(I)"java.lang.Integer#reverseBytes(I)IS
-formatUnsignedIntUTF16(II[BII)1java.lang.Integer#formatUnsignedIntUTF16(II[BII)VR
-toUnsignedString0(II)9java.lang.Integer#toUnsignedString0(II)Ljava/lang/String;O
-parseInt(Ljava/lang/String;)/java.lang.Integer#parseInt(Ljava/lang/String;)I3
-getChars(II[B)!java.lang.Integer#getChars(II[B)I-
-longValue()java.lang.Integer#longValue()J+
-
-hashCode()java.lang.Integer#hashCode()Ia
-valueOf(Ljava/lang/String;I)Ajava.lang.Integer#valueOf(Ljava/lang/String;I)Ljava/lang/Integer;+
-
-intValue()java.lang.Integer#intValue()I3
-rotateLeft(II)!java.lang.Integer#rotateLeft(II)IK
-<init>(Ljava/lang/String;)-java.lang.Integer#<init>(Ljava/lang/String;)V+
-
-reverse(I)java.lang.Integer#reverse(I)I9
-toUnsignedLong(I)$java.lang.Integer#toUnsignedLong(I)J)
-	signum(I)java.lang.Integer#signum(I)I=
-
-valueOf(I)/java.lang.Integer#valueOf(I)Ljava/lang/Integer;5
-lowestOneBit(I)"java.lang.Integer#lowestOneBit(I)I-
-hashCode(I)java.lang.Integer#hashCode(I)IH
-toOctalString(I)4java.lang.Integer#toOctalString(I)Ljava/lang/String;%
-min(II)java.lang.Integer#min(II)Ia
-%parseUnsignedInt(Ljava/lang/String;I)8java.lang.Integer#parseUnsignedInt(Ljava/lang/String;I)IQ
-parseInt(Ljava/lang/String;I)0java.lang.Integer#parseInt(Ljava/lang/String;I)IA
-remainderUnsigned(II)(java.lang.Integer#remainderUnsigned(II)I@
-toString(II)0java.lang.Integer#toString(II)Ljava/lang/String;J
-toBinaryString(I)5java.lang.Integer#toBinaryString(I)Ljava/lang/String;N
-toUnsignedString(I)7java.lang.Integer#toUnsignedString(I)Ljava/lang/String;J
-toStringUTF16(II)5java.lang.Integer#toStringUTF16(II)Ljava/lang/String;=
-compareUnsigned(II)&java.lang.Integer#compareUnsigned(II)I%
-max(II)java.lang.Integer#max(II)I
+<init>() deliverable.Proportion#<init>()VV
+deliverable.CsvWriterjava.lang.Object+
+<init>()deliverable.CsvWriter#<init>()V

@@ -15,7 +15,6 @@ public class Proportion {
 		Integer indexFV = fV.getId();
        	Integer indexOV = oV.getId();
        	Integer indexIV = iV.getId();
-       	Integer n = 0;
           if(iV.getId()==null) {
         	FileLogger.getLogger().info("Entro nel for maledetto dove IV non esiste");
            	if(p.size()<=4) {
@@ -27,13 +26,8 @@ public class Proportion {
        			if(predictedIV > oV.getId()) {
        				return false;
        			}
-       			for(n = 0;n<listVersion.size();n++) {
-       				if(predictedIV.equals(listVersion.get(n).getId() )) {
-       					aV.add(listVersion.get(n));
-       					iV.addIdVersion(listVersion.get(n).getId(), listVersion.get(n).getVersion());
-       					return true;
-       				}
-       			}
+       			iterativeFunc(listVersion,predictedIV, aV, iV);
+       			
        			FileLogger.getLogger().info(String.valueOf(predictedIV));
            		if(indexFV-indexOV !=0) {
            			p.add((indexFV-predictedIV)/(indexFV-indexOV));
@@ -58,4 +52,13 @@ public class Proportion {
            		}
            	 }
 	}
+	public static void iterativeFunc(List<VersionObject> listVersion, Integer predictedIV, List<VersionObject> aV, VersionObject iV) {
+		Integer n = 0;
+		for(n = 0;n<listVersion.size();n++) {
+				if(predictedIV.equals(listVersion.get(n).getId() )) {
+					aV.add(listVersion.get(n));
+					iV.addIdVersion(listVersion.get(n).getId(), listVersion.get(n).getVersion());
+				}
+			}
+	}//se è cambiato qualcosa bisogna rimmetterlo nel proportion con il return TRUE all'interno del for
 }

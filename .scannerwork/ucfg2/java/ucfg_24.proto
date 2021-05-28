@@ -1,16 +1,17 @@
 
-+oggetti.JavaFile#getNr()Ljava/lang/Integer;h
-^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.javaE E("1*¢
+1oggetti.JavaFile#getLOCadded()Ljava/lang/Integer;h
+^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.javal l("1*¨
 1h
-^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.javaF	 F(ª
-§
+^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.javam	 m(°
+­
 h
-^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.javaF	 F(
-%0java.lang.Integer"__id**
-oggetti.JavaFile"
-nr"…
+^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.javam	 m(
+%0java.lang.Integer"__id*"* 
+oggetti.JavaFile"
+
+locAdded"…
 h
-^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.javaF F(
+^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.javam m(
 
 %0java.lang.IntegerB
 oggetti.JavaFile

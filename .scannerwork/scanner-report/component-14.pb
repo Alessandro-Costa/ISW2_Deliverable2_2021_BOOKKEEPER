@@ -1,1 +1,1 @@
- 2javaX.hrsrc/oggetti/VersionObject.java
+ 2javaX>hrsrc/deliverable/Proportion.java

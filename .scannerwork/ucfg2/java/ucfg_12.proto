@@ -1,32 +1,35 @@
 
-6oggetti.VersionObject#getIdVersion()Ljava/lang/String;m
-c/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/VersionObject.java* *("1*î
-
+0oggetti.VersionObject#getAll()Ljava/lang/String;m
+c/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/VersionObject.java& &("1*ô
 1m
-c/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/VersionObject.java+	 +(´
+c/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/VersionObject.java'
+ '(´
 ±
 m
-c/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/VersionObject.java+ +(
+c/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/VersionObject.java' '(
 %0java.lang.Integer"__id*!*
 oggetti.VersionObject"
 id¸
 µ
 m
-c/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/VersionObject.java+	 +(
+c/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/VersionObject.java'
+ '(
 %1java.lang.String"__concat*
 ID:*
 
 %0java.lang.Integer¶
 ³
 m
-c/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/VersionObject.java+	 +(
+c/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/VersionObject.java'
+ '(
 %2java.lang.String"__concat*
 
 %1java.lang.String*
 \n¼
 ¹
 m
-c/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/VersionObject.java+	 +('
+c/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/VersionObject.java'
+ '()
 %3java.lang.String"__concat*
 
 %2java.lang.String*
@@ -34,20 +37,52 @@ c/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggett
 Version:¸
 µ
 m
-c/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/VersionObject.java+* +(6
+c/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/VersionObject.java'+ '(7
 %4java.lang.String"__id*&*$
 oggetti.VersionObject"	
 versionÈ
 Å
 m
-c/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/VersionObject.java+	 +(6
+c/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/VersionObject.java'
+ '(7
 %5java.lang.String"__concat*
 
 %3java.lang.String*
 
-%4java.lang.String"‰
+%4java.lang.String¶
+³
 m
-c/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/VersionObject.java+ +(7
+c/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/VersionObject.java'
+ '(=
+%6java.lang.String"__concat*
 
-%5java.lang.StringB
+%5java.lang.String*
+\n¹
+¶
+m
+c/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/VersionObject.java'
+ '(E
+%7java.lang.String"__concat*
+
+%6java.lang.String*	
+Date:¼
+¹
+m
+c/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/VersionObject.java'G '(P
+%8java.time.LocalDateTime"__id*#*!
+oggetti.VersionObject"
+dateÏ
+Ì
+m
+c/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/VersionObject.java'
+ '(P
+%9java.lang.String"__concat*
+
+%7java.lang.String*
+
+%8java.time.LocalDateTime"‰
+m
+c/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/VersionObject.java' '(R
+
+%9java.lang.StringB
 oggetti.VersionObject

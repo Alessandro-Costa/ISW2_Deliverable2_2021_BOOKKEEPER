@@ -29,7 +29,7 @@ public class CsvWriter {
 						   fileWriter.append(";");
 						   fileWriter.append(file.getNr().toString());
 						   fileWriter.append(";");
-						   fileWriter.append(file.getnAuth().toString());
+						   fileWriter.append(String.valueOf(file.getnAuthList().size()));
 						   fileWriter.append(";");
 						   fileWriter.append(file.getChgSetSize().toString());
 						   fileWriter.append(";");

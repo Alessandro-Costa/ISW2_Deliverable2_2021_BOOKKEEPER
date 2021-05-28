@@ -1,7 +1,7 @@
 organization=alessandro-costa
 projectKey=Alessandro-Costa_ISW2_Deliverable2_2021_BOOKKEEPER
 serverUrl=https://sonarcloud.io
-serverVersion=8.0.0.20026
+serverVersion=8.0.0.20494
 dashboardUrl=https://sonarcloud.io/dashboard?id=Alessandro-Costa_ISW2_Deliverable2_2021_BOOKKEEPER
-ceTaskId=AXlf0DXqr4AxBTVUtvOI
-ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AXlf0DXqr4AxBTVUtvOI
+ceTaskId=AXmyltcALh0_nQcVGBaX
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AXmyltcALh0_nQcVGBaX

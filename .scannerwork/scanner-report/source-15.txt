@@ -1,54 +1,79 @@
 package oggetti;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+
 import org.eclipse.jgit.revwalk.RevCommit;
 
-public class Release {
-	private List<RevCommit> commit;
-	private LocalDateTime date;
-	private Integer classification;
-	private String release;
-	private List<String> javaFileList;
-	public Release() {
-		
+import utility.FileLogger;
+
+
+public class TicketObjectVersionID {
+	private String ticketID;
+	private VersionObject oV;
+	private VersionObject fV;
+	private List<VersionObject> aV;
+	private VersionObject iV;
+	private List<RevCommit> commitList;
+	
+	public TicketObjectVersionID(VersionObject oV, VersionObject fV,List<VersionObject> aV, VersionObject iV, String ticketID) {
+		this.oV = oV;
+		this.fV = fV;
+		this.aV = aV;
+		this.iV = iV;
+		this.commitList = new ArrayList<>();
+		this.ticketID = ticketID;
 	}
-	public Release(LocalDateTime date,Integer classification,String release, ArrayList<String> javaFileList) {
-		this.commit = new ArrayList<>();
-		this.date = date;
-		this.classification = classification;
-		this.release = release;
-		this.javaFileList = new ArrayList<>();
+	public TicketObjectVersionID() {
+		this.oV = new VersionObject();
+		this.fV = new VersionObject();
+		this.aV = new ArrayList<>();
+		this.iV = new VersionObject();
+		this.commitList = new ArrayList<>();
 	}
-	public LocalDateTime getDate() {
-		return date;
+	public void printInfo(String ticketID) {
+		FileLogger.getLogger().info("Sto stampando l'OV del relativo:"+ticketID);    
+		FileLogger.getLogger().info("Sto stampando la versione dell'OV:"+oV.getIdVersion());    
+		FileLogger.getLogger().info("Sto stampando l'FV del relativo:"+ticketID);
+		FileLogger.getLogger().info("Sto stampando la versione dell'FV:"+fV.getIdVersion());
+	        for(var r = 0;r < aV.size();r++) {
+	        	FileLogger.getLogger().info("Sto stampando l'AV del relativo:" + ticketID + aV.get(r).getIdVersion());
+	        }
+	        FileLogger.getLogger().info("Sto stampando l'IV del relativo:" + ticketID + iV.getIdVersion());
+	        FileLogger.getLogger().info(ticketID);
+	      
+	        
 	}
-	public Integer getClassification() {
-		return classification;
+	public String getTicketID() {
+		return ticketID;
 	}
-	public String getRelease() {
-		return release;
+	public VersionObject getIV() {
+		return iV;
+	}
+	public List<VersionObject> getAV() {
+		return aV;
 	}
 	public List<RevCommit> getCommitList(){
-		return commit;
+		return commitList;
 	}
-	public List<String> getFileList(){
-		return javaFileList;
+	public List<RevCommit> addCommitList(RevCommit commit) {
+		this.commitList.add(commit);
+		return commitList;
 	}
-	public void setDate(LocalDateTime date) {
-		this.date = date;
+	public void addFV(VersionObject fV) {
+		this.fV = fV;
 	}
-	public void setClassification(Integer classification) {
-		this.classification = classification;
+	public void addOV(VersionObject oV) {
+		this.oV = oV;
 	}
-	public void setRelease(String release) {
-		this.release = release;
+	public void addAV(List<VersionObject> aV) {
+		this.aV = aV;
 	}
-	public void setCommitList(List<RevCommit> commitList) {
-		this.commit = commitList;
+	public void addIV(VersionObject iV) {
+		this.iV = iV;
 	}
-	public void setFileList(List<String> javaFileList) {
-		this.javaFileList = javaFileList;
+	public void addTicketId(String ticketID) {
+		this.ticketID = ticketID;
 	}
 }

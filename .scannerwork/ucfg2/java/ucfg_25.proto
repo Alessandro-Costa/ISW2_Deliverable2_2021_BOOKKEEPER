@@ -1,16 +1,16 @@
 
-6oggetti.JavaFile#getMaxChgSetSize()Ljava/lang/Integer;h
-^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.javaI I( "1*­
+2oggetti.JavaFile#getLOCaddedList()Ljava/util/List;h
+^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.javao o(%"1*¦
 1h
-^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.javaJ	 J(µ
-²
+^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.javap	 p(±
+®
 h
-^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.javaJ	 J(
-%0java.lang.Integer"__id*'*%
-oggetti.JavaFile"
-maxChgSetSize"…
+^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.javap	 p(
+%0java.util.List"__id*&*$
+oggetti.JavaFile"
+locAddedList"‚
 h
-^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.javaJ J(
-
-%0java.lang.IntegerB
+^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.javap p(
+
+%0java.util.ListB
 oggetti.JavaFile

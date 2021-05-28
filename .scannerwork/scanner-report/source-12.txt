@@ -1,60 +1,62 @@
 package deliverable;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import oggetti.VersionObject;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.InitCommand;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.treewalk.TreeWalk;
 
-public class Proportion {
-	private Proportion() {
+import oggetti.JavaFile;
+import oggetti.Release;
+import utility.FileLogger;
+
+public class GetJavaFile {
+	private GetJavaFile() {
 	    throw new IllegalStateException("Utility class");
 	  }
-	public static boolean proportion(VersionObject fV, VersionObject oV, List<VersionObject> aV,VersionObject iV, List<VersionObject> listVersion,Integer count) {
-		ArrayList <Integer> p = new ArrayList<>();
-		Integer indexFV = fV.getId();
-       	Integer indexOV = oV.getId();
-       	Integer indexIV = iV.getId();
-       	Integer n = 0;
-          if(iV.getId()==null) {
-        	System.out.println("Entro nel for maledetto dove IV non esiste");
-           	if(p.size()<=4) {
-           		p.add(0);
-           		return true;
-           	}
-           	else {
-       			Integer predictedIV = indexFV-(indexFV-indexOV)*((p.get(count-1)+p.get(count-2)+p.get(count-3)+p.get(count-4))/4);
-       			if(predictedIV > oV.getId()) {
-       				return false;
-       			}
-       			for(n = 0;n<listVersion.size();n++) {
-       				if(predictedIV.equals(listVersion.get(n).getId())) {
-       					aV.add(listVersion.get(n));
-       					iV.addIdVersion(listVersion.get(n).getId(), listVersion.get(n).getVersion());
-       					return true;
-       				}
-       			}
-           		System.out.println(predictedIV);
-           		if(indexFV-indexOV !=0) {
-           			p.add((indexFV-predictedIV)/(indexFV-indexOV));
-           			return true;
-           		}
-           		else {
-           			System.out.println("Sono entrato nel caso divisiore = 0");
-           			p.add(0);
-           			return true;
-           		}
-       		}
-           }
-           else {
-           		if(indexFV-indexOV !=0) {
-           			p.add((indexFV-indexIV)/(indexFV-indexOV));
-           			return true;
-           		}
-           		else {
-           			System.out.println("Sono entrato nel caso divisiore = 0");
-           			p.add(0);
-           			return true;
-           		}
-           	 }
+	private static Path repoPathB = Paths.get("/home/alessandro/eclipse-workspace/bookkeeper");
+	private static Path repoPathZ = Paths.get("/home/alessandro/eclipse-workspace/zookeeper");
+	private static Integer prescelto = 0;
+	public static void commitHistory(Release release) throws   IOException	{
+    InitCommand init = Git.init();
+    
+	if(prescelto == 0) {
+ 		init.setDirectory(repoPathB.toFile());
+ 		
+ 		    }
+     else {
+ 		init.setDirectory(repoPathZ.toFile());
+ 		
+     }
+     try (var git = Git.open(repoPathB.toFile())) {
+			List <JavaFile> tempList = new ArrayList<> ();
+			List <String> tempString = new ArrayList<>();
+			for (RevCommit commit :release.getCommitList()) {
+			        try(var tw = new TreeWalk(git.getRepository())){
+			        	tw.reset(commit.getTree());
+			        	tw.setRecursive(true);
+			            while (tw.next()){
+			            var file = new JavaFile();
+			            if (tw.getPathString().endsWith(".java") && !tempString.contains(tw.getPathString())) {
+			                		file.setName(tw.getPathString());    
+			                		tempList.add(file);
+			                		tempString.add(tw.getPathString());
+			                		FileLogger.getLogger().info(tw.getPathString());
+			                		FileLogger.getLogger().info(String.valueOf(tempList.size()));
+			                        release.setFileList(tempList);
+			                	
+			                }
+			            }
+			           }
+			        }
+		}
+	
 	}
+	
 }
+	

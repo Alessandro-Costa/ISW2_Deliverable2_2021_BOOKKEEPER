@@ -1,1 +1,1 @@
- 2javaXhr"src/deliverable/GetCommitInfo.java
+ 2javaX×hr#src/deliverable/GetReleaseInfo.java

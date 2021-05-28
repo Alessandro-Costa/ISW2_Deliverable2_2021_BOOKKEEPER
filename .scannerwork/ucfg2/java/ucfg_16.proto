@@ -1,16 +1,16 @@
 
-/oggetti.JavaFile#getoldPath()Ljava/lang/String;h
-^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.java% %("1*¥
+,oggetti.JavaFile#getAge()Ljava/lang/Integer;h
+^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.javaO O("1*£
 1h
-^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.java&	 &(®
-«
+^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.javaP	 P(«
+¨
 h
-^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.java&	 &(
-%0java.lang.String"__id*!*
-oggetti.JavaFile"	
-oldPath"„
+^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.javaP	 P(
+%0java.lang.Integer"__id**
+oggetti.JavaFile"
+age"…
 h
-^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.java& &(
-
-%0java.lang.StringB
+^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.javaP P(
+
+%0java.lang.IntegerB
 oggetti.JavaFile

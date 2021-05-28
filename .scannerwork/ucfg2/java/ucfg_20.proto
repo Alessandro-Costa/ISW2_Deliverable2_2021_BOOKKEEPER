@@ -1,16 +1,16 @@
 
-.oggetti.JavaFile#getChurn()Ljava/lang/Integer;h
-^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.java5 5("1*¥
+/oggetti.JavaFile#getoldPath()Ljava/lang/String;h
+^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.java] ]("1*¥
 1h
-^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.java6	 6(­
-ª
+^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.java^	 ^(®
+«
 h
-^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.java6	 6(
-%0java.lang.Integer"__id**
-oggetti.JavaFile"
-churn"…
+^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.java^	 ^(
+%0java.lang.String"__id*!*
+oggetti.JavaFile"	
+oldPath"„
 h
-^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.java6 6(
-
-%0java.lang.IntegerB
+^/home/alessandro/eclipse-workspace/ISW2_Deliverable2_2021_BOOKKEEPER/src/oggetti/JavaFile.java^ ^(
+
+%0java.lang.StringB
 oggetti.JavaFile

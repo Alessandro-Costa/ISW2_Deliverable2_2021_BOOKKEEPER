@@ -1,154 +1,180 @@
 package deliverable;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
-import java.nio.charset.Charset;
-import java.io.FileWriter;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import oggetti.JavaFile;
 import oggetti.Release;
+import oggetti.TicketObjectVersionID;
 import oggetti.VersionObject;
+import utility.FileLogger;
 
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.json.JSONArray;
 
-
-public class GetReleaseInfo {
-	private static Logger logger = Logger.getLogger(GetReleaseInfo.class.getName());
-	private GetReleaseInfo() {
+public class RetrieveTicketsID {
+	
+	private static List<String> projName = new ArrayList<>(List.of("BOOKKEEPER","ZOOKEEPER"));
+	private static Integer prescelto = 0;
+	private static Logger logger = Logger.getLogger(RetrieveTicketsID.class.getName());
+	private RetrieveTicketsID() {
 	    throw new IllegalStateException("Utility class");
 	  }
-	   private static Map<LocalDateTime, String> releaseNames;
-	   private static Map<LocalDateTime, String> releaseID;
-	   private static List<LocalDateTime> releases;
-	   private static Integer numVersions;
-
-	public static List <VersionObject>listVersion() throws IOException, JSONException, GitAPIException{
-		   List <VersionObject> listVersion = new ArrayList <>();
-		   List<RevCommit> commitList = new ArrayList<>();
-		   List<Release> releaseList = new ArrayList<>();
-		try {
-			commitList = GetCommitInfo.commitList();
-		} catch (IOException | GitAPIException e2) {
-			e2.printStackTrace();
-		}
-		   var projName ="BOOKKEEPER";
-		 //Fills the arraylist with releases dates and orders them
-		   //Ignores releases with missing dates
-		   releases = new ArrayList<>();
-		   		 Integer i;
-		         String url = "https://issues.apache.org/jira/rest/api/2/project/" + projName;
-		         JSONObject json;
-				try {
-					json = readJsonFromUrl(url);
-				
-		         var versions = json.getJSONArray("versions");
-		         releaseNames = new HashMap<>();
-		         releaseID = new HashMap<>();
-		         for (i = 0; i < versions.length()/2; i++ ) {
-		        	var name = "";
-		            var id = "";
-		            if(versions.getJSONObject(i).has("releaseDate")) {
-		               if (versions.getJSONObject(i).has("name"))
-		                  name = versions.getJSONObject(i).get("name").toString();
-		               if (versions.getJSONObject(i).has("id"))
-		                  id = versions.getJSONObject(i).get("id").toString();
-		               addRelease(versions.getJSONObject(i).get("releaseDate").toString(),
-		                          name,id);
-		            }
-		         }
-				} catch (IOException | JSONException e1) {
-					e1.printStackTrace();
-				}
-		         // order releases by date
-		        Collections.sort(releases,(o1,o2)-> o1.compareTo(o2));
-		         if (releases.size() < 6)
-		            return listVersion;
-		         FileWriter fileWriter = null;
-			 try {
-		            fileWriter = null;
-		            String outname = projName + "VersionInfo.csv";
-						    //Name of CSV for output
-						    fileWriter = new FileWriter(outname);
-		            fileWriter.append("Index,Version ID,Version Name,Date");
-		            fileWriter.append("\n");
-		            numVersions = releases.size();
-		            for ( i = 0; i < releases.size(); i++) {
-		               var versionInfo = new VersionObject();
-		               HashMap <String, LocalDateTime>versionDate = new HashMap <>();
-		               Integer index = i + 1;
-		               fileWriter.append(index.toString());
-		               fileWriter.append(",");
-		               fileWriter.append(releaseID.get(releases.get(i)));
-		               fileWriter.append(",");
-		               fileWriter.append(releaseNames.get(releases.get(i)));
-		               fileWriter.append(",");
-		               fileWriter.append(releases.get(i).toString());
-		               fileWriter.append("\n");
-		               versionDate.put(releaseNames.get(releases.get(i)),releases.get(i));
-		               versionInfo.add(index, releaseNames.get(releases.get(i)), releases.get(i));
-		               listVersion.add(versionInfo);	            
-		            } 
-		            releaseList = VersionGenerator.releaseCreate(commitList, releases); 
-		         } catch (Exception e) {
-		            logger.log(Level.INFO,"Error in csv writer");
-		            e.printStackTrace();
-		         } finally {
-		            try {
-		               fileWriter.flush();
-		               fileWriter.close();
-		            } catch (IOException e) {
-		               logger.log(Level.INFO,"Error while flushing/closing fileWriter !!!");
-		               e.printStackTrace();
-		            }
-		         }
-			 RetrieveTicketsID.reportTicket(listVersion,releaseList);
-		         return listVersion;
-		   }
- 
-	
-	   public static void addRelease(String strDate, String name, String id) {
-		      var date = LocalDate.parse(strDate);
-		      LocalDateTime dateTime = date.atStartOfDay();
-		      if (!releases.contains(dateTime))
-		         releases.add(dateTime);
-		      releaseNames.put(dateTime, name);
-		      releaseID.put(dateTime, id);
-		   }
 
 
-	   public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
-	      InputStream is = new URL(url).openStream();
-	      try {
-	         var rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-	         String jsonText = readAll(rd);
-	         var json = new JSONObject(jsonText);
-	         return json;
-	       } finally {
-	         is.close();
-	       }
+
+
+   private static String readAll(Reader rd) throws IOException {
+	      var sb = new StringBuilder();
+	      int cp;
+	      while ((cp = rd.read()) != -1) {
+	         sb.append((char) cp);
+	      }
+	      return sb.toString();
 	   }
-	   
-	   private static String readAll(Reader rd) throws IOException {
-		      var sb = new StringBuilder();
-		      int cp;
-		      while ((cp = rd.read()) != -1) {
-		         sb.append((char) cp);
-		      }
-		      return sb.toString();
-		   }
+
+   public static JSONArray readJsonArrayFromUrl(String url) throws IOException, JSONException {
+      
+      try(InputStream is = new URL(url).openStream()) {
+    	 var rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8.name()));
+         String jsonText = readAll(rd);
+         return new JSONArray(jsonText);
+       } 
+       
+   }
+
+   public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+      try(InputStream is = new URL(url).openStream()) {
+    	 var rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8.name()));
+         String jsonText = readAll(rd);
+         return new JSONObject(jsonText);
+         
+       } 
+   }
+
+
+  
+  	   public static void reportTicket(List <VersionObject> listVersion, List<Release> releaseList, List<RevCommit> commitList) throws IOException, JSONException, GitAPIException {
+	   List<TicketObjectVersionID> ticketList = new ArrayList<>();
+	   List<JavaFile> buggyFileList = new ArrayList<>();
+	   Integer count = 0;
+	   Integer j = 0;  
+	   Integer i = 0;
+	   Integer total = 1;
+      //Get JSON API for closed bugs w/ AV in the project 
+      do {
+         //Only gets a max of 1000 at a time, so must do this multiple times if bugs >1000
+         j = i + 1000;
+         String url = "https://issues.apache.org/jira/rest/api/2/search?jql=project=%22"
+                     + projName.get(prescelto) + "%22AND%22issueType%22=%22Bug%22AND(%22status%22=%22closed%22OR"
+                     + "%22status%22=%22resolved%22)AND%22resolution%22=%22fixed%22&fields=key,resolutiondate,creationdate,versions,created&startAt="
+                     + i.toString() + "&maxResults=" + j.toString();
+         JSONObject json = readJsonFromUrl(url);
+         var issues2 = json.getJSONArray("issues");
+         total = json.getInt("total");
+         var issues = new JSONArray();
+         for(int m=issues2.length()-1;m>=0;m--) {
+        	 issues.put(issues2.getJSONObject(m));
+         }
+         for (; i < total && i < j; i++) {
+            //Iterate through each bug
+        	var ticketID = issues.getJSONObject(i%1000).get("key").toString();
+            logger.log(Level.INFO,ticketID);
+        	var fields = issues.getJSONObject(i%1000).getJSONObject("fields");
+        	var creationDate = fields.getString("created").substring(0,16);
+        	var data = LocalDateTime.parse(creationDate);
+        	Integer dimension = fields.getJSONArray("versions").length();
+            var versionAffected = fields.getJSONArray("versions");
+        	VersionObject oV = VersionGenerator.gettingOV(data,listVersion);
+        	VersionObject fV = VersionGenerator.gettingFV(ticketID,listVersion);
+        	List<VersionObject> aV = VersionGenerator.gettingAV(dimension,versionAffected,listVersion);
+        	VersionObject iV = VersionGenerator.gettingIV(aV);
+            FileLogger.getLogger().info(String.valueOf(count));
+            count++;
+            var info = new TicketObjectVersionID();
+            if(Proportion.proportion(fV, oV, aV, iV, listVersion, count)) {
+            	info.addFV(fV);
+            	info.addOV(oV);
+            	info.addAV(aV);
+            	info.addIV(iV);
+            	info.addTicketId(ticketID);
+            	GetCommitInfo.commitListTicket(ticketID,info);
+            	info.printInfo(ticketID);
+            	ticketList.add(info);
+            }
+            else {
+            	    logger.log(Level.INFO, "Un parametro è nullo-Ticket scartato");
+            }   
+         }
+         FileLogger.getLogger().info(String.valueOf(ticketList.size()));
+         preCheckFileBug(ticketList, commitList, releaseList,  buggyFileList);
+         } while (i < total);
+      Metrics.nR(releaseList);
+      CsvWriter.write(releaseList);
+      FileLogger.getLogger().info(String.valueOf(buggyFileList.size()));
+   }
+  	   public static void checkFileBug(List<Release> releaseList, DiffEntry entry, TicketObjectVersionID ticket, List<JavaFile> buggyFileList) {
+  		   String file;
+  		   if(entry.getChangeType()== DiffEntry.ChangeType.DELETE) {
+  			 file =entry.getOldPath();
+  		   }
+  		   else {
+  			   file=entry.getNewPath();
+  		   }
+  		   for (Release release : releaseList) {
+  			   for (JavaFile javaFile : release.getFileList()){ 
+				 //NON ENTRA IN QUESTO IF 
+  				   if(javaFile.getName().equals(file) ) {
+  					  compareAv(javaFile, ticket.getAV(), release,buggyFileList);
+				 }
+			 }
+		 }
+  	   }
+  	   public static void compareAv(JavaFile javaFile, List<VersionObject> av, Release release,List<JavaFile> buggyFileList) {
+  		   for(VersionObject version : av) {
+  			if (version.getId().equals(release.getClassification())) {
+  				 FileLogger.getLogger().info("LA CLASSE E' BUGGY\n###\n"); 
+  				 javaFile.setBugg("YES");
+  				 buggyFileList.add(javaFile);
+  			 }
+  			else {
+  				javaFile.setBugg("NO");
+  			}
+  		 }
+  		   
+  	   }
+  	   public static void preCheckFileBug(List<TicketObjectVersionID> ticketList, List<RevCommit> commitList, List<Release> releaseList, List<JavaFile> buggyFileList) throws IOException {
+  		 for(TicketObjectVersionID ticket: ticketList) {
+        	 for(RevCommit commit : commitList) {
+        		 if(commit.getFullMessage().contains(ticket.getTicketID())) {
+        			 List<DiffEntry> diffs = GetReleaseInfo.getDiffs(commit);
+        			 entryFor(diffs,releaseList,ticket,buggyFileList);
+        		 }
+        	 }
+         }
+  	   }
+  	   public static void entryFor(List<DiffEntry> diffs, List<Release> releaseList, TicketObjectVersionID ticket, List<JavaFile> buggyFileList) {
+  		 for(DiffEntry entry : diffs) {
+			 var file = new JavaFile(entry.toString());
+			 if (file.getName().contains(".java") && (entry.getChangeType().toString().equals("MODIFY")
+						|| entry.getChangeType().toString().equals("DELETE") )) { 
+				 checkFileBug(releaseList,entry,ticket,buggyFileList);
+			 }	
+		 }
+  	   }
 }
