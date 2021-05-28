@@ -21,7 +21,6 @@ import java.time.LocalDateTime;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import oggetti.JavaFile;
 import oggetti.Release;
 import oggetti.VersionObject;
 
@@ -29,7 +28,6 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.diff.DiffFormatter;
 import org.eclipse.jgit.diff.RawTextComparator;
-import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryBuilder;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -45,23 +43,23 @@ public class GetReleaseInfo {
 	private GetReleaseInfo() {
 	    throw new IllegalStateException("Utility class");
 	  }
-	   private static final String REPO = "/home/alessandro/eclipse-workspace/bookkeeper/.git";
-	   //private static final String REPO = "/home/alessandro/eclipse-workspace/zookeeper/.git";
+	   private static final String REPOB = "/home/alessandro/eclipse-workspace/bookkeeper/.git";
+	   private static final String REPOZ = "/home/alessandro/eclipse-workspace/zookeeper/.git";
+	   private static final List<String> projName = new ArrayList<>(List.of("BOOKKEEPER","ZOOKEEPER"));
+	   private static Integer prescelto = 0;
 	   private static Map<LocalDateTime, String> releaseNames;
 	   private static Map<LocalDateTime, String> releaseID;
 	   private static List<LocalDateTime> releases;
-	   private static Integer numVersions;
-	   private static Repository repository;
+	   
 	   
 	public static List <VersionObject>listVersion(List <RevCommit> commitList) throws IOException, JSONException, GitAPIException{
 		   List <VersionObject> listVersion = new ArrayList <>();
 		   List<Release> releaseList = new ArrayList<>();
-		   var projName ="BOOKKEEPER";
 		 //Fills the arraylist with releases dates and orders them
 		   //Ignores releases with missing dates
 		   releases = new ArrayList<>();
 		   		 Integer i;
-		         String url = "https://issues.apache.org/jira/rest/api/2/project/" + projName;
+		   		 String url = "https://issues.apache.org/jira/rest/api/2/project/" + projName.get(prescelto);
 		         JSONObject json;
 				try {
 					json = readJsonFromUrl(url);
@@ -91,12 +89,11 @@ public class GetReleaseInfo {
 		         FileWriter fileWriter = null;
 			 try {
 		            fileWriter = null;
-		            String outname = projName + "VersionInfo.csv";
+		            String outname = projName.get(prescelto) + "VersionInfo.csv";
 						    //Name of CSV for output
 						    fileWriter = new FileWriter(outname);
 		            fileWriter.append("Index,Version ID,Version Name,Date");
 		            fileWriter.append("\n");
-		            numVersions = releases.size();
 		            for ( i = 0; i < releases.size(); i++) {
 		               var versionInfo = new VersionObject();
 		               HashMap <String, LocalDateTime>versionDate = new HashMap <>();
@@ -143,7 +140,7 @@ public class GetReleaseInfo {
 	   public static Integer compareDateVersion(LocalDateTime date) {
 			 
 			 Integer releaseIndex =0;
-			 for (int k = 0; k<releases.size(); k++) {
+			 for (var k = 0; k<releases.size(); k++) {
 				 if (date.isBefore(releases.get(k))) {
 					 releaseIndex = k;
 					 break;
@@ -156,12 +153,17 @@ public class GetReleaseInfo {
 			 return releaseIndex;
 		 }
 	   public static List<DiffEntry> getDiffs(RevCommit commit) throws IOException {
-		   var dir= new File("/home/alessandro/eclipse-workspace/bookkeeper/.git");
-		   //var dir= new File("/home/alessandro/eclipse-workspace/zookeeper/.git");
 		   var build = new RepositoryBuilder();
-		   Repository rep = build.setGitDir(dir).readEnvironment().findGitDir().build();
+		   Repository rep;
+		   if (prescelto == 0) {
+			   rep = build.setGitDir(new File(REPOB)).readEnvironment().findGitDir().build();
+		   }
+		   else {
+			   rep = build.setGitDir(new File(REPOZ)).readEnvironment().findGitDir().build();
+		   }
+		   
 		   List<DiffEntry> diffs;
-			DiffFormatter df = new DiffFormatter(DisabledOutputStream.INSTANCE);
+			var df = new DiffFormatter(DisabledOutputStream.INSTANCE);
 			df.setRepository(rep);
 			df.setDiffComparator(RawTextComparator.DEFAULT);
 			df.setContext(0);
@@ -170,13 +172,23 @@ public class GetReleaseInfo {
 				RevCommit parent = (RevCommit) commit.getParent(0).getId();
 				diffs = df.scan(parent.getTree(), commit.getTree());
 			} else {
-				FileRepositoryBuilder repositoryBuilder = new FileRepositoryBuilder();
-				repository = repositoryBuilder.setGitDir(new File(REPO)).readEnvironment() // scan environment GIT_* variables
-						.findGitDir() // scan up the file system tree
-						.setMustExist(true).build();
-				RevWalk rw = new RevWalk(repository);
-				ObjectReader reader = rw.getObjectReader();
+				var repositoryBuilder = new FileRepositoryBuilder();
+				if(prescelto == 0) {
+					rep = repositoryBuilder.setGitDir(new File(REPOB)).readEnvironment() // scan environment GIT_* variables
+							.findGitDir() // scan up the file system tree
+							.setMustExist(true).build();
+				}
+				else {
+					rep = repositoryBuilder.setGitDir(new File(REPOZ)).readEnvironment() // scan environment GIT_* variables
+							.findGitDir() // scan up the file system tree
+							.setMustExist(true).build();
+				}
+				
+				var rw = new RevWalk(rep);
+				var reader = rw.getObjectReader();
 				diffs = df.scan(new EmptyTreeIterator(), new CanonicalTreeParser(null, reader, commit.getTree()));
+				rw.close();
+				df.close();
 			}
 			return diffs;
 

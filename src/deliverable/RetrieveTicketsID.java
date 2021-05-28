@@ -20,6 +20,7 @@ import oggetti.JavaFile;
 import oggetti.Release;
 import oggetti.TicketObjectVersionID;
 import oggetti.VersionObject;
+import utility.FileLogger;
 
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.diff.DiffEntry;
@@ -27,6 +28,9 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.json.JSONArray;
 
 public class RetrieveTicketsID {
+	
+	private static List<String> projName = new ArrayList<>(List.of("BOOKKEEPER","ZOOKEEPER"));
+	private static Integer prescelto = 0;
 	private static Logger logger = Logger.getLogger(RetrieveTicketsID.class.getName());
 	private RetrieveTicketsID() {
 	    throw new IllegalStateException("Utility class");
@@ -66,8 +70,6 @@ public class RetrieveTicketsID {
 
   
   	   public static void reportTicket(List <VersionObject> listVersion, List<Release> releaseList, List<RevCommit> commitList) throws IOException, JSONException, GitAPIException {
-  		 var projName ="BOOKKEEPER";
-	   //var projName = "ZOOKEEPER";
 	   List<TicketObjectVersionID> ticketList = new ArrayList<>();
 	   List<JavaFile> buggyFileList = new ArrayList<>();
 	   Integer count = 0;
@@ -79,9 +81,9 @@ public class RetrieveTicketsID {
          //Only gets a max of 1000 at a time, so must do this multiple times if bugs >1000
          j = i + 1000;
          String url = "https://issues.apache.org/jira/rest/api/2/search?jql=project=%22"
-                 + projName + "%22AND%22issueType%22=%22Bug%22AND(%22status%22=%22closed%22OR"
-                 + "%22status%22=%22resolved%22)AND%22resolution%22=%22fixed%22&fields=key,resolutiondate,creationdate,versions,created&startAt="
-                 + i.toString() + "&maxResults=" + j.toString();
+                     + projName.get(prescelto) + "%22AND%22issueType%22=%22Bug%22AND(%22status%22=%22closed%22OR"
+                     + "%22status%22=%22resolved%22)AND%22resolution%22=%22fixed%22&fields=key,resolutiondate,creationdate,versions,created&startAt="
+                     + i.toString() + "&maxResults=" + j.toString();
          JSONObject json = readJsonFromUrl(url);
          var issues2 = json.getJSONArray("issues");
          total = json.getInt("total");
@@ -102,7 +104,7 @@ public class RetrieveTicketsID {
         	VersionObject fV = VersionGenerator.gettingFV(ticketID,listVersion);
         	List<VersionObject> aV = VersionGenerator.gettingAV(dimension,versionAffected,listVersion);
         	VersionObject iV = VersionGenerator.gettingIV(aV);
-            logger.log(Level.INFO, count.toString());
+            FileLogger.getLogger().info(String.valueOf(count));
             count++;
             var info = new TicketObjectVersionID();
             if(Proportion.proportion(fV, oV, aV, iV, listVersion, count)) {
@@ -119,25 +121,12 @@ public class RetrieveTicketsID {
             	    logger.log(Level.INFO, "Un parametro è nullo-Ticket scartato");
             }   
          }
-         System.out.println(ticketList.size());
-         for(TicketObjectVersionID ticket: ticketList) {
-        	 for(RevCommit commit : commitList) {
-        		 if(commit.getFullMessage().contains(ticket.getTicketID())) {
-        			 List<DiffEntry> diffs = GetReleaseInfo.getDiffs(commit);
-        			 for(DiffEntry entry : diffs) {
-        				 var file = new JavaFile(entry.toString());
-        				 if (file.getName().contains(".java") && (entry.getChangeType().toString().equals("MODIFY")
-									|| entry.getChangeType().toString().equals("DELETE") )) { 
-        					 checkFileBug(releaseList,entry,ticket,buggyFileList);
-        				 }	
-        			 }
-        		 }
-        	 }
-         }
+         FileLogger.getLogger().info(String.valueOf(ticketList.size()));
+         preCheckFileBug(ticketList, commitList, releaseList,  buggyFileList);
          } while (i < total);
       Metrics.nR(releaseList);
       CsvWriter.write(releaseList);
-      System.out.println(buggyFileList.size());
+      FileLogger.getLogger().info(String.valueOf(buggyFileList.size()));
    }
   	   public static void checkFileBug(List<Release> releaseList, DiffEntry entry, TicketObjectVersionID ticket, List<JavaFile> buggyFileList) {
   		   String file;
@@ -159,11 +148,33 @@ public class RetrieveTicketsID {
   	   public static void compareAv(JavaFile javaFile, List<VersionObject> av, Release release,List<JavaFile> buggyFileList) {
   		   for(VersionObject version : av) {
   			if (version.getId().equals(release.getClassification())) {
-  				 System.out.println("LA CLASSE E' BUGGY\n###\n");
+  				 FileLogger.getLogger().info("LA CLASSE E' BUGGY\n###\n"); 
   				 javaFile.setBugg("YES");
   				 buggyFileList.add(javaFile);
   			 }
+  			else {
+  				javaFile.setBugg("NO");
+  			}
   		 }
   		   
+  	   }
+  	   public static void preCheckFileBug(List<TicketObjectVersionID> ticketList, List<RevCommit> commitList, List<Release> releaseList, List<JavaFile> buggyFileList) throws IOException {
+  		 for(TicketObjectVersionID ticket: ticketList) {
+        	 for(RevCommit commit : commitList) {
+        		 if(commit.getFullMessage().contains(ticket.getTicketID())) {
+        			 List<DiffEntry> diffs = GetReleaseInfo.getDiffs(commit);
+        			 entryFor(diffs,releaseList,ticket,buggyFileList);
+        		 }
+        	 }
+         }
+  	   }
+  	   public static void entryFor(List<DiffEntry> diffs, List<Release> releaseList, TicketObjectVersionID ticket, List<JavaFile> buggyFileList) {
+  		 for(DiffEntry entry : diffs) {
+			 var file = new JavaFile(entry.toString());
+			 if (file.getName().contains(".java") && (entry.getChangeType().toString().equals("MODIFY")
+						|| entry.getChangeType().toString().equals("DELETE") )) { 
+				 checkFileBug(releaseList,entry,ticket,buggyFileList);
+			 }	
+		 }
   	   }
 }

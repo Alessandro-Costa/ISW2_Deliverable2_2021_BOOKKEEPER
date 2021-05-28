@@ -1,12 +1,12 @@
 package deliverable;
 
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
 import oggetti.JavaFile;
 import oggetti.Release;
+import utility.FileLogger;
 
 import java.util.logging.Level;
 public class CsvWriter {
@@ -17,11 +17,11 @@ public class CsvWriter {
 
 	public static void write(List <Release> releaseList)  {
 		try (
-				   FileWriter fileWriter = new FileWriter("metriche.csv")) {
+				   var fileWriter = new FileWriter("metriche.csv")) {
 				   
-				   fileWriter.append("RELEASE ; FILENAME ; NR ; NAUTH ; BUGGYNESS \n");
+				   fileWriter.append("RELEASE ; FILENAME ; NR ; NAUTH ; ChgSize ; LOCAdded ; Churn ; BUGGYNESS \n");
 				   for (Release release : releaseList) {
-					   System.out.println("RELEASE CSV == " + release.getClassification());
+					   FileLogger.getLogger().info("RELEASE CSV == " + release.getClassification());
 					   for (JavaFile file : release.getFileList()) {
 						   fileWriter.append(release.getClassification().toString());
 						   fileWriter.append(";");
@@ -30,6 +30,12 @@ public class CsvWriter {
 						   fileWriter.append(file.getNr().toString());
 						   fileWriter.append(";");
 						   fileWriter.append(file.getnAuth().toString());
+						   fileWriter.append(";");
+						   fileWriter.append(file.getChgSetSize().toString());
+						   fileWriter.append(";");
+						   fileWriter.append(file.getLOCadded().toString());
+						   fileWriter.append(";");
+						   fileWriter.append(file.getChurn().toString());
 						   fileWriter.append(";");
 						   fileWriter.append(file.getBugg());
 						   fileWriter.append("\n");

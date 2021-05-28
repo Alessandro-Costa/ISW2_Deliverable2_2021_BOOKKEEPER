@@ -13,6 +13,7 @@ import org.json.JSONException;
 
 import oggetti.Release;
 import oggetti.VersionObject;
+import utility.FileLogger;
 
 public class VersionGenerator {
 	private  VersionGenerator(){
@@ -106,7 +107,7 @@ public class VersionGenerator {
 				if(commit.getAuthorIdent().getWhen().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().isBefore(releases.get(k))) {
      			   tempCommitList.add(commit);
             	   release.setDate(releases.get(k));
-            	   release.setClassification(k);
+            	   release.setClassification(k+1);
             	   release.setRelease(releases.get(k).toString());
      		  }
             }
@@ -120,7 +121,7 @@ public class VersionGenerator {
 			releaseList.add(release);
 			count+=release.getFileList().size();
         }
-		System.out.println("|||||||||||||||||||||||||||||||||||||" +count);
+		FileLogger.getLogger().info("|||||||||||||||||||||||||||||||||||||" +count);
 		return releaseList;
 	}
 }

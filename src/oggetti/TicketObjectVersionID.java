@@ -2,14 +2,14 @@ package oggetti;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 import org.eclipse.jgit.revwalk.RevCommit;
 
+import utility.FileLogger;
+
 
 public class TicketObjectVersionID {
-	private static Logger logger = Logger.getLogger(TicketObjectVersionID.class.getName());
 	private String ticketID;
 	private VersionObject oV;
 	private VersionObject fV;
@@ -31,22 +31,18 @@ public class TicketObjectVersionID {
 		this.aV = new ArrayList<>();
 		this.iV = new VersionObject();
 		this.commitList = new ArrayList<>();
-		this.ticketID = new String();
 	}
 	public void printInfo(String ticketID) {
-		    //logger.log(Level.INFO,"Sto stampando l'OV del relativo: {}",ticketID);
-		    System.out.println("Sto stampando l'OV del relativo:"+ticketID);
-		    //logger.log(Level.INFO,"Sto stampando la versione dell'OV :{}", oV.getIdVersion());
-		    System.out.println("Sto stampando la versione dell'OV:"+oV.getIdVersion());
-		    //logger.log(Level.INFO,"Sto stampando l'FV del relativo:{}" , ticketID);
-		    System.out.println("Sto stampando l'FV del relativo:"+ticketID);
-		    //logger.log(Level.INFO,"Sto stampando la versione dell'FV: {}", fV.getIdVersion());
-		    System.out.println("Sto stampando la versione dell'FV:"+fV.getIdVersion());
-	        for(int r = 0;r < aV.size();r++) {
-	        	System.out.println("Sto stampando l'AV del relativo:" + ticketID + aV.get(r).getIdVersion());
+		FileLogger.getLogger().info("Sto stampando l'OV del relativo:"+ticketID);    
+		FileLogger.getLogger().info("Sto stampando la versione dell'OV:"+oV.getIdVersion());    
+		FileLogger.getLogger().info("Sto stampando l'FV del relativo:"+ticketID);
+		FileLogger.getLogger().info("Sto stampando la versione dell'FV:"+fV.getIdVersion());
+	        for(var r = 0;r < aV.size();r++) {
+	        	FileLogger.getLogger().info("Sto stampando l'AV del relativo:" + ticketID + aV.get(r).getIdVersion());
 	        }
-	        	System.out.println("Sto stampando l'IV del relativo:" + ticketID + iV.getIdVersion());
-	        System.out.println(ticketID);
+	        FileLogger.getLogger().info("Sto stampando l'IV del relativo:" + ticketID + iV.getIdVersion());
+	        FileLogger.getLogger().info(ticketID);
+	      
 	        
 	}
 	public String getTicketID() {

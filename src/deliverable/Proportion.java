@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import oggetti.VersionObject;
+import utility.FileLogger;
 
 public class Proportion {
 	private Proportion() {
@@ -16,7 +17,7 @@ public class Proportion {
        	Integer indexIV = iV.getId();
        	Integer n = 0;
           if(iV.getId()==null) {
-        	System.out.println("Entro nel for maledetto dove IV non esiste");
+        	FileLogger.getLogger().info("Entro nel for maledetto dove IV non esiste");
            	if(p.size()<=4) {
            		p.add(0);
            		return true;
@@ -33,13 +34,13 @@ public class Proportion {
        					return true;
        				}
        			}
-           		System.out.println(predictedIV);
+       			FileLogger.getLogger().info(String.valueOf(predictedIV));
            		if(indexFV-indexOV !=0) {
            			p.add((indexFV-predictedIV)/(indexFV-indexOV));
            			return true;
            		}
            		else {
-           			System.out.println("Sono entrato nel caso divisiore = 0");
+           			FileLogger.getLogger().info("Sono entrato nel caso divisiore = 0");           			
            			p.add(0);
            			return true;
            		}
@@ -51,7 +52,7 @@ public class Proportion {
            			return true;
            		}
            		else {
-           			System.out.println("Sono entrato nel caso divisiore = 0");
+           			FileLogger.getLogger().info("Sono entrato nel caso divisiore = 0");
            			p.add(0);
            			return true;
            		}

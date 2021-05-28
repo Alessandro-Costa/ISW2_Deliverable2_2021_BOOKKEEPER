@@ -14,7 +14,7 @@ public class Release {
 	public Release() {
 		
 	}
-	public Release(LocalDateTime date,Integer classification,String release, List<String> javaFileList) {
+	public Release(LocalDateTime date,Integer classification,String release) {
 		this.commit = new ArrayList<>();
 		this.date = date;
 		this.classification = classification;

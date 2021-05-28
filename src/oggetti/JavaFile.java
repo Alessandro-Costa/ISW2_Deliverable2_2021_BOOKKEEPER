@@ -1,5 +1,6 @@
 package oggetti;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class JavaFile {
@@ -31,9 +32,47 @@ public class JavaFile {
 	
 	public JavaFile() {
 		this.size = 0;
+		this.locTouched = 0;
+		this.nr = 0;
+		this.nFix = 0;
+		this.nAuth = 0;
+		this.listNAuth = new ArrayList<>();
+		this.locAdded = 0;
+		this.locAddedList = new ArrayList<>();
+		this.maxLocAdded = 0;
+		this.avgLocAdded = 0;
+		this.churn = 0;
+		this.churnList = new ArrayList<>();
+		this.maxChurn = 0;
+		this.avgChurn = 0;
+		this.chgSetSize = 0;
+		this.chgSetSizeList = new ArrayList<>();
+		this.maxChgSetSize = 0;
+		this.avgChgSetSize = 0;
+		this.age = 0;
 	}
 	public JavaFile(String name) {
+		this.size = 0;
 		this.name = name;
+		this.oldPath = "";
+		this.locTouched = 0;
+		this.nr = 0;
+		this.nFix = 0;
+		this.nAuth = 0;
+		this.listNAuth = new ArrayList<>();
+		this.locAdded = 0;
+		this.locAddedList = new ArrayList<>();
+		this.maxLocAdded = 0;
+		this.avgLocAdded = 0;
+		this.churn = 0;
+		this.churnList = new ArrayList<>();
+		this.maxChurn = 0;
+		this.avgChurn = 0;
+		this.chgSetSize = 0;
+		this.chgSetSizeList = new ArrayList<>();
+		this.maxChgSetSize = 0;
+		this.avgChgSetSize = 0;
+		this.age = 0;
 	}
 
 	// get

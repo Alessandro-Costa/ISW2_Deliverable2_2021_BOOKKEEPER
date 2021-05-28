@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import org.eclipse.jgit.diff.DiffEntry;
@@ -23,25 +22,37 @@ import org.eclipse.jgit.util.io.DisabledOutputStream;
 
 import oggetti.JavaFile;
 import oggetti.Release;
+import utility.FileLogger;
 
 
 public class Metrics {
-	private static Repository repo;
-	private static String REPO = "/home/alessandro/eclipse-workspace/bookkeeper/.git";
-	private static Logger logger = Logger.getLogger(Metrics.class.getName());
-	private static String URI = "/home/alessandro/eclipse-workspace/bookkeeper/";
+	private Metrics() {
+	    throw new IllegalStateException("Utility class");
+	  }
+
+	
+	private static String repoB = "/home/alessandro/eclipse-workspace/bookkeeper/.git";
+	private static String repoZ = "/home/alessandro/eclipse-workspace/zookeeper/.git";
+	private static Integer prescelto = 0;
 	
 	public static void nR(List<Release> releaseList) throws IOException {
-		var repoBuilder = new FileRepositoryBuilder();
-		repo = repoBuilder.setGitDir(new File(REPO)).readEnvironment().findGitDir().setMustExist(true).build();
+		Repository repository;
+		if(prescelto == 0) {
+			var repoBuilder = new FileRepositoryBuilder();
+			repository = repoBuilder.setGitDir(new File(repoB)).readEnvironment().findGitDir().setMustExist(true).build();
+			}
+		else {
+			var repoBuilder = new FileRepositoryBuilder();
+			repository = repoBuilder.setGitDir(new File(repoZ)).readEnvironment().findGitDir().setMustExist(true).build();
+		}
 		for(Release release : releaseList) {
-			System.out.println("Release ==" + release.getClassification());
+			FileLogger.getLogger().info("Release ==" + release.getClassification());
 			List<JavaFile> fileList = new ArrayList<>(); 
 			List<Integer> chgSetSizeList = new ArrayList<>();
 			
 			for(RevCommit commit : release.getCommitList()) {
 				 var df = new DiffFormatter(DisabledOutputStream.INSTANCE); 
-				 df.setRepository(repo);
+				 df.setRepository(repository);
 				 df.setDiffComparator(RawTextComparator.DEFAULT);
 				 df.setDetectRenames(true);
 				 
@@ -52,9 +63,10 @@ public class Metrics {
 					analyzeDiffEntryMetrics(diffs, fileList, authName, chgSetSizeList, df);
 				 }
 			}
-			System.out.println("###\n\n");
+			FileLogger.getLogger().info("###\n\n");
 			setFileRelease(fileList, release);
 		}
+		
 	}
 	public static void analyzeDiffEntryMetrics(List<DiffEntry> diffs, List<JavaFile> fileList, String authName, List<Integer> chgSetSizeList, DiffFormatter df) {
 	 	var numDiff = 0 ; 
@@ -76,10 +88,10 @@ public class Metrics {
 				 else {
 					 file = diff.getNewPath();
 				 }
-				System.out.println("FILE == " + file);
+				FileLogger.getLogger().info("FILE == " + file);
 				
 				addFileList(fileList, file, authName, numDiff, diff, df);
-				System.out.println("######\n\n");
+				FileLogger.getLogger().info("######\n\n");
 
 			}
 		}
@@ -100,12 +112,12 @@ public class Metrics {
 		 }
 		 
 		 int churn = locAdded - locDeleted;
-		 System.out.println("LOC ADDED == " + locAdded);
-		 System.out.println("LOC DELETED == " + locDeleted);
-		 System.out.println("CHURN == " + churn);
+		 FileLogger.getLogger().info("LOC ADDED == " + locAdded);
+		 FileLogger.getLogger().info("LOC DELETED == " + locDeleted);
+		 FileLogger.getLogger().info("CHURN == " + churn);
 		 
 		 if (fileList.isEmpty()) {
-			 System.out.println("LISTA VUOTA");
+			 FileLogger.getLogger().info("LISTA VUOTA");
 			 var javaFile = new JavaFile(fileName);
 			 javaFile.setNr(1);
 			 List<String> listAuth = new ArrayList<>();
@@ -129,7 +141,7 @@ public class Metrics {
 		 else {
 			 for ( JavaFile file : fileList) {
 				 if (file.getName().equals(fileName)) {
-					 System.out.println("FILE PRESENTE NELLA LISTA ");
+					 FileLogger.getLogger().info("FILE PRESENTE NELLA LISTA ");
 
 					 file.setNr(file.getNr()+1);
 					 file.getnAuthList().add(authName);
@@ -145,7 +157,7 @@ public class Metrics {
 		 }
 		 
 		 if (count == 0) { //vuol dire che il nome del file non e' presente in fileList, quindi lo aggiungo
-			 System.out.println("FILE NON PRESENTE NELLA LISTA ");
+			 FileLogger.getLogger().info("FILE NON PRESENTE NELLA LISTA ");
 
 			 var javaFile = new JavaFile(fileName);
 			 javaFile.setNr(1);

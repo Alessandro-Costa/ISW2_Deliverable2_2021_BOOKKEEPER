@@ -19,31 +19,61 @@ public class GetCommitInfo{
 	private GetCommitInfo() {
 	    throw new IllegalStateException("Utility class");
 	  }
+	private static Integer prescelto = 0;
+	private static String uriB = "/home/alessandro/eclipse-workspace/bookkeeper/.git"; //se prescelto = 0
+	private static String uriZ = "/home/alessandro/eclipse-workspace/zookeeper/.git";	//se prescelto != 0
 	public static List<RevCommit> commitList() throws IOException, GitAPIException {
 		List<RevCommit> ticketCommits= new ArrayList <>();
-		var dir= new File("/home/alessandro/eclipse-workspace/bookkeeper/.git");
-		//var dir= new File("/home/alessandro/eclipse-workspace/zookeeper/.git");
 		var build = new RepositoryBuilder();
-		Repository rep = build.setGitDir(dir).readEnvironment().findGitDir().build();
-		var git = new Git(rep);
-		Iterable<RevCommit> log = git.log().call();
-		for(RevCommit r : log) {
-			ticketCommits.add(r);	
+		if(prescelto == 0) {
+			Repository rep = build.setGitDir(new File(uriB)).readEnvironment().findGitDir().build();
+			var git = new Git(rep);
+			Iterable<RevCommit> log = git.log().call();
+			for(RevCommit r : log) {
+				ticketCommits.add(r);	
+			}
+			git.close();
+			return ticketCommits;
 		}
-		git.close();
-		return ticketCommits;
+		else {
+			Repository rep = build.setGitDir(new File(uriZ)).readEnvironment().findGitDir().build();
+			var git = new Git(rep);
+			Iterable<RevCommit> log = git.log().call();
+			for(RevCommit r : log) {
+				ticketCommits.add(r);	
+			}
+			git.close();
+			return ticketCommits;
+		}
+		
+		
 	}
 	public static void commitListTicket(String ticketID, TicketObjectVersionID info ) throws IOException, GitAPIException {
-		var dir= new File("/home/alessandro/eclipse-workspace/bookkeeper/.git");
-		var build = new RepositoryBuilder();
-		Repository rep = build.setGitDir(dir).readEnvironment().findGitDir().build();
-		var git = new Git(rep);
-		Iterable<RevCommit> log = git.log().call();
-		for(RevCommit r : log) {
-			if(r.getFullMessage().contains(ticketID.toString())) {
-				info.addCommitList(r);	
-			}	
+		if(prescelto == 0) {
+			var dir= new File(uriB);
+			var build = new RepositoryBuilder();
+			Repository rep = build.setGitDir(dir).readEnvironment().findGitDir().build();
+			var git = new Git(rep);
+			Iterable<RevCommit> log = git.log().call();
+			for(RevCommit r : log) {
+				if(r.getFullMessage().contains(ticketID)) {
+					info.addCommitList(r);	
+				}	
+			}
+			git.close();
 		}
-		git.close();
+		else {
+			var dir= new File(uriZ);
+			var build = new RepositoryBuilder();
+			Repository rep = build.setGitDir(dir).readEnvironment().findGitDir().build();
+			var git = new Git(rep);
+			Iterable<RevCommit> log = git.log().call();
+			for(RevCommit r : log) {
+				if(r.getFullMessage().contains(ticketID)) {
+					info.addCommitList(r);	
+				}	
+			}
+			git.close();
+		}
 	}
 }
